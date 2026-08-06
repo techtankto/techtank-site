@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Megaphone, Users, Building2 } from "lucide-react";
+import Link from "next/link";
+import { Megaphone, Users, Building2, ArrowRight } from "lucide-react";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { RoleCard, roleCardsData } from "@/components/ui/role-card";
 import { ContactCard } from "@/components/ui/contact-card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 
 export const metadata: Metadata = {
   title: "Get Involved",
@@ -121,6 +124,61 @@ export default function GetInvolvedPage() {
           {roleCardsData.map((role) => (
             <RoleCard key={role.role} {...role} />
           ))}
+        </div>
+      </Section>
+
+      {/* Pick a Task teaser */}
+      <Section>
+        <div className="shadow-soft overflow-hidden rounded-3xl border border-border bg-card lg:grid lg:grid-cols-2">
+          {/* Left: gradient panel with the pitch */}
+          <div className="gradient-hero-soft texture-grain flex flex-col justify-center p-8 lg:p-12">
+            <span className="mb-4 inline-block text-xs font-semibold tracking-widest text-ring uppercase">
+              Roll up your sleeves
+            </span>
+            <h2 className="mb-4 font-display text-2xl font-semibold text-balance text-foreground lg:text-3xl">
+              Pick something to work on
+            </h2>
+            <p className="leading-relaxed text-muted-foreground">
+              Pick a Task is our running list of concrete, bite-sized ways to help, from photography and design to dev
+              and logistics. No big commitment, no application essay. Find a task that fits, raise your hand, and
+              we&rsquo;ll pair you with it. Tasks go to people in our Slack, so you&rsquo;ll connect your account to
+              apply.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Photography", "Design", "Frontend", "Content", "Logistics"].map((pill) => (
+                <Badge key={pill} variant="secondary">
+                  {pill}
+                </Badge>
+              ))}
+            </div>
+            <div className="mt-8">
+              <Button asChild>
+                <Link href="/tasks">
+                  Browse tasks
+                  <ArrowRight className="ml-2 size-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+
+          {/* Right: how it works */}
+          <div className="flex flex-col justify-center p-8 lg:p-12">
+            <h3 className="mb-6 font-display text-lg font-semibold text-foreground">How it works</h3>
+            <ol className="space-y-5">
+              {[
+                "Find a task that fits your skills and the time you've got.",
+                "Connect Slack and raise your hand. No application essay.",
+                "We message you on Slack, send what you need, and your work ships to the community.",
+              ].map((step, index) => (
+                <li key={step} className="flex items-start gap-4">
+                  <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-secondary font-display text-sm font-bold text-secondary-foreground">
+                    {index + 1}
+                  </span>
+                  <p className="leading-relaxed text-muted-foreground">{step}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </div>
       </Section>
 

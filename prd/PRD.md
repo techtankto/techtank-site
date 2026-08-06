@@ -109,6 +109,7 @@ under Ontario/Canadian jurisdiction.
 │   ├── host
 │   ├── sponsor
 │   └── organizer
+├── tasks                        (public board of tasks to pick up)
 ├── events                       (Luma calendar embed)
 ├── resources                    (grouped resource pages)
 │   ├── media-kit                (brand assets, logos, fast facts)
@@ -130,6 +131,10 @@ under Ontario/Canadian jurisdiction.
 | `/get-involved/host`                | Host                | Venue logistics (40–120 cap, 6–8:30pm) + intake action (email us)              |
 | `/get-involved/sponsor`             | Sponsor             | Corporate partner pitch + intake action (email us)                             |
 | `/get-involved/organizer`           | Organizer Team      | Crew onboarding + intake action (email us)                                     |
+| `/tasks`                            | Pick a Task         | Public board of concrete tasks the community can pick up                       |
+| `/tasks/[id]`                       | Task detail         | One task + Slack-verified apply flow                                           |
+| `/admin/login`                      | Admin sign in       | Organizer login via Slack SSO (not indexed)                                    |
+| `/admin/tasks`                      | Admin — Pick a Task | Back office to CRUD/assign/reorder tasks and review applicants (not indexed)   |
 | `/events`                           | Events              | Upcoming events via Luma calendar                                              |
 | `/resources/media-kit`              | Media Kit           | Brand assets, logos, and fast facts for press and partners                     |
 | `/resources/design-system`          | Design System       | Brand guidelines — colours, typography, and component reference                |
@@ -142,18 +147,19 @@ under Ontario/Canadian jurisdiction.
 
 - **Root layout** — global header, footer, theme, SEO defaults.
 - **`/get-involved` layout** — sticky sub-nav (Speak or Facilitate / Host / Sponsor /
-  Organizer Team), persistent "Join our Slack" CTA, shared "Why get involved"
-  strip, consistent intake CTA styling (email us).
+  Organizer Team), persistent "Join our Slack" CTA, shared "Why get involved" strip,
+  a Pick a Task teaser section linking to `/tasks`, and consistent intake CTA styling
+  (email us).
 - **`/legal` layout** — document-style narrow column, table of contents
   sidebar, last-updated stamp.
 
 ### 2.3 Global navigation
 
-- **Primary nav:** About, Get Involved, Events, Code of Conduct
+- **Primary nav:** About, Get Involved, Pick a Task, Events, Code of Conduct
 - **Header CTA:** "Join our Slack" (secondary: "RSVP on Luma")
 - **Footer:**
   - Column 1 — Community: Luma, Meetup, Slack, LinkedIn, Instagram, GitHub, YouTube
-  - Column 2 — Get Involved: Speak, Host, Sponsor, Organizer Team
+  - Column 2 — Get Involved: Speak, Host, Sponsor, Organizer Team, Pick a Task
   - Column 3 — Resources: Press Kit, Events
   - Column 4 — Legal: Terms of Service, Privacy Policy, Code of Conduct
   - Contact: `techtankto@gmail.com` + Slack community link
@@ -203,6 +209,7 @@ relative to this file, `prd/PRD.md`):
 - [pages/get-involved/host.md](pages/get-involved/host.md)
 - [pages/get-involved/sponsor.md](pages/get-involved/sponsor.md)
 - [pages/get-involved/organizer.md](pages/get-involved/organizer.md)
+- [pages/tasks.md](pages/tasks.md)
 - [pages/resources/media-kit.md](pages/resources/media-kit.md)
 - [pages/resources/design-system.md](pages/resources/design-system.md)
 - [pages/legal/terms-of-service.md](pages/legal/terms-of-service.md)

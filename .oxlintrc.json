@@ -48,5 +48,5 @@
     "tailwindcss/enforce-shorthand": "error",
     "tailwindcss/enforce-sort-order": "error"
   },
-  "ignorePatterns": [".next", "node_modules", "public"]
+  "ignorePatterns": [".next", "node_modules", "public", "db"]
 }

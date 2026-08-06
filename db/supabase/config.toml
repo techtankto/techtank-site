@@ -1,0 +1,133 @@
+# Local Supabase config for TechTank TO.
+#
+# `project_id` and every port below are deliberately distinct from any
+# other local Supabase stack on this machine, so they can all run at the
+# same time without colliding. TechTank owns the 5452x block.
+#
+# Reference: https://supabase.com/docs/guides/local-development/cli/config
+project_id = "techtank"
+
+[api]
+enabled = true
+port = 54521
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[api.tls]
+enabled = false
+
+[db]
+port = 54522
+shadow_port = 54520
+major_version = 15
+
+[db.pooler]
+enabled = false
+port = 54529
+pool_mode = "transaction"
+default_pool_size = 20
+max_client_conn = 100
+
+[db.migrations]
+schema_paths = []
+
+[db.seed]
+enabled = true
+sql_paths = ["./seed.sql"]
+
+[realtime]
+enabled = true
+
+[studio]
+enabled = true
+port = 54523
+api_url = "http://127.0.0.1"
+
+# TechTank sends no email, so there is nothing to capture locally.
+[inbucket]
+enabled = false
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000", "http://localhost:3000/auth/callback"]
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+# Signing in with Slack has to be able to create the auth user on a
+# first login, so account creation is allowed. It grants nothing on its
+# own: authorisation is the Slack workspace gate plus, for the back
+# office, the `admins` allowlist (migration 004).
+enable_signup = true
+enable_anonymous_sign_ins = false
+enable_manual_linking = false
+minimum_password_length = 6
+
+[auth.email]
+# Slack is the only way in, for organizers and applicants alike, so the
+# email provider is off. There is no login code, no SMTP, and no
+# transactional email anywhere in this project. Turning this on would
+# reintroduce a delivery dependency we deliberately removed.
+enable_signup = false
+enable_confirmations = false
+
+# Sign in with Slack (OpenID Connect) — the only way into this app, for
+# organizers and applicants alike. One Slack app carries this, the bot
+# token, and the incoming webhook.
+#
+# Credentials come from the Slack app's Basic Information page. Locally
+# they live in `db/.env` (gitignored), which the CLI reads for `env(...)`
+# substitution; on hosted Supabase they go in the dashboard under
+# Authentication > Providers > Slack (OIDC).
+#
+# Needs Supabase CLI >= ~2.100 (pinned as a devDependency, so use
+# `pnpm db:start` rather than a global install). Older CLIs silently
+# drop this whole block and the provider never turns on.
+#
+# The workspace is pinned two ways: the sign-in URL passes `team=<id>`
+# so Slack pre-selects the right workspace, and `caller_workspace_ok()`
+# (migration 004) verifies the team_id claim in SQL. Only the second is
+# a control.
+[auth.external.slack_oidc]
+enabled = true
+client_id = "env(SLACK_OIDC_CLIENT_ID)"
+secret = "env(SLACK_OIDC_SECRET)"
+# Slack refuses http://localhost redirect URLs, so local development
+# goes through an ngrok tunnel. GoTrue must hand Slack the SAME public
+# URL it was configured with, or Slack rejects the callback as a
+# mismatch — hence overriding it rather than letting it default to
+# http://127.0.0.1:54521/auth/v1/callback. Set this in db/.env to
+# `https://<subdomain>.ngrok-free.app/auth/v1/callback`; leave it empty
+# when you're not doing Slack work locally.
+redirect_uri = "env(SLACK_OIDC_REDIRECT_URI)"
+skip_nonce_check = false
+
+[auth.rate_limit]
+# Sign-in requests per 5 minutes per IP. No email limits are needed:
+# nothing in this project sends mail.
+sign_in_sign_ups = 30
+
+# Applying now requires a Slack-verified session, so the gateway
+# rejects unauthenticated calls before they reach our code. This is
+# what closes the old anonymous spam / email-relay surface.
+[functions.apply-to-task]
+verify_jwt = true
+
+# Assigning an applicant also requires a signed-in admin.
+[functions.assign-task]
+verify_jwt = true
+
+[edge_runtime]
+enabled = true
+policy = "oneshot"
+inspector_port = 8283
+
+[analytics]
+enabled = true
+port = 54527
+backend = "postgres"
