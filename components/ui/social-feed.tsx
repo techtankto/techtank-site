@@ -85,7 +85,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
           href={postUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-auto inline-flex items-center text-sm font-medium text-overline transition-colors hover:text-overline/80"
+          className="mt-auto inline-flex items-center text-sm font-medium text-overline transition-colors hover:text-foreground"
         >
           <InstagramIcon className="mr-2 size-4" />
           View on Instagram
