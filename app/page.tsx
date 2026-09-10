@@ -156,20 +156,20 @@ export default async function HomePage() {
             <a href="https://luma.com/techtank" target="_blank" rel="noopener noreferrer">
               <LumaIcon className="mr-2 size-4" />
               Luma
-              <ExternalLink className="ml-2 size-4" />
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
             </a>
           </Button>
           <Button variant="outline" size="md" asChild>
             <a href="https://meetup.com/techtank-to" target="_blank" rel="noopener noreferrer">
               <MeetupIcon className="mr-2 size-4" />
               Meetup
-              <ExternalLink className="ml-2 size-4" />
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
             </a>
           </Button>
           <Button variant="outline" size="md" asChild>
             <Link href="/events">
-              View all
-              <ArrowRight className="ml-2 size-4" />
+              View all<span className="sr-only"> events</span>
+              <ArrowRight className="ml-2 size-4" aria-hidden="true" />
             </Link>
           </Button>
         </div>
@@ -230,7 +230,7 @@ export default async function HomePage() {
             href="/events"
             className="group glass relative overflow-hidden rounded-xl p-5 transition-all hover:scale-[1.01] lg:p-6"
           >
-            <Calendar className="absolute top-4 right-4 size-14 text-foreground/15" />
+            <Calendar className="absolute top-4 right-4 size-14 text-foreground/15" aria-hidden="true" />
             <div className="relative">
               <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-amber-dark uppercase">
                 Show up
@@ -241,7 +241,7 @@ export default async function HomePage() {
               </p>
               <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-amber-dark">
                 See events
-                <ArrowRight className="ml-2 size-4" />
+                <ArrowRight className="ml-2 size-4" aria-hidden="true" />
               </span>
             </div>
           </Link>
@@ -250,7 +250,7 @@ export default async function HomePage() {
             href="/get-involved"
             className="group glass relative overflow-hidden rounded-xl p-5 transition-all hover:scale-[1.01] lg:p-6"
           >
-            <Users className="absolute top-4 right-4 size-14 text-foreground/15" />
+            <Users className="absolute top-4 right-4 size-14 text-foreground/15" aria-hidden="true" />
             <div className="relative">
               <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-amber-dark uppercase">
                 Contribute
@@ -259,7 +259,7 @@ export default async function HomePage() {
               <p className="mb-4 text-sm text-muted-foreground">Speak, host, sponsor, or volunteer with the crew.</p>
               <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-amber-dark">
                 Pick your path
-                <ArrowRight className="ml-2 size-4" />
+                <ArrowRight className="ml-2 size-4" aria-hidden="true" />
               </span>
             </div>
           </Link>
