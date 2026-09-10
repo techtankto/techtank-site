@@ -61,7 +61,7 @@ How components are added, shaped, styled, and organized. This skill owns authori
 ## Theming
 
 1. **`next-themes` owns light, dark, and system detection.** Set `defaultTheme="system"` with `enableSystem`, and put `suppressHydrationWarning` on `<html>`: the provider resolves the theme on the client, which mismatches the server render without it.
-2. **A theme-aware component renders a placeholder until mounted.** Gate it on a `useEffect` + `useState` mounted flag, or icons and states server-render against the wrong theme.
+2. **A theme-aware component renders a placeholder until hydration finishes.** Gate it on a hydration flag backed by `useSyncExternalStore` (false for the server render and the hydration render that must match it, true after), never a `setState` in an effect, which the `react/set-state-in-effect` lint rule flags. Rendering sooner makes the hydration render disagree with the server's, and a theme-dependent icon comes out wrong.
 3. **The toggle cycles `system → light → dark`**, not light↔dark, so a reader returns to system preference without a page reload.
 4. **Dark mode is a Tailwind v4 custom variant**: `@custom-variant dark (&:where(.dark, .dark *))`, with the dark token values in `.dark {}` beside the light ones.
 
