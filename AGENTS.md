@@ -16,10 +16,10 @@ volunteer.
 The PRD (`docs/prd/`) is kept as a historic record of how the current
 structure came to be — read it for context on prior decisions (why a route
 was shaped the way it was, what a design token replaced), not as a spec to
-keep in sync going forward. House standards (process, writing, nextjs, components, data,
-testing, performance, accessibility, seo, git) are supplied by the vendored
+keep in sync going forward. House standards are supplied by the vendored
 skills under `.claude/skills/` / `.agents/skills/` and load automatically via
-skill discovery. Application code lives in `app/`, with shared pieces in
+skill discovery; §Working conventions groups them by the kind of work they
+govern. Application code lives in `app/`, with shared pieces in
 `components/`, `constants/`, and `public/`. The initial UI scaffold was
 generated from the prior PRD via v0 —
 [original prompt and generation](https://v0.app/chat/website-generation-from-prd-eLek8w4RJMh).
@@ -71,6 +71,28 @@ The `/get-involved` and `/legal` sections use **Next.js shared layouts**
 (sticky sub-nav, persistent CTA, consistent form/document styling).
 
 ## Working conventions
+
+### House standards: read the whole group
+
+House standards live in the vendored skills under `.claude/skills/` / `.agents/skills/`.
+They are grouped by the kind of work they govern. **Before implementing anything, read
+every skill in the matching group, not just the one that looks closest to the task.**
+
+| Group        | Read all of                                                                      | Applies to                                                                                            |
+| ------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Frontend** | `accessibility`, `components`, `data`, `nextjs`, `performance`, `seo`, `testing` | Any change under `app/` or `components/`, or to `globals.css`: a component, a route, a style, a token |
+| **Delivery** | `git`, `process`, `writing`                                                      | Branches, commits, PR and issue bodies, reviews, planning, milestones                                 |
+| **Prose**    | `writing`                                                                        | Docs, standards, README, PR and commit bodies, anything written into a file                           |
+| **Tooling**  | `claude`, `vscode`                                                               | Agent configuration, repo hygiene, editor session                                                     |
+
+A group is the unit because these standards constrain each other, and a change that
+satisfies one while breaking another still fails review: a contrast fix that reaches for a
+raw hex satisfies `accessibility` and violates `components`; a route whose menu is
+keyboard-operable but carries no metadata satisfies `accessibility` and violates `seo`; an
+extracted component with no home in `constants/` satisfies `components` and violates
+`data`. Reading the group up front is cheaper than discovering the conflict in review.
+
+When a skill is added or removed, update this table in the same change.
 
 ### Referencing the PRD
 
