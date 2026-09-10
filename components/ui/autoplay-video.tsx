@@ -15,7 +15,7 @@ type AutoplayVideoRef = HTMLDivElement;
 type AutoplayVideoProps = Omit<HTMLAttributes<AutoplayVideoRef>, "children"> & {
   /** Path to the mp4 source. A webm sibling is derived by swapping the extension. */
   src: string;
-  /** Text alternative for the clip's content: the video's accessible name and its visible fallback (WCAG 1.2.1). */
+  /** Text alternative for the clip's content, rendered as adjacent DOM text (WCAG 1.2.1). */
   description: string;
   /** Poster image shown before playback starts. */
   poster?: string;
@@ -48,10 +48,7 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
 
   // hooks
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [mounted, setMounted] = useState(false);
   const [paused, setPaused] = useState(true);
-
-  useEffect(() => setMounted(true), []);
 
   // Playback is driven entirely by play()/pause() calls, never by a static
   // `autoPlay` attribute, so toggling the control never restarts the clip.
@@ -104,7 +101,6 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
       playsInline
       preload={preload}
       poster={poster}
-      aria-label={description}
       className={cn(styles.video(), videoClassName)}
     >
       <source src={src.replace(/\.mp4$/, ".webm")} type="video/webm" />
@@ -118,20 +114,20 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     <div ref={ref} className={cn(styles.root({ className }))} {...rest}>
       {videoElement}
       <p className="sr-only">{description}</p>
-      {mounted ? (
-        <Button
-          type="button"
-          className={cn(styles.control())}
-          aria-label={paused ? resumeLabel : pauseLabel}
-          size="icon"
-          variant="primary"
-          onClick={handleToggle}
-        >
-          {paused ? <PlayIcon className="size-4" /> : <PauseIcon className="size-4" />}
-        </Button>
-      ) : (
-        <Button type="button" className={cn(styles.control())} aria-label={pauseLabel} size="icon" variant="primary" />
-      )}
+      <Button
+        type="button"
+        className={cn(styles.control())}
+        aria-label={paused ? resumeLabel : pauseLabel}
+        size="icon"
+        variant="primary"
+        onClick={handleToggle}
+      >
+        {paused ? (
+          <PlayIcon className="size-4" aria-hidden="true" />
+        ) : (
+          <PauseIcon className="size-4" aria-hidden="true" />
+        )}
+      </Button>
     </div>
   );
 });
