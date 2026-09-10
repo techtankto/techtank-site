@@ -41,7 +41,7 @@ export default function DonatePage() {
           <div className="glass flex flex-col gap-4 rounded-2xl p-6 lg:p-8">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
-                <CreditCard className="size-5" />
+                <CreditCard className="size-5" aria-hidden="true" />
               </div>
               <h3 className="font-display text-lg font-semibold text-foreground">Donate by card</h3>
             </div>
@@ -60,7 +60,7 @@ export default function DonatePage() {
           <div className="glass flex flex-col gap-4 rounded-2xl p-6 lg:p-8">
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
-                <Banknote className="size-5" />
+                <Banknote className="size-5" aria-hidden="true" />
               </div>
               <h3 className="font-display text-lg font-semibold text-foreground">Donate by Interac e-transfer</h3>
             </div>
@@ -81,7 +81,7 @@ export default function DonatePage() {
       <Section background="white">
         <div className="max-w-2xl space-y-4 rounded-xl border border-border bg-background p-6">
           <div className="flex items-start gap-3">
-            <Info className="mt-0.5 size-5 shrink-0 text-ring" />
+            <Info className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
             <div className="space-y-2">
               <p className="font-semibold text-foreground">Not tax-deductible</p>
               <p className="text-sm leading-relaxed text-muted-foreground">
@@ -92,7 +92,7 @@ export default function DonatePage() {
             </div>
           </div>
           <div className="flex items-start gap-3">
-            <ShieldCheck className="mt-0.5 size-5 shrink-0 text-ring" />
+            <ShieldCheck className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
             <p className="text-sm leading-relaxed text-muted-foreground">
               Questions about where donations go, or want to support TechTank another way? Reach out at{" "}
               <a href={`mailto:${CONTACT_EMAIL}`} className="underline underline-offset-2 hover:text-foreground">

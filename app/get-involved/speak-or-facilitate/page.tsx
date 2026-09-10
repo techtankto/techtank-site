@@ -117,7 +117,7 @@ export default function SpeakOrFacilitatePage() {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {logistics.map((item) => (
             <div key={item.label} className="flex items-start gap-4 rounded-xl bg-background p-5">
-              <Clock className="mt-0.5 size-5 shrink-0 text-ring" />
+              <Clock className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
               <div>
                 <p className="font-semibold text-foreground">{item.label}</p>
                 <p className="text-sm text-muted-foreground">{item.value}</p>
@@ -135,7 +135,7 @@ export default function SpeakOrFacilitatePage() {
             <ul className="space-y-3">
               {techTankHandles.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-ring" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
                   <span className="text-foreground">{item}</span>
                 </li>
               ))}
@@ -147,7 +147,7 @@ export default function SpeakOrFacilitatePage() {
             <ul className="space-y-3">
               {youProvide.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-amber" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-amber" aria-hidden="true" />
                   <span className="text-foreground">{item}</span>
                 </li>
               ))}
@@ -163,7 +163,7 @@ export default function SpeakOrFacilitatePage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {whatYouGet.map((item, index) => (
               <div key={index} className="flex items-center gap-3 rounded-lg bg-card p-4">
-                <Check className="size-5 shrink-0 text-ring" />
+                <Check className="size-5 shrink-0 text-ring" aria-hidden="true" />
                 <span className="text-foreground">{item}</span>
               </div>
             ))}
@@ -183,7 +183,7 @@ export default function SpeakOrFacilitatePage() {
           <Button variant="outline" asChild>
             <Link href="/resources/media-kit">
               Open the Media Kit
-              <ArrowRight className="ml-2 size-4" />
+              <ArrowRight className="ml-2 size-4" aria-hidden="true" />
             </Link>
           </Button>
         </div>

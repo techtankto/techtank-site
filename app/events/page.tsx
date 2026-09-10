@@ -84,14 +84,14 @@ export default async function EventsPage() {
             <Link href="https://lu.ma/techtank" target="_blank" rel="noopener noreferrer">
               <LumaIcon className="mr-2 size-4" />
               Follow us on Luma
-              <ExternalLink className="ml-2 size-4" />
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
             </Link>
           </Button>
           <Button variant="outline" asChild>
             <Link href="https://meetup.com/techtank-to" target="_blank" rel="noopener noreferrer">
               <MeetupIcon className="mr-2 size-4" />
               Follow us on Meetup
-              <ExternalLink className="ml-2 size-4" />
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
             </Link>
           </Button>
         </div>

@@ -135,7 +135,7 @@ export function Footer() {
               href={`mailto:${CONTACT_EMAIL}`}
               className="flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
             >
-              <Mail className="size-4" />
+              <Mail className="size-4" aria-hidden="true" />
               {CONTACT_EMAIL}
             </a>
           </div>

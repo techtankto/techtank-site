@@ -89,7 +89,7 @@ export default function PressKitPage() {
             </p>
             <Button variant="primary" size="lg" asChild>
               <a href="/downloads/techtank-media-kit.zip" download>
-                <Download className="mr-2 size-5" />
+                <Download className="mr-2 size-5" aria-hidden="true" />
                 Download all assets (ZIP)
               </a>
             </Button>
@@ -182,13 +182,16 @@ export default function PressKitPage() {
           className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-ring/50"
         >
           <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-background">
-            <FileText className="size-6 text-ring" />
+            <FileText className="size-6 text-ring" aria-hidden="true" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="font-semibold text-foreground transition-colors group-hover:text-ring">{logoDownload.name}</p>
             <p className="text-sm text-muted-foreground">{logoDownload.description}</p>
           </div>
-          <Download className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
+          <Download
+            className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring"
+            aria-hidden="true"
+          />
         </a>
       </Section>
 
@@ -246,7 +249,7 @@ export default function PressKitPage() {
                 className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-ring/50"
               >
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-ring/10">
-                  <FileText className="size-6 text-ring" />
+                  <FileText className="size-6 text-ring" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-foreground transition-colors group-hover:text-ring">
@@ -255,9 +258,15 @@ export default function PressKitPage() {
                   <p className="text-sm text-muted-foreground">{resource.description}</p>
                 </div>
                 {resource.internal ? (
-                  <ExternalLink className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
+                  <ExternalLink
+                    className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring"
+                    aria-hidden="true"
+                  />
                 ) : (
-                  <Download className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
+                  <Download
+                    className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring"
+                    aria-hidden="true"
+                  />
                 )}
               </Wrapper>
             );
@@ -282,7 +291,7 @@ export default function PressKitPage() {
                     <a href={link.url} target="_blank" rel="noopener noreferrer">
                       {Icon && <Icon className="mr-2 size-4" />}
                       {link.name}
-                      <ExternalLink className="ml-2 size-4" />
+                      <ExternalLink className="ml-2 size-4" aria-hidden="true" />
                     </a>
                   </Button>
                 );

@@ -42,12 +42,11 @@ export function Dialog({ open, onClose, labelledBy, className, children }: Dialo
 
   return createPortal(
     <>
-      <button
-        type="button"
-        className="fixed inset-0 z-50 cursor-default bg-black/70"
-        aria-label="Close dialog"
-        onClick={onClose}
-      />
+      {/* The overlay dismisses on click but is not a control: as a button it would
+          announce itself and take a tab stop ahead of the dialog. It is a mouse
+          convenience only, so it stays out of the accessibility tree; Escape,
+          wired above, is the keyboard path. */}
+      <div aria-hidden="true" className="fixed inset-0 z-50 bg-black/70" onClick={onClose} />
       <dialog
         open
         className={cn(
@@ -62,15 +61,8 @@ export function Dialog({ open, onClose, labelledBy, className, children }: Dialo
         aria-labelledby={labelledBy}
       >
         <div className="flex shrink-0 items-center justify-end px-4 pt-4">
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={onClose}
-            aria-label="Close dialog"
-            className="size-11"
-          >
-            <X className="size-5" />
+          <Button type="button" variant="ghost" size="icon" onClick={onClose} label="Close dialog" className="size-11">
+            <X className="size-5" aria-hidden="true" />
           </Button>
         </div>
 

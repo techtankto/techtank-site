@@ -46,25 +46,46 @@ type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>;
 type IconButtonSize = "icon";
 type TextButtonSize = Exclude<ButtonSize, IconButtonSize>;
 
-type ButtonBaseProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "aria-label"> &
+type ButtonBaseProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   Omit<VariantProps<typeof buttonVariants>, "size"> & {
     asChild?: boolean;
   };
 
+/**
+ * An icon button is named exactly one of two ways. `label` renders the name as
+ * `.sr-only` text, which is what browser translation tools reach; `aria-label`
+ * stays accepted for call sites not yet converted, since translation tools skip
+ * attributes and leave those buttons unnamed on a translated page.
+ */
+type IconButtonLabel = { label: string; "aria-label"?: never } | { label?: never; "aria-label": string };
+
 export type ButtonProps =
   | (ButtonBaseProps & {
       size?: TextButtonSize | null;
-      "aria-label"?: string;
+      label?: string;
     })
-  | (ButtonBaseProps & {
-      size: IconButtonSize;
-      "aria-label": string;
-    });
+  | (ButtonBaseProps & { size: IconButtonSize } & IconButtonLabel);
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, isActive, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return <Comp className={cn(buttonVariants({ variant, size, isActive }), className)} ref={ref} {...props} />;
+  ({ className, variant, size, isActive, asChild = false, label, children, ...props }, ref) => {
+    const classes = cn(buttonVariants({ variant, size, isActive }), className);
+
+    // Radix `Slot` takes exactly one child, so the label span cannot be injected
+    // here: an `asChild` button carries its name in the element it renders.
+    if (asChild) {
+      return (
+        <Slot className={classes} ref={ref} {...props}>
+          {children}
+        </Slot>
+      );
+    }
+
+    return (
+      <button className={classes} ref={ref} {...props}>
+        {label ? <span className="sr-only">{label}</span> : null}
+        {children}
+      </button>
+    );
   },
 );
 

@@ -89,7 +89,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
         >
           <InstagramIcon className="mr-2 size-4" />
           View on Instagram
-          <ExternalLink className="ml-1 size-3" />
+          <ExternalLink className="ml-1 size-3" aria-hidden="true" />
         </a>
       </div>
     </article>
@@ -121,7 +121,7 @@ export function SocialFeed() {
                 >
                   {Icon && <Icon className="mr-2 size-4" />}
                   {link.id === "slack" ? "Join Slack" : link.name}
-                  <ExternalLink className="ml-2 size-4" />
+                  <ExternalLink className="ml-2 size-4" aria-hidden="true" />
                 </a>
               </Button>
             );

@@ -126,7 +126,7 @@ export default function SponsorPage() {
             <ul className="space-y-4">
               {whatSponsorshipSupports.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-ring" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
                   <span className="text-foreground">{item}</span>
                 </li>
               ))}
@@ -195,7 +195,7 @@ export default function SponsorPage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {basePackage.map((item, index) => (
               <div key={index} className="flex items-center gap-3 rounded-lg bg-card p-4">
-                <Check className="size-5 shrink-0 text-ring" />
+                <Check className="size-5 shrink-0 text-ring" aria-hidden="true" />
                 <span className="text-foreground">{item}</span>
               </div>
             ))}

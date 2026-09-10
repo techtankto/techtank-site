@@ -35,7 +35,7 @@ export function JoinDropdown() {
     <div ref={containerRef} className="relative">
       <Button variant="primary" size="sm" aria-haspopup="menu" aria-expanded={open} onClick={() => setOpen((v) => !v)}>
         Join us
-        <ChevronDown className={cn("ml-1.5 size-4 transition-transform", open && "rotate-180")} />
+        <ChevronDown className={cn("ml-1.5 size-4 transition-transform", open && "rotate-180")} aria-hidden="true" />
       </Button>
 
       {open && (
