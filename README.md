@@ -74,7 +74,8 @@ route, annotated with its purpose.
 │   │   ├── speak-or-facilitate/    #   /speak-or-facilitate  Speaker/facilitator intake
 │   │   ├── host/                   #   /host              Host intake
 │   │   ├── sponsor/                #   /sponsor           Sponsor intake
-│   │   └── organizer/              #   /organizer         Organizer intake
+│   │   ├── organizer/              #   /organizer         Organizer intake
+│   │   └── donate/                 #   /donate            (via next.config rewrites) Interac e-transfer donation info
 │   ├── legal/                      # /legal               Legal documents (shared layout)
 │   │   ├── terms-of-service/       #   /terms-of-service
 │   │   ├── privacy-policy/         #   /privacy-policy

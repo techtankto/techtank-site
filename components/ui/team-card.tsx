@@ -13,7 +13,7 @@ const teamCardVariants = cva("group relative w-full text-left", {
     variant: {
       board:
         "poster-card gradient-brand shadow-soft-lg hover:shadow-soft-lg flex cursor-pointer flex-col gap-6 overflow-hidden p-8 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
-      core: "shadow-soft hover:shadow-soft-lg flex cursor-pointer gap-4 rounded-2xl border border-border bg-card p-5 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+      core: "core-card shadow-soft hover:shadow-soft-lg flex cursor-pointer gap-4 rounded-2xl border border-border bg-card p-5 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
       compact:
         "flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-ring/30 hover:bg-accent/30",
     },

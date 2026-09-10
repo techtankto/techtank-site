@@ -10,6 +10,7 @@ const subNav = [
   { name: "Host", href: "/get-involved/host" },
   { name: "Sponsor", href: "/get-involved/sponsor" },
   { name: "Organizer Team", href: "/get-involved/organizer" },
+  { name: "Donate", href: "/donate" },
 ];
 
 export default function GetInvolvedLayout({ children }: { children: React.ReactNode }) {
