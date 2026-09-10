@@ -10,10 +10,6 @@ interface EventTitleProps {
   children: ReactNode;
 }
 
-/**
- * Links the title out to the event page when there is one, and renders the
- * title bare when there is not.
- */
 function EventTitle({ href, children }: EventTitleProps) {
   if (!href) return <>{children}</>;
 

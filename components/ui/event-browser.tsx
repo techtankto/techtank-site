@@ -59,8 +59,7 @@ export function EventBrowser({ events }: EventBrowserProps) {
     return result;
   }, [events, category]);
 
-  // Switching filter starts the list over, so the reset rides along with the
-  // click that changed the category rather than an effect watching it.
+  // Switching filter resets the count here, on the click, not in an effect.
   const selectCategory = (next: CategoryFilter) => {
     if (next === category) return;
     setCategory(next);
