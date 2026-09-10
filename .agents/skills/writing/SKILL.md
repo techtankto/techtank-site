@@ -1,22 +1,23 @@
 ---
 name: writing
-description: House style for project prose — docs, plans, PR and commit bodies. Declarative voice, load-bearing sentences, rationale inline, structure and mechanics rules. Use when writing or editing documentation, PR descriptions, commit bodies, or standards/process docs (not product/site copy, which is the design's voice).
+description: House style for project prose — docs, plans, PR and commit bodies, review comments, code comments, TSDoc. Concision by default, declarative voice, load-bearing sentences, rationale inline, structure and mechanics rules. Use when writing or editing documentation, PR descriptions, commit bodies, review comments, code comments or TSDoc, or standards/process docs (not product/site copy, which is the design's voice).
 ---
 
 # Writing
 
-How project prose reads: docs, the plan, PR and commit bodies. This skill owns
-the sentences, not where facts live. Product or site copy is out of scope, since its
-voice is the design's.
+How project prose reads: docs, the plan, PR and commit bodies, review comments, code
+comments, and TSDoc. This skill owns the sentences, not where facts live. Product or site
+copy is out of scope, since its voice is the design's.
 
 ## Voice
 
 1. **Declarative, present tense.** State what is and what wins, not what should
    ideally happen. No hedging, no marketing filler.
 2. **Every sentence is load-bearing.** A sentence earns its place by adding a
-   fact, a rule, or a reason; otherwise cut it. Conciseness comes from selecting
-   what to say, not compressing how it's said: full sentences stay, whole
-   points go.
+   fact, a rule, or a reason; if it does not change what the reader does, cut it.
+   Write the shortest version that keeps every load-bearing fact. Conciseness
+   comes from selecting what to say, not compressing how it's said: full
+   sentences stay, whole points go.
 3. **Rationale rides along.** A rule carries its why in the same sentence,
    attached with a colon, semicolon, or parenthetical; never a separate
    paragraph of justification.
@@ -41,10 +42,26 @@ voice is the design's.
 1. **Summarize and point, never restate.** A neighboring doc's fact appears
    only as a pointer or a one-line summary; this is the prose form of the
    one-owning-doc rule.
-2. **Standards name the surrounding docs by role, not by link.** "The design contract's
+2. **Length comes out of explanation, never out of substance.** Requirements,
+   caveats, open questions, asks aimed at the reader, measured numbers, and
+   non-obvious rationale survive every trim. `Closes #NNN` and `Fixes #NNN` stay
+   verbatim: dropping one unlinks the issue. Test-plan checkbox state stays as
+   written: it records what a human actually did. A caveat stays even when the
+   claim it qualifies is one line.
+3. **Cut these first.** Restatement of the title or the diff, process narration
+   ("then I updated"), verification transcripts and command dumps, per-file
+   walkthroughs, the history of superseded iterations, and background the reader
+   already has. A PR body says what changed, why, and what the reviewer has to
+   decide.
+4. **Code comments explain why, not what.** A comment that paraphrases the line
+   below it gets deleted, not reworded.
+5. **TSDoc adds what the signature cannot.** One line of summary, then contracts,
+   units, side effects, and failure modes. Never restate a type the signature
+   already carries.
+6. **Standards name the surrounding docs by role, not by link.** "The design contract's
    concern," not a hardcoded path; standards stay standalone and
    portable. Standards may link standards; project docs link each other freely.
-3. **Link once.** A doc or term links at first mention; after that, plain text.
+7. **Link once.** A doc or term links at first mention; after that, plain text.
    Section references use `§Section`, in-doc and across docs alike.
 
 ## Mechanics
