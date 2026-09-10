@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
+import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { Button } from "@/components/ui/button";
 import { BRAND_ICONS, InstagramIcon } from "@/components/ui/icons";
 import { getAllSocialLinks } from "@/constants/social-links";
@@ -39,18 +40,14 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
       {(video || cover) && (
         <div className="relative aspect-4/5 w-full overflow-hidden bg-muted">
           {video ? (
-            <video
+            <AutoplayVideo
+              src={video}
               poster={cover}
-              autoPlay
-              loop
-              muted
-              playsInline
+              description={post.caption}
               preload="auto"
-              className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            >
-              <source src={video.replace(/\.mp4$/, ".webm")} type="video/webm" />
-              <source src={video} type="video/mp4" />
-            </video>
+              className="absolute inset-0"
+              videoClassName="transition-transform duration-500 group-hover:scale-[1.03]"
+            />
           ) : cover ? (
             <Image
               src={cover}

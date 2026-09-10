@@ -10,6 +10,7 @@ import { ToolsStrip } from "@/components/ui/tools-grid";
 import { RoleCard, roleCardsData } from "@/components/ui/role-card";
 import { EventCard } from "@/components/ui/event-card";
 import { SocialFeed } from "@/components/ui/social-feed";
+import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
 import { getAllLumaEvents } from "./events/actions";
 
@@ -63,17 +64,13 @@ export default async function HomePage() {
               {heroPosts[0] && (
                 <div className="photo-frame relative aspect-4/5 w-[45%] translate-y-6 -rotate-2 overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.02] lg:w-[55%]">
                   {heroPosts[0].videoSrc ? (
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
+                    <AutoplayVideo
+                      src={heroPosts[0].videoSrc}
+                      description={heroPosts[0].alt}
                       preload="auto"
-                      className="absolute inset-0 size-full object-cover object-top"
-                    >
-                      <source src={heroPosts[0].videoSrc.replace(/\.mp4$/, ".webm")} type="video/webm" />
-                      <source src={heroPosts[0].videoSrc} type="video/mp4" />
-                    </video>
+                      className="absolute inset-0"
+                      videoClassName="object-top"
+                    />
                   ) : heroPosts[0].imageSrc ? (
                     <Image
                       src={heroPosts[0].imageSrc}
@@ -90,17 +87,13 @@ export default async function HomePage() {
               {heroPosts[1] && (
                 <div className="photo-frame relative z-10 ml-[-10%] aspect-4/5 w-[45%] rotate-2 overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.02] lg:w-[55%]">
                   {heroPosts[1].videoSrc ? (
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
+                    <AutoplayVideo
+                      src={heroPosts[1].videoSrc}
+                      description={heroPosts[1].alt}
                       preload="auto"
-                      className="absolute inset-0 size-full object-cover object-top"
-                    >
-                      <source src={heroPosts[1].videoSrc.replace(/\.mp4$/, ".webm")} type="video/webm" />
-                      <source src={heroPosts[1].videoSrc} type="video/mp4" />
-                    </video>
+                      className="absolute inset-0"
+                      videoClassName="object-top"
+                    />
                   ) : heroPosts[1].imageSrc ? (
                     <Image
                       src={heroPosts[1].imageSrc}
