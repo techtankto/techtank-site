@@ -93,7 +93,7 @@ The `/get-involved` and `/legal` sections use **Next.js shared layouts**
 
 - `next-themes` handles light/dark/system detection. Always set `defaultTheme="system"` and `enableSystem` on `ThemeProvider`.
 - Add `suppressHydrationWarning` to the `<html>` element to suppress the server/client hydration mismatch that `next-themes` causes.
-- Theme-aware components gate their output on `useIsHydrated` (`hooks/use-is-hydrated.ts`) and return a placeholder until it flips: without that gate, the server render and the hydration render disagree, and icons and states come out wrong. The hook is backed by `useSyncExternalStore` rather than a `setState` in an effect, which the `react/set-state-in-effect` lint rule flags.
+- Theme-aware components render a placeholder until `useIsHydrated` (`hooks/use-is-hydrated.ts`) flips: rendering sooner makes the hydration render disagree with the server's, and a theme-dependent icon comes out wrong.
 - The theme toggle cycles `system → light → dark` (not just light↔dark) so users can return to system preference without a page reload.
 - Dark-mode overrides use `@custom-variant dark (&:where(.dark, .dark *))` in Tailwind v4. Dark tokens live in `.dark {}` in `globals.css`.
 - `globals.css` is divided into four sections: Base Tokens (`@theme`), Light Tokens & Gradients (`.light`), Dark Tokens & Gradients (`.dark`), Helper Classes.
