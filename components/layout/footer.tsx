@@ -86,20 +86,20 @@ export function Footer() {
                           href={link.href}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group flex items-center gap-2 text-sm text-primary-foreground transition-colors hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
+                          className="group flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
                         >
                           {Icon && (
-                            <Icon className="size-4 text-primary-foreground transition-colors group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
+                            <Icon className="size-4 text-primary-foreground group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
                           )}
                           {link.name}
                         </a>
                       ) : (
                         <Link
                           href={link.href}
-                          className="group flex items-center gap-2 text-sm text-primary-foreground transition-colors hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
+                          className="group flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
                         >
                           {Icon && (
-                            <Icon className="size-4 text-primary-foreground transition-colors group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
+                            <Icon className="size-4 text-primary-foreground group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
                           )}
                           {link.name}
                         </Link>
@@ -133,7 +133,7 @@ export function Footer() {
             </div>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="flex items-center gap-2 text-sm text-primary-foreground transition-colors hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
+              className="flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
             >
               <Mail className="size-4" />
               {CONTACT_EMAIL}
