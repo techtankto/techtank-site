@@ -74,16 +74,24 @@ The `/get-involved` and `/legal` sections use **Next.js shared layouts**
 
 ### House standards: read the whole group
 
-House standards live in the vendored skills under `.claude/skills/` / `.agents/skills/`.
-They are grouped by the kind of work they govern. **Before implementing anything, read
-every skill in the matching group, not just the one that looks closest to the task.**
+House standards live in the vendored skills under `.claude/skills/` / `.agents/skills/`,
+grouped by the kind of work they govern.
 
-| Group        | Read all of                                                                      | Applies to                                                                                            |
-| ------------ | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **Frontend** | `accessibility`, `components`, `data`, `nextjs`, `performance`, `seo`, `testing` | Any change under `app/` or `components/`, or to `globals.css`: a component, a route, a style, a token |
-| **Delivery** | `git`, `process`, `writing`                                                      | Branches, commits, PR and issue bodies, reviews, planning, milestones                                 |
-| **Prose**    | `writing`                                                                        | Docs, standards, README, PR and commit bodies, anything written into a file                           |
-| **Tooling**  | `claude`, `vscode`                                                               | Agent configuration, repo hygiene, editor session                                                     |
+**`Prose` and `Tooling` are read first, on every task, before doing anything at all.**
+Neither is conditional on what the work turns out to be: `Prose` governs every sentence
+produced, and a commit body or a review comment is written before anyone knows whether the
+task counted as frontend work; `Tooling` governs the state of the repo and the editor the
+work happens in, which is wrong to discover halfway through a change.
+
+**Then read every skill in the group matching the work**, not just the one that looks
+closest to the task.
+
+| Group        | Read                                                                             | When                                                                                                   |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
+| **Prose**    | `writing`                                                                        | Always, first. Governs docs, standards, README, PR and commit bodies, and anything written into a file |
+| **Tooling**  | `claude`, `vscode`                                                               | Always, first. Governs agent configuration, repo hygiene, and the editor session                       |
+| **Frontend** | `accessibility`, `components`, `data`, `nextjs`, `performance`, `seo`, `testing` | Any change under `app/` or `components/`, or to `globals.css`: a component, a route, a style, a token  |
+| **Delivery** | `git`, `process`, `writing`                                                      | Branches, commits, PR and issue bodies, reviews, planning, milestones                                  |
 
 A group is the unit because these standards constrain each other, and a change that
 satisfies one while breaking another still fails review: a contrast fix that reaches for a
