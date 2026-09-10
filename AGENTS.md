@@ -59,6 +59,10 @@ navigation structure as originally specified:
   Host, Sponsor, Organizer Team), each ending in an intake action (email us
   at `techtankto@gmail.com`).
 - `/events` — embedded Luma calendar.
+- `/donate` — Stripe and Interac e-transfer donation info. Kept as its own
+  top-level route (not nested under `/get-involved`) since it's not a role
+  intake form, but linked from the `/get-involved` sub-nav and footer as
+  part of that grouping.
 - `/resources/media-kit` — standalone brand assets and fast facts for media.
 - `/resources/design-system` — brand guidelines and design-token reference.
 - `/legal` — grouped compliance documents.
@@ -130,8 +134,11 @@ Do both before reporting a task complete or opening a commit.
   confirmed. It's better to leave a "finalize with organizers" note
   than to publish fiction.
 - Don't re-introduce the old flat structure (separate `/speak`,
-  `/host`, `/mentors`, `/donate`, `/terms-conditions` pages) — those
-  were intentionally rolled into `/get-involved/*` and `/legal/*`.
+  `/host`, `/mentors`, `/terms-conditions` pages) — those were
+  intentionally rolled into `/get-involved/*` and `/legal/*`. `/donate`
+  is the one exception: it shipped as its own top-level route (see
+  "How the information architecture works" above) rather than nested
+  under `/get-involved`, but is still linked from that section's nav.
 - Don't touch settings or hooks without being asked.
 - Never use agent memory (e.g. Claude Code's persistent memory directory,
   `MEMORY.md`, or any equivalent tool-specific store). Conventions and

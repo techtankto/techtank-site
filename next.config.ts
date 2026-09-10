@@ -46,6 +46,19 @@ const nextConfig: NextConfig = {
         destination: "/get-involved",
         permanent: true,
       },
+      {
+        source: "/get-involved/donate",
+        destination: "/donate",
+        permanent: true,
+      },
+    ];
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/donate",
+        destination: "/get-involved/donate",
+      },
     ];
   },
 };

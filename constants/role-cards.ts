@@ -62,8 +62,7 @@ export const roleCardsData: RoleCardProps[] = [
       "Keeps most events accessible",
       "Supports a registered nonprofit",
     ],
-    href: "#",
+    href: "/donate",
     ctaText: "Donate",
-    comingSoon: true,
   },
 ];
