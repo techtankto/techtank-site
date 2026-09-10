@@ -43,7 +43,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
             <AutoplayVideo
               src={video}
               poster={cover}
-              description={post.caption}
+              description="Video from this Instagram post"
               preload="auto"
               className="absolute inset-0"
               videoClassName="transition-transform duration-500 group-hover:scale-[1.03]"
