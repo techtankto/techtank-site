@@ -1,6 +1,14 @@
 "use client";
 
-import { forwardRef, useState, type CSSProperties, type HTMLAttributes } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type FocusEvent,
+  type HTMLAttributes,
+} from "react";
 import { PauseIcon, PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, cva, type VariantProps } from "@/utils/theme";
@@ -72,18 +80,55 @@ const Marquee = forwardRef<MarqueeRef, MarqueeProps>((props, ref) => {
 
   // hooks
   const [paused, setPaused] = useState(false);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  // Tracks an explicit pause-button press, which outranks focus-driven resume:
+  // focus leaving the group must never restart the drift while the user paused it on purpose.
+  const pausedRef = useRef(paused);
+
+  useEffect(() => {
+    pausedRef.current = paused;
+  }, [paused]);
 
   // render vars
   const handleToggle = () => setPaused((prev) => !prev);
 
+  // Focus entering the track pauses the drift immediately (before the scroll,
+  // so the target doesn't keep moving while it comes into view) and reveals
+  // the focused item without depending on hover.
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (track) track.dataset.paused = "true";
+    const target = event.target;
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ block: "nearest", inline: "nearest" });
+    });
+  };
+
+  // Only resume when focus leaves the group entirely (relatedTarget outside
+  // the track), and never override an explicit pause-button press.
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const nextTarget = event.relatedTarget as Node | null;
+    if (nextTarget && track.contains(nextTarget)) return;
+    if (pausedRef.current) return;
+    track.dataset.paused = "false";
+    const viewport = viewportRef.current;
+    if (viewport) viewport.scrollLeft = 0;
+  };
+
   // jsx
   return (
     <div ref={ref} className={cn(styles.root({ className }))} {...rest}>
-      <div className={cn(styles.viewport())}>
+      <div ref={viewportRef} className={cn(styles.viewport())}>
         <div
+          ref={trackRef}
           className={cn(styles.track({ speed }))}
           style={{ "--marquee-copies": copies } as CSSProperties}
           data-paused={paused}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         >
           {Array.from({ length: copies }, (_, index) => (
             <div
