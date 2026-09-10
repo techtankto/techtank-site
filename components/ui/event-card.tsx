@@ -1,8 +1,28 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Camera, Calendar, MapPin, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Event } from "@/app/events/actions";
+
+interface EventTitleProps {
+  href?: string;
+  children: ReactNode;
+}
+
+/**
+ * Links the title out to the event page when there is one, and renders the
+ * title bare when there is not.
+ */
+function EventTitle({ href, children }: EventTitleProps) {
+  if (!href) return <>{children}</>;
+
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className="hover:underline">
+      {children}
+    </a>
+  );
+}
 
 interface EventCardProps {
   event: Event;
@@ -29,14 +49,6 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
   const locationText = event.host ? event.host.name : (event.venue ?? null);
   const locationUrl = event.host?.url ?? null;
 
-  const TitleWrapper = event.eventUrl
-    ? ({ children }: { children: React.ReactNode }) => (
-        <a href={event.eventUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
-          {children}
-        </a>
-      )
-    : ({ children }: { children: React.ReactNode }) => <>{children}</>;
-
   if (variant === "featured") {
     return (
       <div className="group glass relative overflow-hidden rounded-2xl">
@@ -47,7 +59,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           </div>
 
           <h3 className="mb-2 line-clamp-2 font-display text-xl font-bold text-foreground">
-            <TitleWrapper>{event.title}</TitleWrapper>
+            <EventTitle href={event.eventUrl}>{event.title}</EventTitle>
           </h3>
 
           {event.pitch && <p className="mb-3 line-clamp-2 text-sm text-muted-foreground">{event.pitch}</p>}
@@ -121,7 +133,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
       </div>
 
       <h3 className="mb-2 line-clamp-2 font-display text-sm font-bold text-foreground">
-        <TitleWrapper>{event.title}</TitleWrapper>
+        <EventTitle href={event.eventUrl}>{event.title}</EventTitle>
       </h3>
 
       <div className="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground">
