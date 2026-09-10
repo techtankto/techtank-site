@@ -19,7 +19,13 @@ export default function GetInvolvedLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen">
       {/* Sticky Sub-Nav */}
-      <nav className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
+      <nav
+        aria-labelledby="get-involved-nav-name"
+        className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl"
+      >
+        <span id="get-involved-nav-name" className="sr-only">
+          Get involved pages
+        </span>
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex items-center justify-center py-3">
             {/* Sub-navigation */}

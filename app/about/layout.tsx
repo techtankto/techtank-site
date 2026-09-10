@@ -15,7 +15,13 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="min-h-screen">
-      <nav className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
+      <nav
+        aria-labelledby="about-nav-name"
+        className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl"
+      >
+        <span id="about-nav-name" className="sr-only">
+          About pages
+        </span>
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex items-center justify-center py-3">
             <div className="flex flex-wrap items-center justify-center gap-1">
