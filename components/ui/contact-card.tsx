@@ -33,7 +33,7 @@ export function ContactCard({
         <div className="flex flex-1 items-center gap-3">
           <a
             href={`mailto:${email}`}
-            className="font-display text-base font-semibold break-all text-foreground transition-colors hover:text-amber-dark"
+            className="font-display text-base font-semibold break-all text-foreground transition-colors hover:text-overline"
           >
             {email}
           </a>
@@ -56,7 +56,7 @@ export function ContactCard({
           href={slackUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-display text-base font-semibold text-foreground transition-colors hover:text-amber-dark"
+          className="font-display text-base font-semibold text-foreground transition-colors hover:text-overline"
         >
           Join our Slack community
         </a>

@@ -71,7 +71,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
             <InstagramIcon className="size-5" />
           </span>
           <span className="shrink-0 text-xs font-medium tracking-wide text-muted-foreground uppercase">Instagram</span>
-          <span className="shrink-0 text-xs text-muted-foreground/50">·</span>
+          <span className="shrink-0 text-xs text-muted-foreground">·</span>
           <span className="min-w-[8.5em] shrink-0 text-xs text-muted-foreground">
             {formatDate(post.date, post.createdAtRaw)}
           </span>
@@ -85,7 +85,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
           href={postUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-auto inline-flex items-center text-sm font-medium text-amber-dark transition-colors hover:text-amber-dark/80"
+          className="mt-auto inline-flex items-center text-sm font-medium text-overline transition-colors hover:text-overline/80"
         >
           <InstagramIcon className="mr-2 size-4" />
           View on Instagram

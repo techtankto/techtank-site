@@ -232,14 +232,14 @@ export default async function HomePage() {
           >
             <Calendar className="absolute top-4 right-4 size-14 text-foreground/15" />
             <div className="relative">
-              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-amber-dark uppercase">
+              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
                 Show up
               </span>
               <h3 className="mb-2 font-display text-lg font-bold text-foreground lg:text-xl">Upcoming events</h3>
               <p className="mb-4 text-sm text-muted-foreground">
                 See what&apos;s coming up and RSVP to the next meetup.
               </p>
-              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-amber-dark">
+              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-overline">
                 See events
                 <ArrowRight className="ml-2 size-4" />
               </span>
@@ -252,12 +252,12 @@ export default async function HomePage() {
           >
             <Users className="absolute top-4 right-4 size-14 text-foreground/15" />
             <div className="relative">
-              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-amber-dark uppercase">
+              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
                 Contribute
               </span>
               <h3 className="mb-2 font-display text-lg font-bold text-foreground lg:text-xl">Get involved</h3>
               <p className="mb-4 text-sm text-muted-foreground">Speak, host, sponsor, or volunteer with the crew.</p>
-              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-amber-dark">
+              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-overline">
                 Pick your path
                 <ArrowRight className="ml-2 size-4" />
               </span>

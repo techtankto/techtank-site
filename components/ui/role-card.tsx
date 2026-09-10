@@ -44,7 +44,7 @@ export function RoleCard({
       </div>
 
       {/* Overline */}
-      <span className="mb-2 text-xs font-semibold tracking-widest text-amber-dark uppercase">{overline}</span>
+      <span className="mb-2 text-xs font-semibold tracking-widest text-overline uppercase">{overline}</span>
 
       {/* Title */}
       <h3 className="mb-3 font-display text-xl font-bold text-foreground">{title}</h3>
