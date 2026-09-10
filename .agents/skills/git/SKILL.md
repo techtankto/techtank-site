@@ -10,8 +10,8 @@ How change is recorded.
 ## Workflow
 
 1. **Work on the branch defined for the task at hand.** Never push directly to `main`.
-2. **Create new commits rather than amending.** Never force-push or skip hooks without explicit permission.
-3. **Task PRs target their milestone branch; milestone PRs target the latest `main`.** Work outside a milestone stays on a feature branch and PRs only when explicitly asked.
+2. **Create new commits rather than amending.** Never force-push any branch, no exceptions; never skip hooks without explicit permission.
+3. **Task PRs target their milestone branch; milestone PRs target the latest `main`.** Work outside a milestone stays on a feature branch. No PR opens unless explicitly asked.
 
 ## Conventional Commits
 

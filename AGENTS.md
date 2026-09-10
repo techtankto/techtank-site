@@ -16,9 +16,9 @@ to be. Read it for context on prior decisions (why a route was shaped that
 way, what a design token replaced), not as a spec to keep in sync.
 
 House standards live in the vendored skills and load via skill discovery; see
-"House standards: read the whole group". Application code lives in `app/`,
-with shared pieces in `components/`, `constants/`, and `public/`. The initial
-UI scaffold was generated from the prior PRD via
+§House standards. Application code lives in `app/`, with shared pieces in
+`components/`, `constants/`, and `public/`. The initial UI scaffold was
+generated from the prior PRD via
 [v0](https://v0.app/chat/website-generation-from-prd-eLek8w4RJMh).
 
 For developer-facing setup (scripts, directory tree, route map), see
@@ -64,24 +64,25 @@ the shared layouts and navigation as originally specified:
 The `/get-involved` and `/legal` sections use **Next.js shared layouts**
 (sticky sub-nav, persistent CTA, consistent form/document styling).
 
+Never re-introduce the old flat structure (separate `/speak`, `/host`,
+`/mentors`, `/terms-conditions` pages); those were rolled into
+`/get-involved/*` and `/legal/*` deliberately, and `/donate` is the one
+exception, for the reason above.
+
 ## Working conventions
 
 ### House standards: read the whole group
 
 House standards live in the vendored skills under `.claude/skills/` / `.agents/skills/`,
-grouped by the kind of work they govern.
+grouped by the kind of work they govern. **Read `Prose` and `Tooling` first on every task,
+then every skill in the group matching the work**, not just the one closest to it.
 
-**`Prose` and `Tooling` are read first, on every task, before doing anything at all.**
-
-**Then read every skill in the group matching the work**, not just the one that looks
-closest to the task.
-
-| Group        | Read                                                                             | When                                                                                                   |
-| ------------ | -------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| **Prose**    | `writing`                                                                        | Always, first. Governs docs, standards, README, PR and commit bodies, and anything written into a file |
-| **Tooling**  | `claude`, `vscode`                                                               | Always, first. Governs agent configuration, repo hygiene, and the editor session                       |
-| **Frontend** | `accessibility`, `components`, `data`, `nextjs`, `performance`, `seo`, `testing` | Any change under `app/` or `components/`, or to `globals.css`: a component, a route, a style, a token  |
-| **Delivery** | `git`, `process`, `writing`                                                      | Branches, commits, PR and issue bodies, reviews, planning, milestones                                  |
+| Group        | Read                                                                             | When                                                                                                      |
+| ------------ | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Prose**    | `writing`                                                                        | Always, first. Governs docs, standards, README, PR and commit bodies, and anything written into a file    |
+| **Tooling**  | `claude`, `vscode`                                                               | Always, first. Governs agent configuration, repo hygiene, and the editor session                          |
+| **Frontend** | `accessibility`, `components`, `data`, `nextjs`, `performance`, `seo`, `testing` | Any change under `app/` or `components/`, or to `app/globals.css`: a component, a route, a style, a token |
+| **Delivery** | `git`, `process`, `writing`                                                      | Branches, commits, PR and issue bodies, reviews, planning, milestones                                     |
 
 When a skill is added or removed, update this table in the same change.
 
@@ -95,34 +96,26 @@ When a skill is added or removed, update this table in the same change.
 
 ### Tone in specs
 
-- Concrete, not aspirational. If organizers haven't confirmed a number
-  (attendance, tier, timing), flag it instead of inventing one.
+- Concrete, not aspirational. If organizers haven't confirmed a number, quote,
+  or tier detail, leave a "finalize with organizers" note instead of inventing
+  one.
 - Conversion-oriented: every page spec declares **one dominant CTA**, and
   `/get-involved/*` ends in an intake action (email us).
 - Social proof first: testimonials, real event photography, and logo clouds
   are required patterns, not decoration.
 
-### Theming
+### Styles and state
 
-- `next-themes` handles light/dark/system detection. Always set `defaultTheme="system"` and `enableSystem` on `ThemeProvider`.
-- Add `suppressHydrationWarning` to the `<html>` element, which suppresses the server/client hydration mismatch that `next-themes` causes.
-- Theme-aware components must `useEffect` + `useState(mounted)` and return a placeholder until mounted, or icons and states SSR incorrectly.
-- The theme toggle cycles `system → light → dark` (not just light↔dark), so users return to system preference without a page reload.
-- Dark-mode overrides use `@custom-variant dark (&:where(.dark, .dark *))` in Tailwind v4. Dark tokens live in `.dark {}` in `globals.css`.
-- `globals.css` has four sections: Base Tokens (`@theme`), Light Tokens & Gradients (`.light`), Dark Tokens & Gradients (`.dark`), Helper Classes.
-
-### Global state
-
-- Use Zustand (`lib/store.ts`) for sitewide UI state (mobile menu, future modal or drawer state).
-- Keep `next-themes` as the single source of truth for theme: never duplicate theme state in Zustand.
+- `app/globals.css` has four sections: Base Tokens (`@theme`), Light Tokens &
+  Gradients (`.light`), Dark Tokens & Gradients (`.dark`), Helper Classes. The
+  `components` skill owns how components consume them.
+- The sitewide Zustand store is `stores/app-state.ts`.
 
 ### After making code changes
 
 - Use `pnpm` (not npm or yarn) for all package operations in this repo.
-- Run `pnpm type:check` to catch type errors.
-- Run `pnpm format` to keep the codebase oxfmt-clean.
-
-Run both before reporting a task complete or opening a commit.
+- Run `pnpm format`, then `pnpm validate` (format check, lint, types), before
+  reporting a task complete or opening a commit.
 
 ### Adding a new page
 
@@ -136,33 +129,3 @@ Run both before reporting a task complete or opening a commit.
 
 - Remove the route from `README.md`'s tree, its navigation entry, and any
   inbound links from other pages. Search for references before deleting.
-
-## Things to avoid
-
-- Don't edit `docs/prd/` to reflect IA or behaviour changes: it's a frozen
-  historic record. Update `README.md` and the code under `app/` instead.
-- Don't add numbers, quotes, or tier details that organizers haven't
-  confirmed. Leave a "finalize with organizers" note rather than publish
-  fiction.
-- Don't re-introduce the old flat structure (separate `/speak`, `/host`,
-  `/mentors`, `/terms-conditions` pages); those were intentionally rolled
-  into `/get-involved/*` and `/legal/*`. `/donate` is the one exception, as
-  "How the information architecture works" describes above.
-- Don't touch settings or hooks without being asked.
-- Never use agent memory (e.g. Claude Code's persistent memory directory,
-  `MEMORY.md`, or any equivalent tool-specific store). Conventions and
-  project facts live in this repository, in `AGENTS.md`, the `.agent/skills`,
-  `docs/`, or the code itself, so they are reviewable, versioned, and
-  available to every contributor and agent. Memory that only one tool can
-  read is invisible to code review and drifts out of date. If something is
-  worth remembering, commit it.
-
-## Git workflow
-
-Conventional Commits, branch naming, and the no-AI-attribution rule are
-supplied by the vendored `git` skill. Project-specific overrides:
-
-- Feature work happens on the branch specified in the session brief.
-- Never force-push to any branch, especially `main`. No exceptions.
-- Never skip hooks without explicit permission.
-- Do not open a pull request unless explicitly asked.
