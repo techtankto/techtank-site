@@ -72,10 +72,6 @@ House standards live in the vendored skills under `.claude/skills/` / `.agents/s
 grouped by the kind of work they govern.
 
 **`Prose` and `Tooling` are read first, on every task, before doing anything at all.**
-Neither is conditional on what the work turns out to be: `Prose` governs every sentence
-produced, and a commit body or a review comment is written before anyone knows whether the
-task counted as frontend work; `Tooling` governs the state of the repo and the editor the
-work happens in, which is wrong to discover halfway through a change.
 
 **Then read every skill in the group matching the work**, not just the one that looks
 closest to the task.
@@ -86,13 +82,6 @@ closest to the task.
 | **Tooling**  | `claude`, `vscode`                                                               | Always, first. Governs agent configuration, repo hygiene, and the editor session                       |
 | **Frontend** | `accessibility`, `components`, `data`, `nextjs`, `performance`, `seo`, `testing` | Any change under `app/` or `components/`, or to `globals.css`: a component, a route, a style, a token  |
 | **Delivery** | `git`, `process`, `writing`                                                      | Branches, commits, PR and issue bodies, reviews, planning, milestones                                  |
-
-A group is the unit because these standards constrain each other, and a change that
-satisfies one while breaking another still fails review: a contrast fix that reaches for a
-raw hex satisfies `accessibility` and violates `components`; a route whose menu is
-keyboard-operable but carries no metadata satisfies `accessibility` and violates `seo`; an
-extracted component with no home in `constants/` satisfies `components` and violates
-`data`. Reading the group up front is cheaper than discovering the conflict in review.
 
 When a skill is added or removed, update this table in the same change.
 
