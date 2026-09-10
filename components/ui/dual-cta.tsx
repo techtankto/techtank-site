@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { Calendar, Users, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getEventLinks, getSocialLinks, getContributeLinks } from "@/constants/social-links";
 import { BRAND_ICONS } from "@/components/ui/icons";
+import { TrackedLink } from "@/components/analytics/tracked-link";
+import { trackEvent } from "@/utils/analytics";
 
 export function DualCTA() {
   const eventLinks = getEventLinks();
@@ -28,11 +32,17 @@ export function DualCTA() {
 
               return (
                 <Button key={link.id} variant={link.type === "primary" ? "primary" : "outline"} size="sm" asChild>
-                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  <TrackedLink
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    event="cta_click"
+                    properties={{ id: link.id, name: link.name }}
+                  >
                     {Icon && <Icon className="mr-2 size-4" />}
                     {link.name}
                     <ExternalLink className="ml-2 size-3.5" />
-                  </a>
+                  </TrackedLink>
                 </Button>
               );
             })}
@@ -51,17 +61,25 @@ export function DualCTA() {
           <p className="mb-4 max-w-sm text-sm text-muted-foreground">Speak, host, sponsor, or volunteer.</p>
           <div className="flex flex-wrap gap-2">
             <Button variant="primary" size="sm" asChild>
-              <Link href="/get-involved">Get involved</Link>
+              <Link href="/get-involved" onClick={() => trackEvent("cta_click", { id: "get-involved" })}>
+                Get involved
+              </Link>
             </Button>
             {contributeLinks.map((link) => {
               const Icon = BRAND_ICONS[link.id];
               return (
                 <Button key={link.id} variant="outline" size="sm" asChild>
-                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  <TrackedLink
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    event="cta_click"
+                    properties={{ id: link.id, name: link.name }}
+                  >
                     {Icon && <Icon className="mr-2 size-4" />}
                     {link.name}
                     <ExternalLink className="ml-2 size-3.5" />
-                  </a>
+                  </TrackedLink>
                 </Button>
               );
             })}
