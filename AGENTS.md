@@ -104,6 +104,20 @@ The `/get-involved` and `/legal` sections use **Next.js shared layouts**
 - Keep `next-themes` as the single source of truth for theme — do not duplicate theme state in Zustand.
 - Use `pnpm` (not npm or yarn) for all package operations in this repo.
 
+### Where agent work happens
+
+- Every change to the repo happens in a git worktree under
+  `.claude/worktrees/`, made by a subagent spawned for that task. The
+  primary working directory is never used to edit, commit, or otherwise
+  mutate the repo.
+- The primary checkout is for reading, searching, and orchestration:
+  inspecting state, gathering context, and dispatching subagents.
+  Read-only inspection there is fine; the rule is about mutation.
+- One task, one tree: the primary checkout stays clean and its branch
+  stays stable, so parallel tasks never fight over the working tree or
+  thrash the open editor's branch, and a tree can be discarded without
+  touching anything else.
+
 ### After making code changes
 
 - Run `pnpm type:check` to catch type errors.
@@ -157,3 +171,6 @@ supplied by the vendored `git` skill. Project-specific overrides:
 - Never force-push to any branch, especially `main`. No exceptions.
 - Never skip hooks without explicit permission.
 - Do not open a pull request unless explicitly asked.
+- Commits land in a worktree, never the primary checkout (see "Where
+  agent work happens" above). The force-push, hook, and pull-request
+  rules apply inside a worktree exactly as they do anywhere else.
