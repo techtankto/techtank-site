@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Stepper, type Step } from "@/components/ui/stepper";
 import { Check, Mail, ArrowRight, Download, ExternalLink, Users, Star, Zap } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -114,6 +115,14 @@ const semanticUtilities = [
   { token: "ring", bgCls: "bg-ring", lightAlias: "teal", darkAlias: "seafoam" },
   { token: "input", bgCls: "bg-input", lightAlias: "teal-dark / 18%", darkAlias: "seafoam / 20%" },
 ];
+
+const stepperSteps: Step[] = [
+  "Initial contact",
+  "Scoping call",
+  "Confirm details",
+  "Marketing kickoff",
+  "Event day",
+].map((title) => ({ title, description: "Step description goes here." }));
 
 const gradients = [
   { cls: "gradient-brand texture-grain", label: ".gradient-brand", desc: "135° — seafoam → sand → peach" },
@@ -390,7 +399,7 @@ export default function DesignSystemPage() {
               <Button variant="primary" size="sm">
                 Small
               </Button>
-              <Button variant="primary" size="icon" aria-label="Favorite">
+              <Button variant="primary" size="icon" label="Favorite">
                 <Star className="size-4" aria-hidden="true" />
               </Button>
             </div>
@@ -399,20 +408,20 @@ export default function DesignSystemPage() {
             <p className="mb-4 text-sm tracking-wider text-muted-foreground uppercase">With icons</p>
             <div className="flex flex-wrap items-center gap-4">
               <Button variant="primary">
-                <Mail className="mr-2 size-4" />
+                <Mail className="mr-2 size-4" aria-hidden="true" />
                 Email us
               </Button>
               <Button variant="outline">
                 Open Media Kit
-                <ArrowRight className="ml-2 size-4" />
+                <ArrowRight className="ml-2 size-4" aria-hidden="true" />
               </Button>
               <Button variant="secondary">
-                <Download className="mr-2 size-4" />
+                <Download className="mr-2 size-4" aria-hidden="true" />
                 Download
               </Button>
               <Button variant="ghost">
                 Learn more
-                <ExternalLink className="ml-2 size-4" />
+                <ExternalLink className="ml-2 size-4" aria-hidden="true" />
               </Button>
             </div>
           </div>
@@ -472,7 +481,7 @@ export default function DesignSystemPage() {
           {/* Icon card */}
           <div className="rounded-2xl border border-border bg-card p-6 lg:p-8">
             <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-ring/10 text-ring">
-              <Users className="size-6" />
+              <Users className="size-6" aria-hidden="true" />
             </div>
             <h3 className="mb-3 font-display text-xl font-semibold text-foreground">Icon card</h3>
             <p className="leading-relaxed text-muted-foreground">
@@ -486,7 +495,7 @@ export default function DesignSystemPage() {
             <ul className="space-y-3">
               {["Speaker sourcing", "Marketing", "Recording"].map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-ring" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
                   <span className="text-foreground">{item}</span>
                 </li>
               ))}
@@ -499,7 +508,7 @@ export default function DesignSystemPage() {
             <ul className="space-y-3">
               {["Venue", "Food & drinks", "Optional: your speaker"].map((item) => (
                 <li key={item} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-amber-dark" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-amber-dark" aria-hidden="true" />
                   <span className="text-foreground">{item}</span>
                 </li>
               ))}
@@ -521,13 +530,16 @@ export default function DesignSystemPage() {
             className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-ring/50"
           >
             <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-ring/10">
-              <Star className="size-6 text-ring" />
+              <Star className="size-6 text-ring" aria-hidden="true" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="font-semibold text-foreground transition-colors group-hover:text-ring">Hover-link card</p>
               <p className="text-sm text-muted-foreground">Used for downloadable resources and media kit assets.</p>
             </div>
-            <Download className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
+            <Download
+              className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring"
+              aria-hidden="true"
+            />
           </a>
         </div>
       </Section>
@@ -537,17 +549,17 @@ export default function DesignSystemPage() {
         <SectionHeader overline="Components" title="Surfaces &amp; effects" className="mb-12" />
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="glass rounded-2xl p-8">
-            <Zap className="mb-4 size-8 text-ring" />
+            <Zap className="mb-4 size-8 text-ring" aria-hidden="true" />
             <p className="mb-1 font-semibold text-foreground">.glass</p>
             <p className="text-sm text-muted-foreground">White 55%, blur 20px, saturate 180%</p>
           </div>
           <div className="glass-subtle rounded-2xl p-8">
-            <Zap className="mb-4 size-8 text-ring" />
+            <Zap className="mb-4 size-8 text-ring" aria-hidden="true" />
             <p className="mb-1 font-semibold text-foreground">.glass-subtle</p>
             <p className="text-sm text-muted-foreground">White 35%, blur 16px, saturate 150%</p>
           </div>
           <div className="glass-dark rounded-2xl p-8">
-            <Zap className="mb-4 size-8 text-seafoam" />
+            <Zap className="mb-4 size-8 text-seafoam" aria-hidden="true" />
             <p className="mb-1 font-semibold text-white">.glass-dark</p>
             <p className="text-sm text-seafoam/70">Teal-dark 80%, blur 20px, saturate 180%</p>
           </div>
@@ -568,17 +580,7 @@ export default function DesignSystemPage() {
       {/* Process / Stepper */}
       <Section>
         <SectionHeader overline="Components" title="Process stepper" className="mb-12" />
-        <div className="grid gap-6 lg:grid-cols-5">
-          {["Initial contact", "Scoping call", "Confirm details", "Marketing kickoff", "Event day"].map((title, i) => (
-            <div key={title} className="relative">
-              <div className="mb-4 flex size-10 items-center justify-center rounded-full bg-ring font-semibold text-primary-foreground">
-                {i + 1}
-              </div>
-              <h4 className="mb-1 font-semibold text-foreground">{title}</h4>
-              <p className="text-sm text-muted-foreground">Step description goes here.</p>
-            </div>
-          ))}
-        </div>
+        <Stepper steps={stepperSteps} className="lg:grid-cols-5" />
       </Section>
 
       {/* CTA section pattern */}
