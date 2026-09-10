@@ -1,6 +1,6 @@
 ---
 name: writing
-description: House style for project prose: docs, plans, PR and commit bodies, review comments, code comments, TSDoc. Concision by default, declarative voice, load-bearing sentences, rationale inline, structure and mechanics rules. Use when writing or editing documentation, PR descriptions, commit bodies, review comments, code comments or TSDoc, or standards/process docs (not product/site copy, which is the design's voice).
+description: House style for project prose: docs, plans, PR and commit bodies, review comments, code comments, TSDoc. Concise by default, declarative voice, load-bearing sentences, rationale inline, structure and mechanics rules. Use when writing or editing documentation, PR descriptions, commit bodies, review comments, code comments or TSDoc, or standards/process docs (not product/site copy, which is the design's voice).
 ---
 
 # Writing
