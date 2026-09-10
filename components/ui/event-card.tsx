@@ -38,6 +38,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           href={event.eventUrl}
           target="_blank"
           rel="noopener noreferrer"
+          data-card-link
           className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
         >
           {children}
@@ -47,7 +48,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
 
   if (variant === "featured") {
     return (
-      <div className="group glass relative overflow-hidden rounded-2xl has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ring">
+      <div className="group glass relative overflow-hidden rounded-2xl has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-ring">
         <div className="p-6">
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <Badge variant={isUpcoming ? "warning" : "secondary"}>{isUpcoming ? "Upcoming" : "Past"}</Badge>
@@ -63,7 +64,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           <div className="mb-1.5 flex items-center gap-2 text-sm text-muted-foreground">
             <Calendar className="size-4 shrink-0" aria-hidden="true" />
             <span>{formattedDate}</span>
-            {showTime && <span className="text-muted-foreground">· {formattedTime}</span>}
+            {showTime && <span>· {formattedTime}</span>}
           </div>
 
           {locationText && (
@@ -126,7 +127,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
   }
 
   return (
-    <div className="group glass relative flex flex-col rounded-xl p-4 transition-all duration-300 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ring">
+    <div className="group glass relative flex flex-col rounded-xl p-4 transition-all duration-300 has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-ring">
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <Badge variant={isUpcoming ? "warning" : "secondary"} size="sm">
           {isUpcoming ? "Upcoming" : "Past"}

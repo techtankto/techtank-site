@@ -199,7 +199,7 @@ function GridView({ events }: { events: Event[] }) {
         return (
           <div
             key={event.id}
-            className="group relative aspect-square overflow-hidden rounded-xl bg-muted has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ring"
+            className="group relative aspect-square overflow-hidden rounded-xl bg-muted has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-ring"
           >
             {img ? (
               <Image
@@ -228,6 +228,7 @@ function GridView({ events }: { events: Event[] }) {
                     href={event.eventUrl}
                     target="_blank"
                     rel="noopener noreferrer"
+                    data-card-link
                     className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
                   >
                     {event.title}
