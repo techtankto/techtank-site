@@ -71,22 +71,22 @@ This repo uses a flat two-folder split, not an atoms/molecules/organisms/templat
 hierarchy:
 
 - `components/ui/`: reusable primitives and shared building blocks (buttons, cards,
-  sections, dialogs, marquees — anything usable from more than one route). shadcn CLI
+  sections, dialogs, marquees: anything usable from more than one route). shadcn CLI
   imports land here (the `components.json` `ui` alias points there) and are reformatted
   on arrival.
-- `components/layout/`: the persistent shell — `Header`, `Footer`.
+- `components/layout/`: the persistent shell, `Header` and `Footer`.
 - **All component definitions live under `components/`, never inline in `app/`.** A route's
   `page.tsx` composes components; it doesn't define new ones. Page-specific components still
-  go in `components/ui/` alongside shared ones — nothing under `app/` besides Next.js's own
-  route files (`page.tsx`, `layout.tsx`, `opengraph-image.tsx`, etc.).
+  go in `components/ui/` alongside shared ones; nothing lives under `app/` besides Next.js's
+  own route files (`page.tsx`, `layout.tsx`, `opengraph-image.tsx`, etc.).
 
 ## Layout shell
 
 1. **One persistent shell wraps every page**: `Header` and `Footer` from
    `components/layout/`, composed in the root layout around each route's page content.
 2. Page sections are plain composed JSX in each route's `page.tsx` (or a page-local
-   component), not a shared `section` template — there is no enforced three-width wrapper
-   primitive in this repo.
+   component), not a shared `section` template: this repo has no enforced three-width
+   wrapper primitive.
 
 ## Reusability
 
