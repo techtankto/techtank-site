@@ -2,9 +2,8 @@ import { forwardRef, type HTMLAttributes } from "react";
 import { cn, cva, type VariantProps } from "@/utils/theme";
 
 const styles = {
-  // A description list, not headings: each step is a title paired with its
-  // description, which `dt`/`dd` model directly. Headings would have to invent a
-  // level below the section's own, which is what produced the h2-to-h4 jump.
+  // A description list, not headings: `dt`/`dd` model a title paired with its
+  // description, without inventing a heading level below the section's own.
   root: cva("grid gap-6"),
   step: cva("relative"),
   marker: cva(

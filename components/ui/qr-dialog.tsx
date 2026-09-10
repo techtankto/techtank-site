@@ -30,9 +30,7 @@ export function QrDialog() {
           </p>
         </div>
 
-        {/* The heading and the paragraph above already say what the code is and what
-            scanning it does, and the link below is the same destination, so the
-            graphic itself adds nothing to announce. */}
+        {/* The copy above and the link below already say this, so the graphic adds nothing. */}
         <QrCodeIcon className="size-40 max-w-full text-black dark:text-white" />
 
         <Button variant="primary" size="sm" className="w-full" asChild onClick={onClose}>

@@ -23,10 +23,8 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
-      {/* Named so it is distinguishable from the section sub-nav that internal pages
-          render below it. The name is DOM text rather than an aria-label, which
-          browser translation tools skip, and a span rather than a hidden heading, which
-          would put an h2 ahead of the page's h1. */}
+      {/* Named to tell it apart from the section sub-nav below. DOM text (translation
+          tools skip aria-label) in a span (a heading would precede the h1). */}
       <nav
         aria-labelledby="primary-nav-name"
         className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8"

@@ -1,9 +1,7 @@
 import { SVGProps } from "react";
 
-// Every icon here is presentational: a brand mark beside its own name, or the QR
-// code, whose meaning the surrounding copy carries. Hidden by default so the
-// accessibility tree stays free of noise; props spread last, so a call site that
-// needs the icon exposed passes aria-hidden={false} and its own name.
+// Every icon here is presentational: the surrounding copy carries the meaning. Hidden
+// by default; props spread last, so a call site can pass aria-hidden={false} and a name.
 
 export function LumaIcon(props: SVGProps<SVGSVGElement>) {
   return (

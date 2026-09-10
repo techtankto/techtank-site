@@ -42,10 +42,8 @@ export function Dialog({ open, onClose, labelledBy, className, children }: Dialo
 
   return createPortal(
     <>
-      {/* The overlay dismisses on click but is not a control: as a button it would
-          announce itself and take a tab stop ahead of the dialog. It is a mouse
-          convenience only, so it stays out of the accessibility tree; Escape,
-          wired above, is the keyboard path. */}
+      {/* Mouse convenience, not a control: as a button it would announce itself and
+          take a tab stop ahead of the dialog. Escape, wired above, is the keyboard path. */}
       <div aria-hidden="true" className="fixed inset-0 z-50 bg-black/70" onClick={onClose} />
       <dialog
         open

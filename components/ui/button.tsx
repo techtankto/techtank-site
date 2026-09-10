@@ -52,10 +52,8 @@ type ButtonBaseProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
   };
 
 /**
- * An icon button is named exactly one of two ways. `label` renders the name as
- * `.sr-only` text, which is what browser translation tools reach; `aria-label`
- * stays accepted for call sites not yet converted, since translation tools skip
- * attributes and leave those buttons unnamed on a translated page.
+ * An icon button takes exactly one name. `label` renders `.sr-only` text, which
+ * translation tools reach; `aria-label` stays for call sites not yet converted.
  */
 type IconButtonLabel = { label: string; "aria-label"?: never } | { label?: never; "aria-label": string };
 
@@ -70,8 +68,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ className, variant, size, isActive, asChild = false, label, children, ...props }, ref) => {
     const classes = cn(buttonVariants({ variant, size, isActive }), className);
 
-    // Radix `Slot` takes exactly one child, so the label span cannot be injected
-    // here: an `asChild` button carries its name in the element it renders.
+    // Radix `Slot` takes one child, so an `asChild` button carries its name in the
+    // element it renders.
     if (asChild) {
       return (
         <Slot className={classes} ref={ref} {...props}>
