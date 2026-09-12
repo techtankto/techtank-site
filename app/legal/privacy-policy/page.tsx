@@ -11,7 +11,7 @@ export default function PrivacyPolicyPage() {
     <div className="rounded-2xl border border-border bg-card p-6 lg:p-10">
       {/* Header */}
       <div className="mb-8 border-b border-border pb-8">
-        <p className="mb-2 text-sm text-muted-foreground">Last updated: June 5, 2026</p>
+        <p className="mb-2 text-sm text-muted-foreground">Last updated: August 23, 2026</p>
         <h1 className="font-display text-3xl font-semibold text-foreground lg:text-4xl">Privacy Policy</h1>
       </div>
 
@@ -85,10 +85,25 @@ export default function PrivacyPolicyPage() {
 
         <section>
           <h2 className="mb-4 font-display text-xl font-semibold text-foreground">5. Analytics</h2>
-          <p className="text-muted-foreground">
+          <p className="mb-4 text-muted-foreground">
             TechTank uses privacy-respecting analytics to understand how visitors use the website. We collect aggregate
             data only (page views, referrers, general geographic region). We do not track individual users across sites
             or collect personal identifiers through analytics.
+          </p>
+          <p className="text-muted-foreground">
+            We use{" "}
+            <a
+              href="https://posthog.com/privacy"
+              target="_blank"
+              rel="noreferrer"
+              className="text-ring underline underline-offset-2"
+            >
+              PostHog
+            </a>{" "}
+            for product analytics, including page views and interactions with buttons and links (such as role selections
+            and calls to action) so we can understand which parts of the site are helping people get involved. PostHog
+            analytics only runs on the live production site — it does not run in local development. You can review
+            PostHog&apos;s own privacy practices at the link above.
           </p>
         </section>
 

@@ -55,8 +55,15 @@ How components are added, shaped, styled, and organized. This skill owns authori
 3. **Layout utilities at the call site, visual styles in the CVA.** `w-full`, grid placement, margins come from the parent; color, radius, type, borders live in the component's variants.
 4. **Semantic tokens only.** No raw hex, no palette utilities (`text-zinc-400`), no arbitrary color values in JSX. Backgrounds pair with their foregrounds (`bg-primary` → `text-primary-foreground`).
 5. **Type comes from the ramps.** Use the heading/expressive/body typography utilities defined by the design tokens: no arbitrary `text-[13px]`. Uppercase is CSS `uppercase`; content is written in normal case.
-6. **Tailwind v4 CSS-first.** All theme extension in `themes/theme.css` `@theme`; no `tailwind.config.ts`.
+6. **Tailwind v4 CSS-first.** All theme extension in the project's theme stylesheet (`app/globals.css`) under `@theme`; no `tailwind.config.ts`.
 7. **`asChild` + Radix `Slot`** when a component delegates rendering (`<Button asChild><Link …/></Button>`); never nest interactive elements.
+
+## Theming
+
+1. **`next-themes` owns light, dark, and system detection.** Set `defaultTheme="system"` with `enableSystem`, and put `suppressHydrationWarning` on `<html>`: the provider resolves the theme on the client, which mismatches the server render without it.
+2. **A theme-aware component renders a placeholder until hydration finishes.** Gate it on a hydration flag backed by `useSyncExternalStore` (false for the server render and the hydration render that must match it, true after), never a `setState` in an effect, which the `react/set-state-in-effect` lint rule flags. Rendering sooner makes the hydration render disagree with the server's, and a theme-dependent icon comes out wrong.
+3. **The toggle cycles `system → light → dark`**, not light↔dark, so a reader returns to system preference without a page reload.
+4. **Dark mode is a Tailwind v4 custom variant**: `@custom-variant dark (&:where(.dark, .dark *))`, with the dark token values in `.dark {}` beside the light ones.
 
 ## Organization: this repo does not use atomic design
 
@@ -64,22 +71,22 @@ This repo uses a flat two-folder split, not an atoms/molecules/organisms/templat
 hierarchy:
 
 - `components/ui/`: reusable primitives and shared building blocks (buttons, cards,
-  sections, dialogs, marquees — anything usable from more than one route). shadcn CLI
+  sections, dialogs, marquees: anything usable from more than one route). shadcn CLI
   imports land here (the `components.json` `ui` alias points there) and are reformatted
   on arrival.
-- `components/layout/`: the persistent shell — `Header`, `Footer`.
+- `components/layout/`: the persistent shell, `Header` and `Footer`.
 - **All component definitions live under `components/`, never inline in `app/`.** A route's
   `page.tsx` composes components; it doesn't define new ones. Page-specific components still
-  go in `components/ui/` alongside shared ones — nothing under `app/` besides Next.js's own
-  route files (`page.tsx`, `layout.tsx`, `opengraph-image.tsx`, etc.).
+  go in `components/ui/` alongside shared ones; nothing lives under `app/` besides Next.js's
+  own route files (`page.tsx`, `layout.tsx`, `opengraph-image.tsx`, etc.).
 
 ## Layout shell
 
 1. **One persistent shell wraps every page**: `Header` and `Footer` from
    `components/layout/`, composed in the root layout around each route's page content.
 2. Page sections are plain composed JSX in each route's `page.tsx` (or a page-local
-   component), not a shared `section` template — there is no enforced three-width wrapper
-   primitive in this repo.
+   component), not a shared `section` template: this repo has no enforced three-width
+   wrapper primitive.
 
 ## Reusability
 

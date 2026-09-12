@@ -3,6 +3,7 @@ import { Banknote, CreditCard, ShieldCheck, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { CopyButton } from "@/components/ui/copy-button";
+import { TrackedLink } from "@/components/analytics/tracked-link";
 import { CONTACT_EMAIL, STRIPE_DONATE_URL } from "@/constants/contact";
 
 export const metadata: Metadata = {
@@ -49,9 +50,15 @@ export default function DonatePage() {
               Quick and self-serve. You&apos;ll get an automatic email receipt.
             </p>
             <Button variant="primary" size="lg" asChild className="w-full">
-              <a href={STRIPE_DONATE_URL} target="_blank" rel="noopener noreferrer">
+              <TrackedLink
+                href={STRIPE_DONATE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                event="cta_click"
+                properties={{ id: "donate-stripe" }}
+              >
                 Donate by card
-              </a>
+              </TrackedLink>
             </Button>
             <p className="text-xs text-muted-foreground">Processed securely via Stripe.</p>
           </div>
