@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { LumaIcon, MeetupIcon } from "@/components/ui/icons";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { EventBrowser } from "@/components/ui/event-browser";
-import { LumaCalendarEmbed } from "@/components/ui/luma-calendar-embed";
 import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 import { events } from "@/constants/events";
+import type { Event } from "@/app/events/actions";
 
 import { getAllLumaEvents } from "./actions";
+import { LumaEventCard } from "@/components/ui/luma-event-card";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -19,9 +20,18 @@ export const metadata: Metadata = {
 };
 
 export default async function EventsPage() {
-  const LUMA_CALENDAR_ID = process.env.LUMA_CALENDAR_ID;
   const { upcoming: lumaEvents, past: pastLumaEvents } = await getAllLumaEvents();
   const allLumaEvents = [...lumaEvents, ...pastLumaEvents];
+
+  const upcomingEventsGroupedByDate = (() => {
+    const dict: Record<string, Event[]> = {};
+    for (const event of lumaEvents) {
+      const dateStr = new Date(event.start_at).toLocaleDateString();
+      dict[dateStr] ??= [];
+      dict[dateStr].push(event);
+    }
+    return dict;
+  })();
 
   const staticLumaSlugs = new Set(
     events
@@ -107,20 +117,60 @@ export default async function EventsPage() {
             </TrackedLink>
           </Button>
         </div>
-        {LUMA_CALENDAR_ID ? (
-          <div className="flex w-full justify-center">
-            <LumaCalendarEmbed
-              calendarId={LUMA_CALENDAR_ID}
-              className="h-300 w-full overflow-hidden sm:h-250 md:h-225 md:w-3/4 lg:h-200"
+        <div className="flex flex-col items-center">
+          <div
+            className="relative w-full max-w-[680px] border-l border-dashed border-l-black dark:border-l-white"
+            style={{
+              paddingLeft: "24px",
+            }}
+          >
+            <div
+              className="bg-[#f7f8f9] dark:bg-[#212325]"
+              style={{
+                position: "absolute",
+                width: "10px",
+                height: "26px",
+                left: "-5px",
+                top: 0,
+              }}
             />
+            <div
+              className="bg-gradient-to-b from-transparent to-[#f7f8f9] dark:to-[#212325]"
+              style={{
+                position: "absolute",
+                width: "10px",
+                height: "100%",
+                maxHeight: "300px",
+                left: "-5px",
+                bottom: 0,
+              }}
+            />
+            {Object.entries(upcomingEventsGroupedByDate).map(([date, events]) => (
+              <div key={date}>
+                <div className="my-4 flex items-center">
+                  <div
+                    className="bg-black dark:bg-white"
+                    style={{
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "50%",
+                      transform: "translateX(-24px) translateX(-50%)",
+                    }}
+                  />
+                  <div className="text-left font-semibold" style={{}}>
+                    {Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(new Date(date))}
+                  </div>
+                  <div className="ml-2 text-left text-zinc-500">
+                    {Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date(date))}
+                  </div>
+                </div>
+                {events.map((event) => (
+                  <LumaEventCard key={event.id} event={event} />
+                ))}
+              </div>
+            ))}
           </div>
-        ) : (
-          <div className="flex w-full justify-center">
-            <p className="rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-              Luma calendar is unavailable (missing environment variables).
-            </p>
-          </div>
-        )}
+        </div>
       </Section>
 
       {/* All Events */}
