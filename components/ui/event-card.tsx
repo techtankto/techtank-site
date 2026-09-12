@@ -10,11 +10,20 @@ interface EventTitleProps {
   children: ReactNode;
 }
 
+// The primary link: it carries the card's accessible name and grows a
+// pseudo-element that extends its hit area to cover the whole card, so
+// the card behaves as a block link without nesting an anchor around it.
 function EventTitle({ href, children }: EventTitleProps) {
   if (!href) return <>{children}</>;
 
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" className="hover:underline">
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-card-link
+      className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
+    >
       {children}
     </a>
   );
@@ -47,7 +56,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
 
   if (variant === "featured") {
     return (
-      <div className="group glass relative overflow-hidden rounded-2xl">
+      <div className="group glass relative overflow-hidden rounded-2xl has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-ring">
         <div className="p-6">
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <Badge variant={isUpcoming ? "warning" : "secondary"}>{isUpcoming ? "Upcoming" : "Past"}</Badge>
@@ -61,16 +70,21 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           {event.pitch && <p className="mb-3 line-clamp-2 text-sm text-muted-foreground">{event.pitch}</p>}
 
           <div className="mb-1.5 flex items-center gap-2 text-sm text-muted-foreground">
-            <Calendar className="size-4 shrink-0" />
+            <Calendar className="size-4 shrink-0" aria-hidden="true" />
             <span>{formattedDate}</span>
-            {showTime && <span className="text-muted-foreground/60">· {formattedTime}</span>}
+            {showTime && <span>· {formattedTime}</span>}
           </div>
 
           {locationText && (
             <div className="mb-1.5 flex items-center gap-2 text-sm text-muted-foreground">
-              <MapPin className="size-4 shrink-0" />
+              <MapPin className="size-4 shrink-0" aria-hidden="true" />
               {locationUrl ? (
-                <a href={locationUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                <a
+                  href={locationUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative z-10 hover:underline"
+                >
                   {locationText}
                 </a>
               ) : (
@@ -82,7 +96,13 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           {event.sponsors && event.sponsors.length > 0 && (
             <div className="mb-3 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
               {event.sponsors.map((s) => (
-                <a key={s.id} href={s.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                <a
+                  key={s.id}
+                  href={s.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative z-10 hover:underline"
+                >
                   {s.name}
                 </a>
               ))}
@@ -92,23 +112,18 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           {(event.albumUrl || event.youtubeUrl) && (
             <div className="flex flex-wrap items-center gap-2">
               {event.albumUrl && (
-                <Badge variant="secondary" asChild>
-                  <a href={event.albumUrl} target="_blank" rel="noopener noreferrer" aria-label="View event photos">
-                    <Camera className="size-3" />
-                    Photos
+                <Badge variant="secondary" asChild className="relative z-10">
+                  <a href={event.albumUrl} target="_blank" rel="noopener noreferrer">
+                    <Camera className="size-3" aria-hidden="true" />
+                    Photos<span className="sr-only"> from {event.title}</span>
                   </a>
                 </Badge>
               )}
               {event.youtubeUrl && (
-                <Badge variant="secondary" asChild>
-                  <a
-                    href={event.youtubeUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Watch recap on YouTube"
-                  >
-                    <Play className="size-3 fill-current" />
-                    Recap
+                <Badge variant="secondary" asChild className="relative z-10">
+                  <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                    <Play className="size-3 fill-current" aria-hidden="true" />
+                    Recap<span className="sr-only"> from {event.title}</span>
                   </a>
                 </Badge>
               )}
@@ -120,7 +135,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
   }
 
   return (
-    <div className="group glass relative flex flex-col rounded-xl p-4 transition-all duration-300">
+    <div className="group glass relative flex flex-col rounded-xl p-4 transition-all duration-300 has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-ring">
       <div className="mb-2 flex flex-wrap items-center gap-1.5">
         <Badge variant={isUpcoming ? "warning" : "secondary"} size="sm">
           {isUpcoming ? "Upcoming" : "Past"}
@@ -133,15 +148,20 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
       </h3>
 
       <div className="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-        <Calendar className="size-3 shrink-0" />
+        <Calendar className="size-3 shrink-0" aria-hidden="true" />
         <span>{formattedDate}</span>
       </div>
 
       {locationText && (
         <div className="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-          <MapPin className="size-3 shrink-0" />
+          <MapPin className="size-3 shrink-0" aria-hidden="true" />
           {locationUrl ? (
-            <a href={locationUrl} target="_blank" rel="noopener noreferrer" className="line-clamp-1 hover:underline">
+            <a
+              href={locationUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 line-clamp-1 hover:underline"
+            >
               {locationText}
             </a>
           ) : (
@@ -158,7 +178,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
               href={s.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="line-clamp-1 hover:underline"
+              className="relative z-10 line-clamp-1 hover:underline"
             >
               {s.name}
             </a>
@@ -169,18 +189,18 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
       {(event.albumUrl || event.youtubeUrl) && (
         <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-1">
           {event.albumUrl && (
-            <Badge variant="secondary" size="sm" asChild>
-              <a href={event.albumUrl} target="_blank" rel="noopener noreferrer" aria-label="View event photos">
-                <Camera className="size-2.5" />
-                Photos
+            <Badge variant="secondary" size="sm" asChild className="relative z-10">
+              <a href={event.albumUrl} target="_blank" rel="noopener noreferrer">
+                <Camera className="size-2.5" aria-hidden="true" />
+                Photos<span className="sr-only"> from {event.title}</span>
               </a>
             </Badge>
           )}
           {event.youtubeUrl && (
-            <Badge variant="secondary" size="sm" asChild>
-              <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer" aria-label="Watch recap on YouTube">
-                <Play className="size-2.5 fill-current" />
-                Recap
+            <Badge variant="secondary" size="sm" asChild className="relative z-10">
+              <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                <Play className="size-2.5 fill-current" aria-hidden="true" />
+                Recap<span className="sr-only"> from {event.title}</span>
               </a>
             </Badge>
           )}

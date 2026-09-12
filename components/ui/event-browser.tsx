@@ -200,7 +200,10 @@ function GridView({ events }: { events: Event[] }) {
         const locationUrl = event.host?.url ?? null;
 
         return (
-          <div key={event.id} className="group relative aspect-square overflow-hidden rounded-xl bg-muted">
+          <div
+            key={event.id}
+            className="group relative aspect-square overflow-hidden rounded-xl bg-muted has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-ring"
+          >
             {img ? (
               <Image
                 src={img}
@@ -220,9 +223,17 @@ function GridView({ events }: { events: Event[] }) {
               </Badge>
               {event.tags[0] && <span className="text-[10px] text-white">{event.tags[0]}</span>}
 
+              {/* Primary link: grows a pseudo-element that covers the whole
+                  card, so the card behaves as a block link. */}
               <p className="line-clamp-2 text-xs leading-snug font-semibold text-white">
                 {event.eventUrl ? (
-                  <a href={event.eventUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                  <a
+                    href={event.eventUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-card-link
+                    className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
+                  >
                     {event.title}
                   </a>
                 ) : (
@@ -230,20 +241,20 @@ function GridView({ events }: { events: Event[] }) {
                 )}
               </p>
 
-              <div className="flex items-center gap-1 text-[10px] text-white/70">
-                <Calendar className="size-2.5 shrink-0" />
+              <div className="flex items-center gap-1 text-[10px] text-white">
+                <Calendar className="size-2.5 shrink-0" aria-hidden="true" />
                 <span>{formattedDate}</span>
               </div>
 
               {locationText && (
-                <div className="flex items-center gap-1 text-[10px] text-white/70">
-                  <MapPin className="size-2.5 shrink-0" />
+                <div className="flex items-center gap-1 text-[10px] text-white">
+                  <MapPin className="size-2.5 shrink-0" aria-hidden="true" />
                   {locationUrl ? (
                     <a
                       href={locationUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="truncate hover:underline"
+                      className="relative z-10 truncate hover:underline"
                     >
                       {locationText}
                     </a>
@@ -256,18 +267,18 @@ function GridView({ events }: { events: Event[] }) {
               {(event.albumUrl || event.youtubeUrl) && (
                 <div className="flex flex-wrap gap-1 pt-0.5">
                   {event.albumUrl && (
-                    <Badge variant="secondary" size="sm" asChild>
-                      <a href={event.albumUrl} target="_blank" rel="noopener noreferrer" aria-label="View event photos">
-                        <Camera className="size-2.5" />
-                        Photos
+                    <Badge variant="secondary" size="sm" asChild className="relative z-10">
+                      <a href={event.albumUrl} target="_blank" rel="noopener noreferrer">
+                        <Camera className="size-2.5" aria-hidden="true" />
+                        Photos<span className="sr-only"> from {event.title}</span>
                       </a>
                     </Badge>
                   )}
                   {event.youtubeUrl && (
-                    <Badge variant="secondary" size="sm" asChild>
-                      <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer" aria-label="Watch recap">
-                        <Play className="size-2.5 fill-current" />
-                        Recap
+                    <Badge variant="secondary" size="sm" asChild className="relative z-10">
+                      <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer">
+                        <Play className="size-2.5 fill-current" aria-hidden="true" />
+                        Recap<span className="sr-only"> from {event.title}</span>
                       </a>
                     </Badge>
                   )}
@@ -297,7 +308,7 @@ function ListView({ events }: { events: Event[] }) {
         return (
           <div key={event.id} className="flex items-center gap-4 bg-card px-4 py-3 transition-colors hover:bg-muted/50">
             <div className="w-20 shrink-0 text-xs text-muted-foreground">
-              <Calendar className="mr-1 inline size-3" />
+              <Calendar className="mr-1 inline size-3" aria-hidden="true" />
               {formattedDate}
             </div>
 
@@ -313,7 +324,7 @@ function ListView({ events }: { events: Event[] }) {
               </p>
               {location && (
                 <p className="truncate text-xs text-muted-foreground">
-                  <MapPin className="mr-0.5 inline size-2.5" />
+                  <MapPin className="mr-0.5 inline size-2.5" aria-hidden="true" />
                   {event.host ? (
                     <a href={event.host.url} target="_blank" rel="noopener noreferrer" className="hover:underline">
                       {location}
@@ -339,7 +350,8 @@ function ListView({ events }: { events: Event[] }) {
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground"
                 >
-                  <Camera className="size-3.5" />
+                  <Camera className="size-3.5" aria-hidden="true" />
+                  <span className="sr-only">Photos from {event.title}</span>
                 </a>
               )}
               {event.youtubeUrl && (
@@ -349,7 +361,8 @@ function ListView({ events }: { events: Event[] }) {
                   rel="noopener noreferrer"
                   className="text-muted-foreground hover:text-foreground"
                 >
-                  <Play className="size-3.5" />
+                  <Play className="size-3.5" aria-hidden="true" />
+                  <span className="sr-only">Recap from {event.title}</span>
                 </a>
               )}
             </div>
