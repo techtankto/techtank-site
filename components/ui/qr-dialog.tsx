@@ -30,10 +30,8 @@ export function QrDialog() {
           </p>
         </div>
 
-        <QrCodeIcon
-          className="size-40 max-w-full text-black dark:text-white"
-          aria-label="QR code linking to the TechTank get involved page"
-        />
+        {/* The copy above and the link below already say this, so the graphic adds nothing. */}
+        <QrCodeIcon className="size-40 max-w-full text-black dark:text-white" />
 
         <Button variant="primary" size="sm" className="w-full" asChild onClick={onClose}>
           <Link href="/get-involved">Visit Get Involved</Link>

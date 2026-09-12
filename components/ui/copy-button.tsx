@@ -19,7 +19,11 @@ export function CopyButton({ text }: CopyButtonProps) {
 
   return (
     <Button variant="ghost" size="sm" onClick={handleCopy}>
-      {copied ? <Check className="mr-2 size-4" /> : <Copy className="mr-2 size-4" />}
+      {copied ? (
+        <Check className="mr-2 size-4" aria-hidden="true" />
+      ) : (
+        <Copy className="mr-2 size-4" aria-hidden="true" />
+      )}
       {copied ? "Copied!" : "Copy to clipboard"}
     </Button>
   );

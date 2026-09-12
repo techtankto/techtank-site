@@ -366,7 +366,7 @@ export default function AboutPage() {
                   className="inline-flex items-center gap-2"
                 >
                   Supercollider website
-                  <ExternalLink className="size-3.5" />
+                  <ExternalLink className="size-3.5" aria-hidden="true" />
                 </a>
               </Button>
               <Button variant="outline" size="sm" asChild>
@@ -377,7 +377,7 @@ export default function AboutPage() {
                   className="inline-flex items-center gap-2"
                 >
                   Supercollider events calendar
-                  <ExternalLink className="size-3.5" />
+                  <ExternalLink className="size-3.5" aria-hidden="true" />
                 </a>
               </Button>
             </div>

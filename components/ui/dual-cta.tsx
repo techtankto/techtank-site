@@ -17,7 +17,7 @@ export function DualCTA() {
     <div className="grid gap-4 lg:grid-cols-2">
       {/* Never miss an event */}
       <div className="glass relative overflow-hidden rounded-xl p-5 lg:p-6">
-        <Calendar className="absolute top-4 right-4 size-16 text-foreground/15" />
+        <Calendar className="absolute top-4 right-4 size-16 text-foreground/15" aria-hidden="true" />
         <div className="relative">
           <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
             Stay in the loop
@@ -41,7 +41,7 @@ export function DualCTA() {
                   >
                     {Icon && <Icon className="mr-2 size-4" />}
                     {link.name}
-                    <ExternalLink className="ml-2 size-3.5" />
+                    <ExternalLink className="ml-2 size-3.5" aria-hidden="true" />
                   </TrackedLink>
                 </Button>
               );
@@ -52,7 +52,7 @@ export function DualCTA() {
 
       {/* Want to contribute? */}
       <div className="glass relative overflow-hidden rounded-xl p-5 lg:p-6">
-        <Users className="absolute top-4 right-4 size-16 text-foreground/15" />
+        <Users className="absolute top-4 right-4 size-16 text-foreground/15" aria-hidden="true" />
         <div className="relative">
           <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
             Get involved
@@ -78,7 +78,7 @@ export function DualCTA() {
                   >
                     {Icon && <Icon className="mr-2 size-4" />}
                     {link.name}
-                    <ExternalLink className="ml-2 size-3.5" />
+                    <ExternalLink className="ml-2 size-3.5" aria-hidden="true" />
                   </TrackedLink>
                 </Button>
               );

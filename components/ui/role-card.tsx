@@ -43,7 +43,7 @@ export function RoleCard({
     <div className="group glass relative flex flex-col rounded-2xl p-6 transition-all duration-300 lg:p-8">
       {/* Icon */}
       <div className="mb-4 inline-flex size-12 items-center justify-center rounded-full bg-secondary text-secondary-foreground">
-        <Icon className="size-6" />
+        <Icon className="size-6" aria-hidden="true" />
       </div>
 
       {/* Overline */}
@@ -59,7 +59,7 @@ export function RoleCard({
       <ul className="mb-6 flex-1 space-y-2">
         {benefits.map((benefit, index) => (
           <li key={index} className="flex items-start gap-2 text-sm text-foreground">
-            <Check className="mt-0.5 size-4 shrink-0 text-mint" />
+            <Check className="mt-0.5 size-4 shrink-0 text-mint" aria-hidden="true" />
             <span>{benefit}</span>
           </li>
         ))}
@@ -78,6 +78,8 @@ export function RoleCard({
             {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
           >
             {ctaText}
+            {/* Readers navigate by link list, where a bare "Learn more" says nothing. */}
+            <span className="sr-only"> about {title}</span>
           </Link>
         </Button>
       )}

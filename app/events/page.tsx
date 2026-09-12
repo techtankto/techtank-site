@@ -90,7 +90,7 @@ export default async function EventsPage() {
             >
               <LumaIcon className="mr-2 size-4" />
               Follow us on Luma
-              <ExternalLink className="ml-2 size-4" />
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
             </TrackedLink>
           </Button>
           <Button variant="outline" asChild>
@@ -103,7 +103,7 @@ export default async function EventsPage() {
             >
               <MeetupIcon className="mr-2 size-4" />
               Follow us on Meetup
-              <ExternalLink className="ml-2 size-4" />
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
             </TrackedLink>
           </Button>
         </div>

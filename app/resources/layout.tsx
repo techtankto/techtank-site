@@ -15,7 +15,13 @@ export default function ResourcesLayout({ children }: { children: React.ReactNod
   return (
     <div className="min-h-screen">
       {/* Sticky Sub-Nav */}
-      <nav className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
+      <nav
+        aria-labelledby="resources-nav-name"
+        className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl"
+      >
+        <span id="resources-nav-name" className="sr-only">
+          Resources pages
+        </span>
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex items-center justify-center py-3">
             <div className="flex flex-wrap items-center justify-center gap-1">

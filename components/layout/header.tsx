@@ -23,7 +23,15 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+      {/* Named to tell it apart from the section sub-nav below. DOM text (translation
+          tools skip aria-label) in a span (a heading would precede the h1). */}
+      <nav
+        aria-labelledby="primary-nav-name"
+        className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
+      >
+        <span id="primary-nav-name" className="sr-only">
+          Main
+        </span>
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
@@ -60,35 +68,30 @@ export function Header() {
         {/* Desktop CTA + theme toggle */}
         <div className="hidden lg:flex lg:items-center lg:gap-2">
           <ThemeToggle />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setQrDialogOpen(true)}
-            aria-label="Show get involved QR code"
-          >
-            <QrCode className="size-5" />
+          <Button variant="ghost" size="icon" onClick={() => setQrDialogOpen(true)} label="Show get involved QR code">
+            <QrCode className="size-5" aria-hidden="true" />
           </Button>
           <JoinDropdown />
         </div>
 
         {/* Mobile: QR + theme toggle + menu button */}
         <div className="flex items-center gap-1 lg:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setQrDialogOpen(true)}
-            aria-label="Show get involved QR code"
-          >
-            <QrCode className="size-5" />
+          <Button variant="ghost" size="icon" onClick={() => setQrDialogOpen(true)} label="Show get involved QR code">
+            <QrCode className="size-5" aria-hidden="true" />
           </Button>
           <ThemeToggle />
           <button
             type="button"
             className="-m-2 p-2 text-foreground"
             onClick={toggleMobileMenu}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+            <span className="sr-only">{mobileMenuOpen ? "Close menu" : "Open menu"}</span>
+            {mobileMenuOpen ? (
+              <X className="size-6" aria-hidden="true" />
+            ) : (
+              <Menu className="size-6" aria-hidden="true" />
+            )}
           </button>
         </div>
       </nav>

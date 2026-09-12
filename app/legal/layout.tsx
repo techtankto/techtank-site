@@ -16,7 +16,13 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-background">
       {/* Sticky Sub-Nav */}
-      <nav className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl">
+      <nav
+        aria-labelledby="legal-nav-name"
+        className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl"
+      >
+        <span id="legal-nav-name" className="sr-only">
+          Legal documents
+        </span>
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="flex items-center justify-center py-3">
             {/* Sub-navigation */}
