@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useIsHydrated } from "@/hooks/use-is-hydrated";
 import { cn } from "@/utils/theme";
 
 interface DialogProps {
@@ -15,11 +16,7 @@ interface DialogProps {
 }
 
 export function Dialog({ open, onClose, labelledBy, className, children }: DialogProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const hydrated = useIsHydrated();
 
   useEffect(() => {
     if (!open) return;
@@ -38,7 +35,7 @@ export function Dialog({ open, onClose, labelledBy, className, children }: Dialo
     };
   }, [open, onClose]);
 
-  if (!open || !mounted) return null;
+  if (!open || !hydrated) return null;
 
   return createPortal(
     <>

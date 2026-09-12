@@ -54,7 +54,7 @@ export function SectionHeader({ overline, title, description, align, className }
   return (
     <div className={cn(sectionHeaderVariants({ align }), className)}>
       {overline && (
-        <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-foreground uppercase dark:text-amber-dark">
+        <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-foreground uppercase dark:text-overline">
           {overline}
         </span>
       )}

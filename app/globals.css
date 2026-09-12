@@ -24,6 +24,10 @@
   --color-muted: #ebf3f4;
   --color-muted-foreground: #4a6670;
 
+  /* Warm accent text for overlines/hover links — meets AA on light surfaces,
+     unlike raw amber-dark used as text on some backgrounds. */
+  --color-overline: #8a5200;
+
   --color-border: rgba(27, 75, 90, 0.12);
   --color-input: rgba(27, 75, 90, 0.18);
   --color-ring: #2a6b7c;
@@ -81,6 +85,10 @@
   --color-muted: #ebf3f4;
   --color-muted-foreground: #4a6670;
 
+  /* Warm accent text for overlines/hover links — meets AA on light surfaces,
+     unlike raw amber-dark used as text on some backgrounds. */
+  --color-overline: #8a5200;
+
   --color-border: rgba(27, 75, 90, 0.12);
   --color-input: rgba(27, 75, 90, 0.18);
   --color-ring: #2a6b7c;
@@ -134,6 +142,9 @@
 
   --color-muted: #1a3d4a;
   --color-muted-foreground: #8bbec6;
+
+  /* Warm accent text for overlines/hover links — meets AA on dark surfaces. */
+  --color-overline: #ffbc55;
 
   --color-border: rgba(168, 213, 216, 0.15);
   --color-input: rgba(168, 213, 216, 0.2);
@@ -197,7 +208,7 @@
     outline-offset: 2px;
   }
   footer a:focus-visible {
-    outline: 2px solid #a8d5d8;
+    outline: 2px solid var(--color-seafoam);
   }
 }
 

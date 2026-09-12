@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { THEMES } from "@/constants/theme";
+import { useIsHydrated } from "@/hooks/use-is-hydrated";
 
 type LumaCalendarEmbedProps = {
   calendarId: string;
@@ -11,11 +11,9 @@ type LumaCalendarEmbedProps = {
 
 export function LumaCalendarEmbed({ calendarId, className }: LumaCalendarEmbedProps) {
   const { resolvedTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const hydrated = useIsHydrated();
 
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) {
+  if (!hydrated) {
     return <div className={className} />;
   }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useState, type CSSProperties, type HTMLAttributes } from "react";
+import { forwardRef, useRef, useState, type CSSProperties, type FocusEvent, type HTMLAttributes } from "react";
 import { PauseIcon, PlayIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, cva, type VariantProps } from "@/utils/theme";
@@ -72,18 +72,54 @@ const Marquee = forwardRef<MarqueeRef, MarqueeProps>((props, ref) => {
 
   // hooks
   const [paused, setPaused] = useState(false);
+  // Tracked separately from `paused` since focus and the pause button are independent
+  // reasons to hold the drift still; the attribute below renders their union.
+  const [focusPaused, setFocusPaused] = useState(false);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
 
   // render vars
   const handleToggle = () => setPaused((prev) => !prev);
 
+  // Focus entering the track pauses the drift immediately (before the scroll,
+  // so the target doesn't keep moving while it comes into view) and reveals
+  // the focused item without depending on hover. The imperative write lands
+  // before the next render; `setFocusPaused` makes sure that render agrees.
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (track) track.dataset.paused = "true";
+    setFocusPaused(true);
+    const target = event.target;
+    requestAnimationFrame(() => {
+      target.scrollIntoView({ block: "nearest", inline: "nearest" });
+    });
+  };
+
+  // Only resume when focus leaves the group entirely (relatedTarget outside
+  // the track), and never override an explicit pause-button press.
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    const track = trackRef.current;
+    if (!track) return;
+    const nextTarget = event.relatedTarget as Node | null;
+    if (nextTarget && track.contains(nextTarget)) return;
+    setFocusPaused(false);
+    if (paused) return;
+    track.dataset.paused = "false";
+    const viewport = viewportRef.current;
+    if (viewport) viewport.scrollLeft = 0;
+  };
+
   // jsx
   return (
     <div ref={ref} className={cn(styles.root({ className }))} {...rest}>
-      <div className={cn(styles.viewport())}>
+      <div ref={viewportRef} className={cn(styles.viewport())}>
         <div
+          ref={trackRef}
           className={cn(styles.track({ speed }))}
           style={{ "--marquee-copies": copies } as CSSProperties}
-          data-paused={paused}
+          data-paused={paused || focusPaused}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         >
           {Array.from({ length: copies }, (_, index) => (
             <div
@@ -105,7 +141,11 @@ const Marquee = forwardRef<MarqueeRef, MarqueeProps>((props, ref) => {
         variant="primary"
         onClick={handleToggle}
       >
-        {paused ? <PlayIcon className="size-4" /> : <PauseIcon className="size-4" />}
+        {paused ? (
+          <PlayIcon className="size-4" aria-hidden="true" />
+        ) : (
+          <PauseIcon className="size-4" aria-hidden="true" />
+        )}
       </Button>
     </div>
   );

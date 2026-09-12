@@ -15,7 +15,13 @@ const brandColors = [
   { name: "teal", cls: "bg-teal", label: "Teal", hex: "#2A6B7C", usage: "Ring / focus, kicker labels" },
   { name: "teal-dark", cls: "bg-teal-dark", label: "Teal Dark", hex: "#1B4B5A", usage: "Primary (light mode)" },
   { name: "amber", cls: "bg-amber", label: "Amber", hex: "#FFBC55", usage: "Warning / secondary CTA" },
-  { name: "amber-dark", cls: "bg-amber-dark", label: "Amber Dark", hex: "#EFA020", usage: "Overlines, hover links" },
+  {
+    name: "amber-dark",
+    cls: "bg-amber-dark",
+    label: "Amber Dark",
+    hex: "#EFA020",
+    usage: "Amber surfaces, dark-mode accent text",
+  },
 ];
 
 const accentTokens = [
@@ -114,6 +120,7 @@ const semanticUtilities = [
   { token: "border", bgCls: "bg-border", lightAlias: "teal-dark / 12%", darkAlias: "seafoam / 15%" },
   { token: "ring", bgCls: "bg-ring", lightAlias: "teal", darkAlias: "seafoam" },
   { token: "input", bgCls: "bg-input", lightAlias: "teal-dark / 18%", darkAlias: "seafoam / 20%" },
+  { token: "overline", bgCls: "bg-overline", lightAlias: "#8A5200", darkAlias: "amber" },
 ];
 
 const stepperSteps: Step[] = [

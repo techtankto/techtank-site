@@ -21,7 +21,7 @@ export function StatsMarquee({ className }: { className?: string }) {
       {items.map((item) => (
         <div key={item.label} className="flex shrink-0 flex-col items-center text-center">
           <span className="font-display text-xl font-bold text-foreground lg:text-2xl">{item.value}</span>
-          <span className="text-xs whitespace-nowrap text-foreground/60">{item.label}</span>
+          <span className="text-xs whitespace-nowrap text-muted-foreground">{item.label}</span>
         </div>
       ))}
     </Marquee>

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
+import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { Button } from "@/components/ui/button";
 import { BRAND_ICONS, InstagramIcon } from "@/components/ui/icons";
 import { getAllSocialLinks } from "@/constants/social-links";
@@ -39,18 +40,14 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
       {(video || cover) && (
         <div className="relative aspect-4/5 w-full overflow-hidden bg-muted">
           {video ? (
-            <video
+            <AutoplayVideo
+              src={video}
               poster={cover}
-              autoPlay
-              loop
-              muted
-              playsInline
+              description="Video from this Instagram post"
               preload="auto"
-              className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            >
-              <source src={video.replace(/\.mp4$/, ".webm")} type="video/webm" />
-              <source src={video} type="video/mp4" />
-            </video>
+              className="absolute inset-0"
+              videoClassName="transition-transform duration-500 group-hover:scale-[1.03]"
+            />
           ) : cover ? (
             <Image
               src={cover}
@@ -71,7 +68,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
             <InstagramIcon className="size-5" />
           </span>
           <span className="shrink-0 text-xs font-medium tracking-wide text-muted-foreground uppercase">Instagram</span>
-          <span className="shrink-0 text-xs text-muted-foreground/50">·</span>
+          <span className="shrink-0 text-xs text-muted-foreground">·</span>
           <span className="min-w-[8.5em] shrink-0 text-xs text-muted-foreground">
             {formatDate(post.date, post.createdAtRaw)}
           </span>
@@ -85,7 +82,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
           href={postUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-auto inline-flex items-center text-sm font-medium text-amber-dark transition-colors hover:text-amber-dark/80"
+          className="mt-auto inline-flex items-center text-sm font-medium text-overline transition-colors hover:text-foreground"
         >
           <InstagramIcon className="mr-2 size-4" />
           View on Instagram

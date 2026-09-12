@@ -104,12 +104,19 @@ When a skill is added or removed, update this table in the same change.
 - Social proof first: testimonials, real event photography, and logo clouds
   are required patterns, not decoration.
 
-### Styles and state
+### Theming
 
-- `app/globals.css` has four sections: Base Tokens (`@theme`), Light Tokens &
-  Gradients (`.light`), Dark Tokens & Gradients (`.dark`), Helper Classes. The
-  `components` skill owns how components consume them.
-- The sitewide Zustand store is `stores/app-state.ts`.
+- `next-themes` handles light/dark/system detection. Always set `defaultTheme="system"` and `enableSystem` on `ThemeProvider`.
+- Add `suppressHydrationWarning` to the `<html>` element to suppress the server/client hydration mismatch that `next-themes` causes.
+- Theme-aware components render a placeholder until `useIsHydrated` (`hooks/use-is-hydrated.ts`) flips: rendering sooner makes the hydration render disagree with the server's, and a theme-dependent icon comes out wrong.
+- The theme toggle cycles `system → light → dark` (not just light↔dark) so users can return to system preference without a page reload.
+- Dark-mode overrides use `@custom-variant dark (&:where(.dark, .dark *))` in Tailwind v4. Dark tokens live in `.dark {}` in `globals.css`.
+- `globals.css` is divided into four sections: Base Tokens (`@theme`), Light Tokens & Gradients (`.light`), Dark Tokens & Gradients (`.dark`), Helper Classes.
+
+### Global state
+
+- Use Zustand (`stores/app-state.ts`) for sitewide UI state (mobile menu, future modal/drawer state, etc.).
+- Keep `next-themes` as the single source of truth for theme — do not duplicate theme state in Zustand.
 
 ### After making code changes
 

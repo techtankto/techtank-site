@@ -11,6 +11,7 @@ import { RoleCard } from "@/components/ui/role-card";
 import { roleCardsData } from "@/constants/role-cards";
 import { EventCard } from "@/components/ui/event-card";
 import { SocialFeed } from "@/components/ui/social-feed";
+import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
 import { getAllLumaEvents } from "./events/actions";
 
@@ -64,17 +65,13 @@ export default async function HomePage() {
               {heroPosts[0] && (
                 <div className="photo-frame relative aspect-4/5 w-[45%] translate-y-6 -rotate-2 overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.02] lg:w-[55%]">
                   {heroPosts[0].videoSrc ? (
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
+                    <AutoplayVideo
+                      src={heroPosts[0].videoSrc}
+                      description={heroPosts[0].alt}
                       preload="auto"
-                      className="absolute inset-0 size-full object-cover object-top"
-                    >
-                      <source src={heroPosts[0].videoSrc.replace(/\.mp4$/, ".webm")} type="video/webm" />
-                      <source src={heroPosts[0].videoSrc} type="video/mp4" />
-                    </video>
+                      className="absolute inset-0"
+                      videoClassName="object-top"
+                    />
                   ) : heroPosts[0].imageSrc ? (
                     <Image
                       src={heroPosts[0].imageSrc}
@@ -91,17 +88,13 @@ export default async function HomePage() {
               {heroPosts[1] && (
                 <div className="photo-frame relative z-10 ml-[-10%] aspect-4/5 w-[45%] rotate-2 overflow-hidden shadow-xl transition-transform duration-300 hover:scale-[1.02] lg:w-[55%]">
                   {heroPosts[1].videoSrc ? (
-                    <video
-                      autoPlay
-                      loop
-                      muted
-                      playsInline
+                    <AutoplayVideo
+                      src={heroPosts[1].videoSrc}
+                      description={heroPosts[1].alt}
                       preload="auto"
-                      className="absolute inset-0 size-full object-cover object-top"
-                    >
-                      <source src={heroPosts[1].videoSrc.replace(/\.mp4$/, ".webm")} type="video/webm" />
-                      <source src={heroPosts[1].videoSrc} type="video/mp4" />
-                    </video>
+                      className="absolute inset-0"
+                      videoClassName="object-top"
+                    />
                   ) : heroPosts[1].imageSrc ? (
                     <Image
                       src={heroPosts[1].imageSrc}
@@ -233,14 +226,14 @@ export default async function HomePage() {
           >
             <Calendar className="absolute top-4 right-4 size-14 text-foreground/15" aria-hidden="true" />
             <div className="relative">
-              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-amber-dark uppercase">
+              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
                 Show up
               </span>
               <h3 className="mb-2 font-display text-lg font-bold text-foreground lg:text-xl">Upcoming events</h3>
               <p className="mb-4 text-sm text-muted-foreground">
                 See what&apos;s coming up and RSVP to the next meetup.
               </p>
-              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-amber-dark">
+              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-overline">
                 See events
                 <ArrowRight className="ml-2 size-4" aria-hidden="true" />
               </span>
@@ -253,12 +246,12 @@ export default async function HomePage() {
           >
             <Users className="absolute top-4 right-4 size-14 text-foreground/15" aria-hidden="true" />
             <div className="relative">
-              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-amber-dark uppercase">
+              <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
                 Contribute
               </span>
               <h3 className="mb-2 font-display text-lg font-bold text-foreground lg:text-xl">Get involved</h3>
               <p className="mb-4 text-sm text-muted-foreground">Speak, host, sponsor, or volunteer with the crew.</p>
-              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-amber-dark">
+              <span className="inline-flex items-center text-sm font-semibold text-foreground transition-colors group-hover:text-overline">
                 Pick your path
                 <ArrowRight className="ml-2 size-4" aria-hidden="true" />
               </span>
