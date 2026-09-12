@@ -7,6 +7,8 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import { THEMES } from "@/constants/theme";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { PostHogProvider } from "@/components/analytics/posthog-provider";
+import { PostHogPageview } from "@/components/analytics/posthog-pageview";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -67,19 +69,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
       <body className="flex min-h-screen flex-col font-sans antialiased" suppressHydrationWarning>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-          themes={[THEMES.LIGHT, THEMES.DARK]}
-        >
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-          <Analytics />
-          <SpeedInsights />
-        </ThemeProvider>
+        <PostHogProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+            themes={[THEMES.LIGHT, THEMES.DARK]}
+          >
+            <PostHogPageview />
+            <Header />
+            <main className="flex-1">{children}</main>
+            <Footer />
+            <Analytics />
+            <SpeedInsights />
+          </ThemeProvider>
+        </PostHogProvider>
       </body>
     </html>
   );
