@@ -7,6 +7,7 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { ContactCard } from "@/components/ui/contact-card";
 import { ToolsGrid } from "@/components/ui/tools-grid";
+import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
 import { CONTACT_EMAIL } from "@/constants/contact";
 
@@ -135,10 +136,11 @@ export default function SponsorPage() {
           <div className="relative">
             <div className="via-lavender to-aqua relative aspect-4/3 overflow-hidden rounded-2xl bg-linear-to-br from-peach">
               {featuredVideo ? (
-                <video autoPlay loop muted playsInline className="absolute inset-0 size-full object-cover">
-                  <source src={featuredVideo.replace(/\.mp4$/, ".webm")} type="video/webm" />
-                  <source src={featuredVideo} type="video/mp4" />
-                </video>
+                <AutoplayVideo
+                  src={featuredVideo}
+                  description="Montage of TechTank community members at a recent event"
+                  className="absolute inset-0 size-full"
+                />
               ) : featuredImage ? (
                 <Image
                   src={featuredImage}
