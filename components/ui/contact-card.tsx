@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Mail, Copy, Check, MessageSquare } from "lucide-react";
 import { CONTACT_EMAIL } from "@/constants/contact";
+import { trackEvent } from "@/utils/analytics";
 
 interface ContactCardProps {
   context?: string;
@@ -33,6 +34,7 @@ export function ContactCard({
         <div className="flex flex-1 items-center gap-3">
           <a
             href={`mailto:${email}`}
+            onClick={() => trackEvent("intake_cta_click", { context })}
             className="font-display text-base font-semibold break-all text-foreground transition-colors hover:text-amber-dark"
           >
             {email}

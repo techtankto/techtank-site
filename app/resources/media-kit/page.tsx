@@ -7,6 +7,7 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { BRAND_ICONS } from "@/components/ui/icons";
 import { ContactCard } from "@/components/ui/contact-card";
 import { CopyButton } from "@/components/ui/copy-button";
+import { TrackedLink } from "@/components/analytics/tracked-link";
 import { getAllSocialLinks } from "@/constants/social-links";
 import { CONTACT_EMAIL } from "@/constants/contact";
 
@@ -88,10 +89,15 @@ export default function PressKitPage() {
               attribution.
             </p>
             <Button variant="primary" size="lg" asChild>
-              <a href="/downloads/techtank-media-kit.zip" download>
+              <TrackedLink
+                href="/downloads/techtank-media-kit.zip"
+                download
+                event="asset_download"
+                properties={{ asset: "media-kit-zip" }}
+              >
                 <Download className="mr-2 size-5" />
                 Download all assets (ZIP)
-              </a>
+              </TrackedLink>
             </Button>
           </div>
         </div>
@@ -176,9 +182,11 @@ export default function PressKitPage() {
         </div>
 
         {/* Logo Download */}
-        <a
+        <TrackedLink
           href={logoDownload.href}
           download
+          event="asset_download"
+          properties={{ asset: "logos" }}
           className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-ring/50"
         >
           <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-background">
@@ -189,7 +197,7 @@ export default function PressKitPage() {
             <p className="text-sm text-muted-foreground">{logoDownload.description}</p>
           </div>
           <Download className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
-        </a>
+        </TrackedLink>
       </Section>
 
       {/* Brand Colors */}

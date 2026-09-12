@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LumaIcon, MeetupIcon } from "@/components/ui/icons";
@@ -8,6 +7,7 @@ import { EventBrowser } from "@/components/ui/event-browser";
 import { LumaCalendarEmbed } from "@/components/ui/luma-calendar-embed";
 import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
+import { TrackedLink } from "@/components/analytics/tracked-link";
 import { events } from "@/constants/events";
 
 import { getAllLumaEvents } from "./actions";
@@ -81,18 +81,30 @@ export default async function EventsPage() {
         </p>
         <div className="mb-8 flex flex-wrap justify-center gap-4">
           <Button variant="primary" asChild>
-            <Link href="https://lu.ma/techtank" target="_blank" rel="noopener noreferrer">
+            <TrackedLink
+              href="https://lu.ma/techtank"
+              target="_blank"
+              rel="noopener noreferrer"
+              event="events_cta_click"
+              properties={{ platform: "luma" }}
+            >
               <LumaIcon className="mr-2 size-4" />
               Follow us on Luma
               <ExternalLink className="ml-2 size-4" />
-            </Link>
+            </TrackedLink>
           </Button>
           <Button variant="outline" asChild>
-            <Link href="https://meetup.com/techtank-to" target="_blank" rel="noopener noreferrer">
+            <TrackedLink
+              href="https://meetup.com/techtank-to"
+              target="_blank"
+              rel="noopener noreferrer"
+              event="events_cta_click"
+              properties={{ platform: "meetup" }}
+            >
               <MeetupIcon className="mr-2 size-4" />
               Follow us on Meetup
               <ExternalLink className="ml-2 size-4" />
-            </Link>
+            </TrackedLink>
           </Button>
         </div>
         {LUMA_CALENDAR_ID ? (
