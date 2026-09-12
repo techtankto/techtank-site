@@ -410,3 +410,25 @@
     }
   }
 }
+
+.luma-event-card {
+  .avatar {
+    --size: var(--size-default);
+    @media (width >= theme(breakpoint.sm)) {
+      --size: var(--size-sm);
+    }
+    width: var(--size);
+    height: var(--size);
+    max-width: var(--size);
+    max-height: var(--size);
+    margin-left: calc(var(--size) / 2 * -1);
+  }
+
+  .avatar-row {
+    --size: var(--size-default);
+    @media (width >= theme(breakpoint.sm)) {
+      --size: var(--size-sm);
+    }
+    margin-left: calc(var(--size) / 2);
+  }
+}

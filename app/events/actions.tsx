@@ -15,10 +15,30 @@ export interface Event {
   status: "upcoming" | "past";
   /** Event URL — prefers Luma when available, falls back to Meetup */
   eventUrl?: string;
-  imagePath?: string;
+  cover_url?: string;
   albumUrl?: string;
   youtubeUrl?: string;
   host?: Sponsor;
+  hosts?:
+    | {
+        first_name?: string | null;
+        last_name?: string | null;
+        avatar_url?: string | null;
+      }[]
+    | null;
+  guest_count: number;
+  featured_guests?:
+    | {
+        name?: string | null;
+        avatar_url?: string | null;
+      }[]
+    | null;
+  virtual_info?: {
+    raw_join_url?: string | null;
+  } | null;
+  geo_address_info?: {
+    sublocality?: string | null;
+  } | null;
   sponsors?: Sponsor[];
   speakers?: {
     name: string;
@@ -51,6 +71,22 @@ const SIX_HOURS_IN_SECONDS = 6 * 60 * 60;
 
 const EventSchema = z.object({
   api_id: z.string(),
+  hosts: z
+    .object({
+      first_name: z.string().nullish(),
+      last_name: z.string().nullish(),
+      avatar_url: z.string().nullish(),
+    })
+    .array()
+    .nullish(),
+  guest_count: z.number(),
+  featured_guests: z
+    .object({
+      name: z.string().nullish(),
+      avatar_url: z.string().nullish(),
+    })
+    .array()
+    .nullish(),
   event: z.object({
     api_id: z.string(),
     name: z.string(),
@@ -59,6 +95,16 @@ const EventSchema = z.object({
     timezone: z.string(),
     url: z.string(),
     cover_url: z.string().optional(),
+    virtual_info: z
+      .object({
+        raw_join_url: z.string().nullish(),
+      })
+      .nullish(),
+    geo_address_info: z
+      .object({
+        sublocality: z.string().nullish(),
+      })
+      .nullish(),
   }),
 });
 
@@ -105,14 +151,19 @@ function inferTags(title: string, slug: string): string[] {
 }
 
 function lumaCalendarResponseToEvents(parsed: LumaEventResponse[]): Event[] {
-  return parsed.map(({ event }) => ({
+  return parsed.map(({ event, hosts, featured_guests, guest_count }) => ({
     id: event.api_id,
     title: event.name,
     start_at: event.start_at,
     tags: inferTags(event.name, event.url),
     status: Date.now() > new Date(event.start_at).valueOf() ? "past" : "upcoming",
     eventUrl: `https://luma.com/${event.url}`,
-    imagePath: event.cover_url,
+    cover_url: event.cover_url,
+    hosts: hosts,
+    guest_count,
+    featured_guests,
+    virtual_info: event.virtual_info,
+    geo_address_info: event.geo_address_info,
   }));
 }
 
