@@ -35,7 +35,7 @@ export function ContactCard({
           <a
             href={`mailto:${email}`}
             onClick={() => trackEvent("intake_cta_click", { context })}
-            className="font-display text-base font-semibold break-all text-foreground transition-colors hover:text-amber-dark"
+            className="font-display text-base font-semibold break-all text-foreground transition-colors hover:text-overline"
           >
             {email}
           </a>
@@ -58,7 +58,7 @@ export function ContactCard({
           href={slackUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-display text-base font-semibold text-foreground transition-colors hover:text-amber-dark"
+          className="font-display text-base font-semibold text-foreground transition-colors hover:text-overline"
         >
           Join our Slack community
         </a>

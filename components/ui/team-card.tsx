@@ -39,7 +39,7 @@ function BoardBody({ name, pronouns, role, bio }: TeamMember) {
       {bio ? (
         <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{bio}</p>
       ) : (
-        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground/40 italic">Bio coming soon</p>
+        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground italic">Bio coming soon</p>
       )}
       <TeamProfileHint />
     </div>
@@ -55,7 +55,7 @@ function CoreBody({ name, pronouns, role, bio }: TeamMember) {
       {bio ? (
         <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{bio}</p>
       ) : (
-        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground/40 italic">Bio coming soon</p>
+        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground italic">Bio coming soon</p>
       )}
       <TeamProfileHint />
     </div>

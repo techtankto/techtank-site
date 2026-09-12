@@ -41,7 +41,7 @@ export function TeamProfileDialog({ member, open, onClose, titleId }: TeamProfil
               ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground/40 italic">Bio coming soon</p>
+          <p className="text-sm text-muted-foreground italic">Bio coming soon</p>
         )}
       </div>
     </Dialog>
