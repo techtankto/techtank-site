@@ -2,17 +2,15 @@
 
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { THEMES } from "@/constants/theme";
+import { useIsHydrated } from "@/hooks/use-is-hydrated";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const hydrated = useIsHydrated();
 
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) {
+  if (!hydrated) {
     return <Button variant="ghost" size="icon" aria-label="Toggle theme" />;
   }
 

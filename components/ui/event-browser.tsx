@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { LayoutGrid, List, Columns2, Calendar, MapPin, Camera, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -59,9 +59,12 @@ export function EventBrowser({ events }: EventBrowserProps) {
     return result;
   }, [events, category]);
 
-  useEffect(() => {
+  // Switching filter resets the count here, on the click, not in an effect.
+  const selectCategory = (next: CategoryFilter) => {
+    if (next === category) return;
+    setCategory(next);
     setVisibleCount(PAGE_SIZE);
-  }, [category]);
+  };
 
   const visible = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
@@ -88,7 +91,7 @@ export function EventBrowser({ events }: EventBrowserProps) {
               variant="nav"
               size="sm"
               isActive={category === c.id}
-              onClick={() => setCategory(c.id)}
+              onClick={() => selectCategory(c.id)}
               className="cursor-pointer"
             >
               {c.label}

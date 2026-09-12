@@ -1,8 +1,33 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { Camera, Calendar, MapPin, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Event } from "@/app/events/actions";
+
+interface EventTitleProps {
+  href?: string;
+  children: ReactNode;
+}
+
+// The primary link: it carries the card's accessible name and grows a
+// pseudo-element that extends its hit area to cover the whole card, so
+// the card behaves as a block link without nesting an anchor around it.
+function EventTitle({ href, children }: EventTitleProps) {
+  if (!href) return <>{children}</>;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-card-link
+      className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
+    >
+      {children}
+    </a>
+  );
+}
 
 interface EventCardProps {
   event: Event;
@@ -29,23 +54,6 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
   const locationText = event.host ? event.host.name : (event.venue ?? null);
   const locationUrl = event.host?.url ?? null;
 
-  // The primary link: it carries the card's accessible name and grows a
-  // pseudo-element that extends its hit area to cover the whole card, so
-  // the card behaves as a block link without nesting an anchor around it.
-  const TitleWrapper = event.eventUrl
-    ? ({ children }: { children: React.ReactNode }) => (
-        <a
-          href={event.eventUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          data-card-link
-          className="after:absolute after:inset-0 hover:underline focus-visible:outline-none"
-        >
-          {children}
-        </a>
-      )
-    : ({ children }: { children: React.ReactNode }) => <>{children}</>;
-
   if (variant === "featured") {
     return (
       <div className="group glass relative overflow-hidden rounded-2xl has-[[data-card-link]:focus-visible]:outline-2 has-[[data-card-link]:focus-visible]:outline-offset-2 has-[[data-card-link]:focus-visible]:outline-ring">
@@ -56,7 +64,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           </div>
 
           <h3 className="mb-2 line-clamp-2 font-display text-xl font-bold text-foreground">
-            <TitleWrapper>{event.title}</TitleWrapper>
+            <EventTitle href={event.eventUrl}>{event.title}</EventTitle>
           </h3>
 
           {event.pitch && <p className="mb-3 line-clamp-2 text-sm text-muted-foreground">{event.pitch}</p>}
@@ -136,7 +144,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
       </div>
 
       <h3 className="mb-2 line-clamp-2 font-display text-sm font-bold text-foreground">
-        <TitleWrapper>{event.title}</TitleWrapper>
+        <EventTitle href={event.eventUrl}>{event.title}</EventTitle>
       </h3>
 
       <div className="mb-1 flex items-center gap-1.5 text-xs text-muted-foreground">
