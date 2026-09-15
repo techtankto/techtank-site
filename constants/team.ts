@@ -123,6 +123,10 @@ When she’s not here, she’s somewhere in the world or somewhere in Toronto ch
         pronouns: "he/him",
         role: "Organizer",
         avatar: "/images/team/rodrigo-curbelo.webp",
+        bio: `Rodrigo is a Senior Product Engineer, UI/UX designer, and community organizer who has spent most of his career in early-stage startups. He’s led engineering teams, founded a company, and tends to gravitate toward the intersection of engineering, product, and design, especially the messy early stages where the problem is still being figured out.
+At TechTank, he helps organize events, partnerships, and some of the systems behind the community. He’s particularly interested in creating formats that get people doing more than exchanging LinkedIn profiles: working together, sharing what they know, building things, and forming actual relationships with other people in tech.
+That interest in how people work together also led him to start Creative Blocks Club, a Toronto community built around making remote work less isolating. They host regular coworking sessions, workshops, outdoor events, and collaborations with other communities around the city.
+Outside of tech and community work, he can usually be found at a coffee shop, playing chess badly, planning a new trip, or getting disproportionately excited about some new project. Ask him about his dog, he won’t stop talking.`,
       },
       {
         name: "Rohan Villoth",
