@@ -29,14 +29,14 @@ export interface InstagramPostWithId extends InstagramPost {
 // Merge machine-owned scraped data with human-owned curation. The scraper only
 // ever writes instagram-posts.generated.ts; featured/curation lives separately in
 // instagram-featured.ts, so an automated run can never clobber editorial choices.
-export const instagramPosts: Record<string, InstagramPost> = Object.fromEntries(
+const instagramPosts: Record<string, InstagramPost> = Object.fromEntries(
   Object.entries(generatedPosts).map(([id, post]) => [id, featuredKeys.has(id) ? { ...post, featured: true } : post]),
 );
 
 // --- Queries ---
 
 // All posts, newest first. The base query the others build on.
-export function getInstagramPosts(): InstagramPostWithId[] {
+function getInstagramPosts(): InstagramPostWithId[] {
   return Object.entries(instagramPosts)
     .map(([id, post]) => ({ id, ...post }))
     .sort((a, b) => (b.createdAtRaw ?? 0) - (a.createdAtRaw ?? 0));
