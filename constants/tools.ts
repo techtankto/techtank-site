@@ -12,7 +12,7 @@ export interface Tool {
   scale?: number; // Multiplier on the base row height, to even out logos with lots of built-in padding (default 1)
 }
 
-export const tools: Record<string, Tool> = {
+const tools: Record<string, Tool> = {
   slack: {
     id: "slack",
     name: "Slack",

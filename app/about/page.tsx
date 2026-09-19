@@ -385,11 +385,10 @@ export default function AboutPage() {
           <div className="flex flex-col rounded-2xl border border-border bg-card p-6 lg:p-8">
             <h3 className="mb-3 font-display text-xl font-semibold text-foreground">Creative Blocks Club</h3>
             <p className="mb-6 leading-relaxed text-muted-foreground">
-              Creative Blocks is a Toronto coworking community that brings remote workers,
-              founders, creatives, and builders together for focused coworking sessions,
-              workshops, and community events across the city. TechTank and Creative Blocks
-              collaborate regularly on events designed to help people get things done, learn
-              from each other, and build real relationships.
+              Creative Blocks is a Toronto coworking community that brings remote workers, founders, creatives, and
+              builders together for focused coworking sessions, workshops, and community events across the city.
+              TechTank and Creative Blocks collaborate regularly on events designed to help people get things done,
+              learn from each other, and build real relationships.
             </p>
             <div className="mt-auto flex flex-wrap gap-3">
               <Button variant="outline" size="sm" asChild>

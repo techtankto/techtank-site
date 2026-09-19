@@ -134,4 +134,3 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
 AutoplayVideo.displayName = "AutoplayVideo";
 
 export { AutoplayVideo };
-export type { AutoplayVideoProps, AutoplayVideoRef };
