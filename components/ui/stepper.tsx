@@ -46,4 +46,4 @@ const Stepper = forwardRef<StepperRef, StepperProps>((props, ref) => {
 Stepper.displayName = "Stepper";
 
 export { Stepper };
-export type { Step, StepperProps, StepperRef };
+export type { Step };

@@ -28,5 +28,4 @@ export const mediaResponseSchema = z.object({
 });
 
 export type MediaNode = z.infer<typeof mediaNodeSchema>;
-export type MediaChild = z.infer<typeof childSchema>;
 export type MediaResponse = z.infer<typeof mediaResponseSchema>;
