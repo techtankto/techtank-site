@@ -1,18 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Subnav } from "@/components/layout/subnav";
 
-const legalDocs = [
+const subMenu = [
   { name: "Code of Conduct", href: "/legal/code-of-conduct" },
   { name: "Terms of Service", href: "/legal/terms-of-service" },
   { name: "Privacy Policy", href: "/legal/privacy-policy" },
 ];
 
 export default function LegalLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
   return (
     <div className="min-h-screen bg-background">
       {/* Sticky Sub-Nav */}
@@ -23,21 +19,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
         <span id="legal-nav-name" className="sr-only">
           Legal documents
         </span>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex items-center justify-center py-3">
-            {/* Sub-navigation */}
-            <div className="flex flex-wrap items-center justify-center gap-1">
-              {legalDocs.map((doc) => {
-                const isActive = pathname === doc.href;
-                return (
-                  <Button key={doc.href} variant="nav" size="sm" isActive={isActive} asChild>
-                    <Link href={doc.href}>{doc.name}</Link>
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <Subnav items={subMenu} />
       </nav>
 
       {/* Main Content */}
