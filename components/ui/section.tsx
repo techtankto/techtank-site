@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority";
+﻿import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/theme";
 
 const sectionVariants = cva("py-10 lg:py-14", {

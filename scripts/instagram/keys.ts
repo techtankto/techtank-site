@@ -1,4 +1,4 @@
-// Deterministic record-key derivation. Keys must exactly match the historical
+﻿// Deterministic record-key derivation. Keys must exactly match the historical
 // format `<YYYY-MM-DD>-<shortcode with non-alphanumerics stripped>` so that keys
 // hardcoded in pages keep resolving after a scrape.
 

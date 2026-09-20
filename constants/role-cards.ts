@@ -1,4 +1,4 @@
-import type { RoleCardProps } from "@/components/ui/role-card";
+﻿import type { RoleCardProps } from "@/components/ui/role-card";
 
 export const roleCardsData: RoleCardProps[] = [
   {

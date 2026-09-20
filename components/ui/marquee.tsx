@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { forwardRef, useRef, useState, type CSSProperties, type FocusEvent, type HTMLAttributes } from "react";
 import { PauseIcon, PlayIcon } from "lucide-react";

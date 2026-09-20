@@ -1,4 +1,4 @@
-import Image from "next/image";
+﻿import Image from "next/image";
 import { getAllTools, type Tool } from "@/constants/tools";
 
 const tools = getAllTools();

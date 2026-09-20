@@ -1,4 +1,4 @@
-import type { InstagramPost, InstagramPostMedia } from "../../constants/instagram-posts";
+﻿import type { InstagramPost, InstagramPostMedia } from "../../constants/instagram-posts";
 import type { MediaNode } from "./schema";
 import {
   deriveKey,

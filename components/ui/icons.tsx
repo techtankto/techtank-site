@@ -1,4 +1,4 @@
-import { SVGProps } from "react";
+﻿import { SVGProps } from "react";
 
 // Every icon here is presentational: the surrounding copy carries the meaning. Hidden
 // by default; props spread last, so a call site can pass aria-hidden={false} and a name.

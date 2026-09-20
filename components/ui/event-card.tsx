@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type { ReactNode } from "react";
 import { Camera, Calendar, MapPin, Play } from "lucide-react";
