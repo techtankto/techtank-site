@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { Subnav } from "@/components/layout/subnav";
 
 const subNav = [
   { name: "TechTank", href: "/about" },
@@ -11,8 +9,6 @@ const subNav = [
 ];
 
 export default function AboutLayout({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
   return (
     <div className="min-h-screen">
       <nav
@@ -22,21 +18,7 @@ export default function AboutLayout({ children }: { children: React.ReactNode })
         <span id="about-nav-name" className="sr-only">
           About pages
         </span>
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="flex items-center justify-center py-3">
-            <div className="flex flex-wrap items-center justify-center gap-1">
-              {subNav.map((item) => {
-                const isActive = item.href === "/about" ? pathname === "/about" : pathname.startsWith(item.href);
-
-                return (
-                  <Button key={item.name} variant="nav" size="sm" isActive={isActive} asChild>
-                    <Link href={item.href}>{item.name}</Link>
-                  </Button>
-                );
-              })}
-            </div>
-          </div>
-        </div>
+        <Subnav items={subNav} />
       </nav>
 
       {children}

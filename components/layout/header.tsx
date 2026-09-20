@@ -25,10 +25,7 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
       {/* Named to tell it apart from the section sub-nav below. DOM text (translation
           tools skip aria-label) in a span (a heading would precede the h1). */}
-      <nav
-        aria-labelledby="primary-nav-name"
-        className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8"
-      >
+      <nav aria-labelledby="primary-nav-name" className="justify-left flex items-center gap-8 px-6 py-4 lg:px-8">
         <span id="primary-nav-name" className="sr-only">
           Main
         </span>
@@ -64,6 +61,8 @@ export function Header() {
             </Link>
           ))}
         </div>
+
+        <div className="flex-1"></div>
 
         {/* Desktop CTA + theme toggle */}
         <div className="hidden lg:flex lg:items-center lg:gap-2">
