@@ -1,4 +1,4 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 import Image from "next/image";
 import { Mail } from "lucide-react";
 import { BRAND_ICONS } from "@/components/ui/icons";

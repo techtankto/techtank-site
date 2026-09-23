@@ -1,4 +1,4 @@
-export interface FailedPost {
+﻿export interface FailedPost {
   id: string;
   reason: string;
 }

@@ -26,7 +26,7 @@ export default async function EventsPage() {
   const upcomingEventsGroupedByDate = (() => {
     const dict: Record<string, Event[]> = {};
     for (const event of lumaEvents) {
-      const dateStr = new Date(event.start_at).toLocaleDateString();
+      const dateStr = event.start_at.slice(0, 10);
       dict[dateStr] ??= [];
       dict[dateStr].push(event);
     }
@@ -145,30 +145,36 @@ export default async function EventsPage() {
                 bottom: 0,
               }}
             />
-            {Object.entries(upcomingEventsGroupedByDate).map(([date, events]) => (
-              <div key={date}>
-                <div className="my-4 flex items-center">
-                  <div
-                    className="bg-black dark:bg-white"
-                    style={{
-                      width: "8px",
-                      height: "8px",
-                      borderRadius: "50%",
-                      transform: "translateX(-24px) translateX(-50%)",
-                    }}
-                  />
-                  <div className="text-left font-semibold" style={{}}>
-                    {Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(new Date(date))}
+            {lumaEvents.length === 0 ? (
+              <p className="text-muted-foreground">No upcoming events scheduled — check back soon.</p>
+            ) : (
+              Object.entries(upcomingEventsGroupedByDate).map(([date, groupEvents]) => (
+                <div key={date}>
+                  <div className="my-4 flex items-center">
+                    <div
+                      className="bg-black dark:bg-white"
+                      style={{
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        transform: "translateX(-24px) translateX(-50%)",
+                      }}
+                    />
+                    <div className="text-left font-semibold" style={{}}>
+                      {Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(
+                        new Date(groupEvents[0].start_at),
+                      )}
+                    </div>
+                    <div className="ml-2 text-left text-zinc-500">
+                      {Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date(groupEvents[0].start_at))}
+                    </div>
                   </div>
-                  <div className="ml-2 text-left text-zinc-500">
-                    {Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date(date))}
-                  </div>
+                  {groupEvents.map((event) => (
+                    <LumaEventCard key={event.id} event={event} />
+                  ))}
                 </div>
-                {events.map((event) => (
-                  <LumaEventCard key={event.id} event={event} />
-                ))}
-              </div>
-            ))}
+              ))
+            )}
           </div>
         </div>
       </Section>

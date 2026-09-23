@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Dialog } from "@/components/ui/dialog";
 import { TeamAvatar } from "@/components/ui/team-avatar";

@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import { Calendar, MapPin, Video } from "lucide-react";
 import type { Event } from "@/app/events/actions";
 
@@ -24,6 +25,11 @@ interface Props {
 }
 
 export function LumaEventCard({ event }: Props) {
+  const hostNames = event.hosts?.map((host) => `${host.first_name ?? ""} ${host.last_name ?? ""}`) ?? [];
+  const renderedGuests =
+    event.featured_guests?.filter((g) => g.avatar_url).slice(0, AVATAR_DIMENSIONS.default.guestCount) ?? [];
+  const overflowCount = (event.guest_count ?? 0) - renderedGuests.length;
+
   const dateObj = new Date(event.start_at);
   const formattedTime = dateObj.toLocaleTimeString("en-US", {
     hour: "numeric",
@@ -63,7 +69,7 @@ export function LumaEventCard({ event }: Props) {
                   (host, i) =>
                     host.avatar_url && (
                       <Avatar
-                        key={host.avatar_url ?? i}
+                        key={i}
                         size={{
                           default: AVATAR_DIMENSIONS.default.hostSize,
                           sm: AVATAR_DIMENSIONS.sm.hostSize,
@@ -78,16 +84,10 @@ export function LumaEventCard({ event }: Props) {
                 )}
               </div>
               <span className="text-sm text-muted-foreground sm:hidden">
-                {buildHostNameSummary(
-                  event.hosts?.map((host) => `${host.first_name ?? ""} ${host.last_name ?? ""}`) ?? [],
-                  AVATAR_DIMENSIONS.default.hostCount,
-                )}
+                {buildHostNameSummary(hostNames, AVATAR_DIMENSIONS.default.hostCount)}
               </span>
               <span className="hidden text-sm text-muted-foreground sm:inline">
-                {buildHostNameSummary(
-                  event.hosts?.map((host) => `${host.first_name ?? ""} ${host.last_name ?? ""}`) ?? [],
-                  AVATAR_DIMENSIONS.sm.hostCount,
-                )}
+                {buildHostNameSummary(hostNames, AVATAR_DIMENSIONS.sm.hostCount)}
               </span>
             </div>
 
@@ -101,26 +101,22 @@ export function LumaEventCard({ event }: Props) {
                   } as CSSProperties
                 }
               >
-                {event.featured_guests?.slice(0, AVATAR_DIMENSIONS.default.guestCount).map(
-                  (guest, i) =>
-                    guest.avatar_url && (
-                      <Avatar
-                        key={guest.avatar_url ?? i}
-                        size={{
-                          default: AVATAR_DIMENSIONS.default.guestSize,
-                          sm: AVATAR_DIMENSIONS.sm.guestSize,
-                        }}
-                        name={guest.name ?? ""}
-                        content={{
-                          type: "url",
-                          url: guest.avatar_url,
-                        }}
-                      />
-                    ),
-                )}
-                {event.guest_count - AVATAR_DIMENSIONS.default.guestCount > 0 && (
+                {renderedGuests.map((guest, i) => (
                   <Avatar
-                    key="extra-guest-count"
+                    key={i}
+                    size={{
+                      default: AVATAR_DIMENSIONS.default.guestSize,
+                      sm: AVATAR_DIMENSIONS.sm.guestSize,
+                    }}
+                    name={guest.name ?? ""}
+                    content={{
+                      type: "url",
+                      url: guest.avatar_url!,
+                    }}
+                  />
+                ))}
+                {overflowCount > 0 && (
+                  <Avatar
                     size={{
                       default: AVATAR_DIMENSIONS.default.guestSize,
                       sm: AVATAR_DIMENSIONS.sm.guestSize,
@@ -128,7 +124,7 @@ export function LumaEventCard({ event }: Props) {
                     name=""
                     content={{
                       type: "string",
-                      value: `+${event.guest_count - AVATAR_DIMENSIONS.default.guestCount}`,
+                      value: `+${overflowCount}`,
                     }}
                   />
                 )}
@@ -162,7 +158,7 @@ export function LumaEventCard({ event }: Props) {
           <div
             className={`col-[1_/_span_1] row-[1_/_span_1] aspect-square h-full rounded-t-sm sm:col-[2_/_span_1] sm:row-[1_/_span_1] sm:rounded-sm`}
             style={{
-              background: `url(${event.cover_url})`,
+              background: event.cover_url ? `url("${event.cover_url}")` : "none",
               backgroundSize: "cover",
             }}
           />
@@ -192,17 +188,17 @@ type AvatarProps = {
 const Avatar = ({ name, content, size }: AvatarProps) => {
   if (content.type === "url") {
     return (
-      <img
-        src={content.url}
-        alt={name}
+      <div
         style={
           {
             "--size-default": `${size.default}px`,
             "--size-sm": `${size.sm}px`,
           } as CSSProperties
         }
-        className="avatar rounded-full border-2 border-background"
-      />
+        className="avatar relative overflow-hidden rounded-full border-2 border-background"
+      >
+        <Image src={content.url} alt={name} fill sizes={`${size.default}px`} className="object-cover" />
+      </div>
     );
   }
   return (

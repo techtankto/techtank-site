@@ -120,7 +120,7 @@ community they believe in. Thank you to everyone who shipped it 💙
 - [Tony Ko](https://github.com/tkodev)
 - [Rohan Villoth](https://github.com/RohanVilloth)
 - [Justin Bento](https://github.com/Justin-Bento)
-- [Jacky](https://github.com/jackytea)
+- [Jacky Tea](https://github.com/jackytea)
 - [John Malapit](https://github.com/johnmal-dev)
 - [Danyal Imran](https://github.com/imRanDan)
 - [Niki Fereidooni](https://github.com/nfereidooni)

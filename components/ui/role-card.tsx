@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { Check, Mic, Building, Heart, Calendar, Star, HandCoins } from "lucide-react";

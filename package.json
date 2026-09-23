@@ -9,7 +9,7 @@
   "type": "module",
   "sideEffects": false,
   "scripts": {
-    "knip": "knip --fix --format --include-entry-exports --allow-remove-files",
+    "knip": "tsx scripts/knip.ts",
     "validate": "pnpm format:check && pnpm lint && pnpm type:check",
     "fix": "pnpm knip && pnpm format && pnpm lint:fix",
     "type:check": "pnpm exec tsc --noEmit",
