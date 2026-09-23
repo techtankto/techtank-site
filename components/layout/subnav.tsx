@@ -16,7 +16,7 @@ export function Subnav(props: Props) {
       <div className="flex items-center justify-start py-3">
         <div className="flex flex-wrap items-center justify-center gap-1">
           {props.items.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+            const isActive = pathname === item.href;
             return (
               <Button key={item.href} variant="nav" size="sm" isActive={isActive} asChild>
                 <Link href={item.href}>{item.name}</Link>
