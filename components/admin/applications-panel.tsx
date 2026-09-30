@@ -7,12 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { ApplicantRow } from "@/components/admin/applicant-row";
-import { useTaskApplications } from "@/components/admin/use-task-applications";
+import { useTaskApplications } from "@/hooks/use-task-applications";
 
 interface ApplicationsPanelProps {
   taskId: string;
   taskTitle: string;
   assignedName: string | null;
+  assignedApplicationId: string | null;
   expanded: boolean;
   onAssign: (name: string | null) => Promise<void>;
   onAssignApplication: (applicationId: string) => Promise<void>;
@@ -22,6 +23,7 @@ export function ApplicationsPanel({
   taskId,
   taskTitle,
   assignedName,
+  assignedApplicationId,
   expanded,
   onAssign,
   onAssignApplication,
@@ -41,7 +43,7 @@ export function ApplicationsPanel({
     requestUnassign,
     closeConfirm,
     runConfirm,
-  } = useTaskApplications({ taskId, assignedName, expanded, onAssign, onAssignApplication });
+  } = useTaskApplications({ taskId, assignedApplicationId, expanded, onAssign, onAssignApplication });
 
   const [manualName, setManualName] = useState("");
 
@@ -98,7 +100,7 @@ export function ApplicationsPanel({
             <ApplicantRow
               key={app.id}
               app={app}
-              isAssignee={assignedName === app.applicant_name}
+              isAssignee={assignedApplicationId === app.id}
               busy={busy}
               onAssign={requestAssign}
               onUnassign={requestUnassign}

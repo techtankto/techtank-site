@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, GripVertical, Pencil, Trash2, Users } from "lucide-react";
@@ -30,9 +30,7 @@ export function TaskRow({ task, expanded, onToggle, onEdit, onDelete, onAssign, 
   // Latches on first expand so the collapse animation has content, without
   // mounting every row's panel up front.
   const [hasOpened, setHasOpened] = useState(expanded);
-  useEffect(() => {
-    if (expanded) setHasOpened(true);
-  }, [expanded]);
+  if (expanded && !hasOpened) setHasOpened(true);
 
   const style: CSSProperties = { transform: CSS.Transform.toString(transform), transition };
 
@@ -120,6 +118,7 @@ export function TaskRow({ task, expanded, onToggle, onEdit, onDelete, onAssign, 
                 taskId={task.id}
                 taskTitle={task.title}
                 assignedName={task.assigned_name}
+                assignedApplicationId={task.assigned_application_id}
                 expanded={expanded}
                 onAssign={onAssign}
                 onAssignApplication={onAssignApplication}

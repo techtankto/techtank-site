@@ -11,7 +11,7 @@ export type PendingAction = { kind: "assign"; app: ContributionTaskApplication }
 
 interface Options {
   taskId: string;
-  assignedName: string | null;
+  assignedApplicationId: string | null;
   expanded: boolean;
   onAssign: (name: string | null) => Promise<void>;
   onAssignApplication: (applicationId: string) => Promise<void>;
@@ -24,7 +24,13 @@ interface Options {
  * sharing one derived `busy`, so their errors stay on their own surfaces
  * (inline vs. the confirm dialog).
  */
-export function useTaskApplications({ taskId, assignedName, expanded, onAssign, onAssignApplication }: Options) {
+export function useTaskApplications({
+  taskId,
+  assignedApplicationId,
+  expanded,
+  onAssign,
+  onAssignApplication,
+}: Options) {
   const [applications, setApplications] = useState<ContributionTaskApplication[] | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
@@ -58,13 +64,21 @@ export function useTaskApplications({ taskId, assignedName, expanded, onAssign, 
   // Refetch on every expand — applications arrive while the page is open, so a
   // cached first result would go stale against the header count. Old rows stay
   // on screen during the refetch so reopening doesn't flash a spinner.
-  const resetManual = manual.reset; // stable ref, safe as an effect dependency
+  // Clearing the last session's messages happens during render, on the
+  // collapsed-to-expanded transition, rather than as setState in the effect.
+  const [wasExpanded, setWasExpanded] = useState(expanded);
+  if (expanded !== wasExpanded) {
+    setWasExpanded(expanded);
+    if (expanded) {
+      setLoadError(null);
+      setNotice(null);
+      manual.reset();
+    }
+  }
+
   useEffect(() => {
     if (!expanded) return;
     let active = true;
-    setLoadError(null);
-    setNotice(null);
-    resetManual();
     listTaskApplications(taskId)
       .then((rows) => {
         if (active) setApplications(rows);
@@ -75,7 +89,7 @@ export function useTaskApplications({ taskId, assignedName, expanded, onAssign, 
     return () => {
       active = false;
     };
-  }, [expanded, taskId, resetManual]);
+  }, [expanded, taskId]);
 
   const assignManual = (name: string, message: string) => {
     setNotice(null);
@@ -111,7 +125,7 @@ export function useTaskApplications({ taskId, assignedName, expanded, onAssign, 
     pendingAction,
     // The assignee is either a listed applicant (unassign on their row) or a
     // hand-typed name (unassign in the header) — one control either way.
-    assigneeIsApplicant: applications?.some((app) => app.applicant_name === assignedName) ?? false,
+    assigneeIsApplicant: applications?.some((app) => app.id === assignedApplicationId) ?? false,
     assignApp: pendingAction?.kind === "assign" ? pendingAction.app : null,
     assignManual,
     requestAssign,

@@ -108,6 +108,8 @@ export const contributionTaskSchema = z.object({
 export type ContributionTask = z.infer<typeof contributionTaskSchema>;
 
 export const adminContributionTaskSchema = contributionTaskSchema.extend({
+  // Set when the assignee is a listed applicant; null for a hand-typed name.
+  assigned_application_id: z.string().nullable(),
   application_count: z.coerce.number(),
 });
 export type AdminContributionTask = z.infer<typeof adminContributionTaskSchema>;
