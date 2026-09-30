@@ -11,11 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function TeamPage() {
-  const board = teamGroups[0];
-  const coreTeam = teamGroups[1];
-  const websiteTeam = teamGroups[2];
-  const socialMedia = teamGroups[3];
-  const volunteers = teamGroups[4];
+  const [board, coreTeam, designTeam, websiteTeam, socialMedia, volunteers] = teamGroups;
 
   return (
     <>
@@ -71,23 +67,33 @@ export default function TeamPage() {
         </div>
       </Section>
 
-      {/* Website + Social side-by-side */}
+      {/* Website + Social/Design side-by-side */}
       <Section background="brand-soft">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeader overline="Website team" title="Developers & designers" className="mb-8" />
+            <SectionHeader overline="Website team" title="Developers" className="mb-8" />
             <div className="grid gap-3">
               {websiteTeam.members.map((m) => (
                 <TeamCard key={m.name} variant="compact" member={m} />
               ))}
             </div>
           </div>
-          <div>
-            <SectionHeader overline="Social media" title="Content & community" className="mb-8" />
-            <div className="grid gap-3">
-              {socialMedia.members.map((m) => (
-                <TeamCard key={m.name} variant="compact" member={m} />
-              ))}
+          <div className="flex flex-col gap-12">
+            <div>
+              <SectionHeader overline="Social media" title="Content & community" className="mb-8" />
+              <div className="grid gap-3">
+                {socialMedia.members.map((m) => (
+                  <TeamCard key={m.name} variant="compact" member={m} />
+                ))}
+              </div>
+            </div>
+            <div>
+              <SectionHeader overline="Design team" title="Designers" className="mb-8" />
+              <div className="grid gap-3">
+                {designTeam.members.map((m) => (
+                  <TeamCard key={m.name} variant="compact" member={m} />
+                ))}
+              </div>
             </div>
           </div>
         </div>

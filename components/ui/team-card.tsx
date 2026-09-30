@@ -17,9 +17,15 @@ const teamCardVariants = cva("group relative w-full text-left", {
       compact:
         "flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-ring/30 hover:bg-accent/30",
     },
+    /** Applied to `compact` cards that open a profile dialog; `board` and `core` carry these styles already. */
+    interactive: {
+      true: "cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+      false: "",
+    },
   },
   defaultVariants: {
     variant: "core",
+    interactive: false,
   },
 });
 
@@ -77,29 +83,42 @@ function CompactBody({ name, pronouns, role }: TeamMember) {
 export function TeamCard({ member, variant = "core", className }: TeamCardProps) {
   const [open, setOpen] = useState(false);
   const titleId = useId();
-  const { name, avatar } = member;
+  const { name, avatar, bio } = member;
   const avatarSize = avatarSizes[variant ?? "core"];
+  const isCompact = variant === "compact";
+  const interactive = !isCompact || Boolean(bio);
 
-  if (variant === "compact") {
-    return (
-      <div className={cn(teamCardVariants({ variant }), className)}>
-        <TeamAvatar name={name} avatar={avatar} size={avatarSize} />
+  const body = (
+    <>
+      {variant === "board" && (
+        <>
+          <div className="light pointer-events-none absolute -top-8 -right-8 size-40 rounded-full bg-background/10 dark:bg-background/5" />
+          <div className="light pointer-events-none absolute -bottom-12 -left-6 size-32 rounded-full bg-background/10 dark:bg-background/5" />
+        </>
+      )}
+      <TeamAvatar name={name} avatar={avatar} size={avatarSize} />
+      {variant === "board" ? (
+        <BoardBody {...member} />
+      ) : isCompact ? (
         <CompactBody {...member} />
-      </div>
-    );
+      ) : (
+        <CoreBody {...member} />
+      )}
+    </>
+  );
+
+  if (!interactive) {
+    return <div className={cn(teamCardVariants({ variant }), className)}>{body}</div>;
   }
 
   return (
     <>
-      <button type="button" onClick={() => setOpen(true)} className={cn(teamCardVariants({ variant }), className)}>
-        {variant === "board" && (
-          <>
-            <div className="light pointer-events-none absolute -top-8 -right-8 size-40 rounded-full bg-background/10 dark:bg-background/5" />
-            <div className="light pointer-events-none absolute -bottom-12 -left-6 size-32 rounded-full bg-background/10 dark:bg-background/5" />
-          </>
-        )}
-        <TeamAvatar name={name} avatar={avatar} size={avatarSize} />
-        {variant === "board" ? <BoardBody {...member} /> : <CoreBody {...member} />}
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className={cn(teamCardVariants({ variant, interactive: isCompact }), className)}
+      >
+        {body}
       </button>
       <TeamProfileDialog member={member} open={open} onClose={() => setOpen(false)} titleId={titleId} />
     </>
