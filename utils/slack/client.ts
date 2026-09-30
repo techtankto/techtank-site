@@ -16,7 +16,7 @@ export type SlackFailure = string | null;
 // ── organizer channel (incoming webhook) ─────────────────────
 
 export async function notifySlack(message: SlackMessage): Promise<void> {
-  const webhookUrl = Deno.env.get("SLACK_WEBHOOK_URL");
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
   if (!webhookUrl) {
     console.log("[slack] SLACK_WEBHOOK_URL unset — skipping notification:\n" + message.text);
     return;
@@ -75,7 +75,7 @@ export async function messageSlackUsers(userIds: string[], message: SlackMessage
   const ids = userIds.filter(Boolean);
   if (ids.length === 0) return "no Slack user id";
 
-  const token = Deno.env.get("SLACK_BOT_TOKEN");
+  const token = process.env.SLACK_BOT_TOKEN;
   if (!token) {
     console.log(`[slack] SLACK_BOT_TOKEN unset — would message ${ids.join(", ")}`);
     return "no bot token configured";

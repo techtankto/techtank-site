@@ -19,7 +19,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { TaskEditor } from "@/components/admin/task-editor";
 import { TaskRow } from "@/components/admin/task-row";
-import { useContributionBoard } from "@/components/admin/use-contribution-board";
+import { useContributionBoard } from "@/hooks/use-contribution-board";
 import type { AdminContributionTask } from "@/constants/contribution-board";
 
 interface AdminContributionBoardProps {

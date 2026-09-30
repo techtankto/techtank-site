@@ -49,26 +49,25 @@ See `scripts/instagram/README.md` for Instagram-specific environment variables.
 
 ### Scripts
 
-| Command                | What it does                        |
-| ---------------------- | ----------------------------------- |
-| `pnpm dev`             | Start the dev server with Turbopack |
-| `pnpm build`           | Production build                    |
-| `pnpm start`           | Serve the production build          |
-| `pnpm lint`            | Lint with oxlint                    |
-| `pnpm type:check`      | Type-check with tsc (no emit)       |
-| `pnpm format`          | Format the repo with oxfmt          |
-| `pnpm format:check`    | Check formatting without writing    |
-| `pnpm db:start`        | Start the local Supabase stack      |
-| `pnpm db:stop`         | Stop the local Supabase stack       |
-| `pnpm db:reset`        | Reapply migrations + seed           |
-| `pnpm functions:serve` | Serve the edge functions locally    |
+| Command             | What it does                        |
+| ------------------- | ----------------------------------- |
+| `pnpm dev`          | Start the dev server with Turbopack |
+| `pnpm build`        | Production build                    |
+| `pnpm start`        | Serve the production build          |
+| `pnpm lint`         | Lint with oxlint                    |
+| `pnpm type:check`   | Type-check with tsc (no emit)       |
+| `pnpm format`       | Format the repo with oxfmt          |
+| `pnpm format:check` | Check formatting without writing    |
+| `pnpm db:start`     | Start the local Supabase stack      |
+| `pnpm db:stop`      | Stop the local Supabase stack       |
+| `pnpm db:reset`     | Reapply migrations + seed           |
 
 ### Backend (Supabase)
 
 The app's dynamic features — a task board (`/tasks`) and its organizer
-back office (`/admin/tasks`) — are backed by Supabase (Postgres + two
-Deno edge functions) under [`db/`](./db). The rest of the app runs
-without it.
+back office (`/admin/tasks`) — are backed by Supabase Postgres under
+[`db/`](./db); Slack notifications run in the app's server actions. The
+rest of the app runs without it.
 
 Requires [Docker](https://www.docker.com/). The Supabase CLI is pinned
 as a devDependency, so use the `pnpm db:*` scripts rather than a global
@@ -78,7 +77,7 @@ install (an older global CLI will silently ignore parts of
 ```bash
 pnpm db:start                 # boots Postgres, Studio, etc.
 cp .env.example .env.local    # then paste the anon key from db:start output
-cp db/.env.example db/.env    # Slack credentials + function secrets
+cp db/.env.example db/.env    # Slack OIDC credentials
 pnpm dev
 ```
 
@@ -114,11 +113,10 @@ and your **workspace / team ID** (`T…`, from _About this workspace_). Then:
    posting. Name it **Tanky**, install it, and copy the `xoxb-…` **Bot
    User OAuth Token**. Add an **Incoming Webhook** on the organizers'
    channel for the alert.
-4. **Secrets** — `db/.env`: `SLACK_OIDC_CLIENT_ID/SECRET`,
-   `SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`, `PUBLIC_SITE_URL`. `.env.local`:
-   `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY`, `NEXT_PUBLIC_SLACK_TEAM_ID`.
-   Hosted: OIDC creds in the dashboard, function secrets via
-   `supabase secrets set`, `NEXT_PUBLIC_*` in Vercel.
+4. **Secrets** — `db/.env`: `SLACK_OIDC_CLIENT_ID/SECRET`. `.env.local`:
+   `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY`, `NEXT_PUBLIC_SLACK_TEAM_ID`,
+   `SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`, `PUBLIC_SITE_URL`. Hosted: OIDC
+   creds in the Supabase dashboard, everything else in Vercel.
 5. **Lock the workspace** — `NEXT_PUBLIC_SLACK_TEAM_ID` only pre-selects
    the workspace on the consent screen; the database is the real gate. Set
    it, or the check stays disabled (fails open):
@@ -180,7 +178,7 @@ are route groups: they scope a shared layout without adding a URL segment.
 ├── constants/                      # Structured data (events, sponsors, board vocabulary)
 ├── hooks/                          # Reusable React hooks (useMutation)
 ├── utils/                          # Helpers (theme, Supabase clients)
-├── db/                             # Supabase — migrations, seed, edge functions
+├── db/                             # Supabase — config, migrations, seed
 ├── middleware.ts                   # Admin session refresh + route guard
 ├── docs/prd/                       # Product requirements pipeline (01-brief → 06-plan)
 ├── .agents/skills/                 # Vendored house-standard skills (copied, portable)
@@ -206,23 +204,15 @@ Vercel deploys the whole app; the Supabase-backed features (`/tasks` and
 `/admin/tasks`) additionally need the Supabase project deployed.
 
 ```bash
-# 1. Push the schema
 pnpm exec supabase link --project-ref <ref> --workdir db
 pnpm exec supabase db push --workdir db
-
-# 2. Deploy both edge functions + their secrets
-pnpm exec supabase functions deploy apply-to-task --workdir db
-pnpm exec supabase functions deploy assign-task  --workdir db
-pnpm exec supabase secrets set --workdir db \
-  SLACK_WEBHOOK_URL="https://hooks.slack.com/services/..." \
-  SLACK_BOT_TOKEN="xoxb-..." \
-  PUBLIC_SITE_URL="https://www.techtankto.com"
 ```
 
 Then finish the production wiring: configure Slack for prod (the redirect
 URL is the hosted project's `https://<ref>.supabase.co/auth/v1/callback` —
 no tunnel); set `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` and
-`NEXT_PUBLIC_SLACK_TEAM_ID` in Vercel (read at request time — if missing,
+`NEXT_PUBLIC_SLACK_TEAM_ID`, plus `SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`,
+and `PUBLIC_SITE_URL`, in Vercel (read at request time — if missing,
 the task routes error rather than show an empty board); and set
 `app_settings.slack_team_id` + seed the first organizer in the production
 DB (steps 5–6 above). A missing notification secret degrades to a log

@@ -5,6 +5,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import { useMutation } from "@/hooks/use-mutation";
 import type { AdminContributionTask } from "@/constants/contribution-board";
 import {
+  assignApplication,
   assignContributionTask,
   deleteContributionTask,
   listContributionTasks,
@@ -12,7 +13,6 @@ import {
   saveContributionTask,
   type SaveContributionTaskInput,
 } from "@/app/admin/tasks/actions";
-import { assignApplication } from "@/app/admin/tasks/assign-application";
 
 /**
  * All of the admin board's async state — the task list plus the save, delete,
@@ -91,7 +91,8 @@ export function useContributionBoard(initialTasks: AdminContributionTask[]) {
     await refetch();
   };
   const assignFromApplication = async (applicationId: string) => {
-    await assignApplication(applicationId);
+    const { error } = await assignApplication(applicationId);
+    if (error) throw new Error(error);
     await refetch();
   };
 

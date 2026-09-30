@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SlackIcon } from "@/components/ui/icons";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation } from "@/hooks/use-mutation";
+import { applyToTask } from "@/app/(site)/tasks/[id]/actions";
 import { isTakingApplications, type ContributionTask } from "@/constants/contribution-board";
 
 interface ApplyPanelProps {
@@ -43,24 +44,9 @@ export function ApplyPanel({ task }: ApplyPanelProps) {
 
   // Resolves to the outcome so a server-side "closed" reads differently from an error.
   const apply = useMutation(async (msg: string) => {
-    const { data } = await createClient().auth.getSession();
-    const token = data.session?.access_token;
-    if (!token) throw new Error("Your session expired. Connect Slack again to apply.");
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SUPABASE_URL}/functions/v1/apply-to-task`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ task_id: task.id, message: msg }),
-    });
-    if (res.status === 409) return "closed" as const;
-
-    const body = (await res.json()) as { ok?: boolean; error?: string };
-    if (!res.ok || !body.ok) throw new Error(body.error ?? "Something went wrong. Please try again.");
-    return "applied" as const;
+    const result = await applyToTask(task.id, msg);
+    if (result.status === "error") throw new Error(result.message);
+    return result.status;
   });
 
   const connect = useMutation(async () => {

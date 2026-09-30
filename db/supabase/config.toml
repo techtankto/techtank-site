@@ -112,18 +112,9 @@ skip_nonce_check = false
 # nothing in this project sends mail.
 sign_in_sign_ups = 30
 
-# Applying now requires a Slack-verified session, so the gateway
-# rejects unauthenticated calls before they reach our code. This is
-# what closes the old anonymous spam / email-relay surface.
-[functions.apply-to-task]
-verify_jwt = true
-
-# Assigning an applicant also requires a signed-in admin.
-[functions.assign-task]
-verify_jwt = true
-
+# No edge functions: Slack side effects run in the app's server actions.
 [edge_runtime]
-enabled = true
+enabled = false
 policy = "oneshot"
 inspector_port = 8283
 

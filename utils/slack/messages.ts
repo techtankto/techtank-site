@@ -1,4 +1,4 @@
-import type { SlackMessage } from "./slack.ts";
+import type { SlackMessage } from "@/utils/slack/client";
 
 // Slack message templates. Each returns Block Kit `blocks` plus a plain-text
 // `text` fallback for notifications.
@@ -150,3 +150,6 @@ export function assignmentMessage(p: AssignmentParams): SlackMessage {
     ],
   };
 }
+
+/** Base for links in Slack messages; Slack needs absolute URLs. */
+export const SITE_URL = process.env.PUBLIC_SITE_URL ?? "https://www.techtankto.com";

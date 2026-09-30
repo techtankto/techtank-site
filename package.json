@@ -23,7 +23,6 @@
     "db:stop": "supabase stop --workdir db",
     "db:status": "supabase status --workdir db",
     "db:reset": "supabase db reset --workdir db",
-    "functions:serve": "supabase functions serve --workdir db --env-file db/.env",
     "format": "oxfmt .",
     "lint": "oxlint .",
     "test": "vitest run",

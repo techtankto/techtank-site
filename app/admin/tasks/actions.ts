@@ -1,6 +1,8 @@
 "use server";
 
 import { createServerSupabaseClient } from "@/utils/supabase/server";
+import { messageSlackUsers } from "@/utils/slack/client";
+import { SITE_URL, assignmentMessage } from "@/utils/slack/messages";
 import {
   adminContributionTaskSchema,
   contributionTaskApplicationSchema,
@@ -74,4 +76,67 @@ export async function listTaskApplications(taskId: string): Promise<Contribution
   });
   if (error) throw new Error(error.message);
   return contributionTaskApplicationSchema.array().parse(data ?? []);
+}
+
+interface AssignRpcResult {
+  status: "assigned" | "not_found" | "closed";
+  task_id?: string;
+  task_title?: string;
+  assignee_name?: string;
+  assignee_slack_user_id?: string | null;
+  admin_slack_user_id?: string | null;
+}
+
+/**
+ * Assign a listed applicant and introduce them to the assigning organizer
+ * on Slack. Returns an error message rather than throwing, since Next
+ * redacts thrown server-action errors in production.
+ */
+export async function assignApplication(applicationId: string): Promise<{ error: string | null }> {
+  const supabase = await createServerSupabaseClient();
+  const { data, error } = await supabase.rpc("admin_assign_application", { p_application_id: applicationId });
+  if (error) {
+    if (error.code === "42501") return { error: "Not authorized." };
+    console.error("[assignApplication] rpc failed:", error.message);
+    return { error: "Couldn't assign that applicant." };
+  }
+
+  const result = data as AssignRpcResult;
+  if (result.status === "not_found") return { error: "Application not found." };
+  if (result.status === "closed") return { error: "This task is already marked done. Reopen it before assigning." };
+
+  await notifyAssignment(result, `${SITE_URL}/tasks/${result.task_id}`);
+  return { error: null };
+}
+
+/**
+ * Tell the assignee they're on it: a group DM with the organizer when
+ * possible, else a 1:1 DM naming them. Best-effort; never throws, since the
+ * assignment is already committed.
+ */
+async function notifyAssignment(result: AssignRpcResult, taskUrl: string): Promise<void> {
+  const assigneeSlackId = result.assignee_slack_user_id ?? null;
+  if (!assigneeSlackId) return;
+
+  const adminSlackId = result.admin_slack_user_id ?? null;
+  // A group DM needs a second, different person; self-assignment has no one to group with.
+  const groupWith = adminSlackId && adminSlackId !== assigneeSlackId ? adminSlackId : null;
+
+  const base = {
+    taskTitle: result.task_title ?? "a task",
+    taskUrl,
+    assigneeSlackId,
+    assigneeName: result.assignee_name ?? "you",
+  };
+
+  if (groupWith) {
+    const failure = await messageSlackUsers(
+      [groupWith, assigneeSlackId],
+      assignmentMessage({ ...base, adminSlackId: groupWith, grouped: true }),
+    );
+    if (!failure) return;
+    console.error(`[assignApplication] group DM failed, falling back to solo DM: ${failure}`);
+  }
+
+  await messageSlackUsers([assigneeSlackId], assignmentMessage({ ...base, adminSlackId: groupWith, grouped: false }));
 }

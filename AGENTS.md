@@ -121,9 +121,9 @@ When a skill is added or removed, update this table in the same change.
 ### Backend / Supabase
 
 The **task board** (`/tasks`, public) and its **admin back office**
-(`/admin/tasks`, organizer-only) are backed by Supabase (Postgres + two
-Deno edge functions), all under `db/`; the rest of the app doesn't touch
-it. The code still uses "contribution" internally (`contribution_tasks`,
+(`/admin/tasks`, organizer-only) are backed by Supabase Postgres under
+`db/`, with Slack notifications in the app's server actions; the rest of
+the app doesn't touch it. The code still uses "contribution" internally (`contribution_tasks`,
 `components/contribution/*`, `/admin/tasks`); "Pick a Task" is the
 user-facing name.
 
@@ -131,13 +131,12 @@ user-facing name.
   with any other local Supabase stack on the machine. TechTank is
   `project_id = "techtank"` on the `5452x` block — API `54521`,
   Studio `54523`. Run it with `pnpm db:start` / `db:stop` /
-  `db:reset`; serve the edge functions with `pnpm functions:serve`.
+  `db:reset`.
   Multiple stacks can run at once.
 - **Env:** copy `.env.example` → `.env.local` and fill the anon key
-  from `pnpm db:start` output. Edge-function secrets come from
-  `db/.env.example` → `db/supabase/functions/.env`
-  (`SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`, `PUBLIC_SITE_URL`,
-  `SLACK_OIDC_CLIENT_ID`, `SLACK_OIDC_SECRET`).
+  from `pnpm db:start` output, plus the Slack notification secrets
+  (`SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`, `PUBLIC_SITE_URL`). The Slack
+  OIDC credentials go in `db/.env.example` → `db/.env`.
 - **Everyone signs in with Slack; nobody gets a TechTank account.**
   Applying requires connecting Slack, so an applicant's name, email and
   Slack id come from the verified token rather than the request body.
@@ -158,8 +157,8 @@ user-facing name.
   the UI. Public reads use the anon `get_public_contribution_task(s)`
   RPCs.
 - **This project sends no email at all.** Slack is the only channel:
-  the `apply-to-task` function DMs the applicant their receipt (the bot
-  is **Tanky**) and `assign-task` opens a group DM introducing an
+  the `applyToTask` server action DMs the applicant their receipt (the
+  bot is **Tanky**) and `assignApplication` opens a group DM introducing an
   assignee to the assigning organizer (`SLACK_BOT_TOKEN`, needing
   `chat:write`, `im:write`, and `mpim:write` — a channel is opened
   before posting), then POSTs to `SLACK_WEBHOOK_URL` to alert
@@ -179,9 +178,8 @@ user-facing name.
   from `config.toml` and the provider never turns on.
 - **Homes:** Supabase clients in `utils/supabase/*`; board
   vocabulary/types/helpers in `constants/contribution-board.ts`; data
-  access in `app/**/actions.ts` (server-first, no react-query). The
-  Deno edge tree under `db/` is excluded from `tsconfig`, oxlint, and
-  oxfmt — it has its own runtime.
+  access in `app/**/actions.ts` (server-first, no react-query); Slack
+  helpers and message templates in `utils/slack/*`.
 
 ### After making code changes
 
