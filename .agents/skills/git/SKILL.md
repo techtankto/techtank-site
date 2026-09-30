@@ -1,6 +1,6 @@
 ---
 name: git
-description: Git workflow standards — Conventional Commits, branch naming, the no-AI-attribution rule, and how to review a PR. Use when creating branches, writing commit messages, opening PRs, reviewing a PR, or the user asks how a change should be recorded in git.
+description: Git workflow standards: Conventional Commits, branch naming, the no-AI-attribution rule, and how to review a PR. Use when creating branches, writing commit messages, opening PRs, reviewing a PR, or the user asks how a change should be recorded in git.
 ---
 
 # Git
@@ -10,8 +10,8 @@ How change is recorded.
 ## Workflow
 
 1. **Work on the branch defined for the task at hand.** Never push directly to `main`.
-2. **Create new commits rather than amending.** Never force-push or skip hooks without explicit permission.
-3. **Task PRs target their milestone branch; milestone PRs target the latest `main`.** Work outside a milestone stays on a feature branch and PRs only when explicitly asked.
+2. **Create new commits rather than amending.** Never force-push any branch, no exceptions; never skip hooks without explicit permission.
+3. **Task PRs target their milestone branch; milestone PRs target the latest `main`.** Work outside a milestone stays on a feature branch. No PR opens unless explicitly asked.
 
 ## Conventional Commits
 
@@ -53,10 +53,10 @@ How change is recorded.
    diff, `data` for a constants/data change, `nextjs` for routing, etc.) and check the diff
    against what they specifically say before reaching for anything else.
 2. **Then apply conventional best practice**: correctness, security, performance, test
-   coverage, readability — the concerns a project's skills don't cover because they're
+   coverage, readability: the concerns a project's skills don't cover because they're
    universal rather than project-specific.
 3. **A skill deviation is a finding on its own**, distinct from a generic style nit: name the
    skill and the rule it violates, not just "this looks off."
 4. **When a project has no vendored skills**, or the change touches an area none of them
-   cover, fall back to conventional best practice alone — don't invent a project standard
+   cover, fall back to conventional best practice alone. Never invent a project standard
    that isn't written down anywhere.

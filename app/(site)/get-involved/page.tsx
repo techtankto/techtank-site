@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { Megaphone, Users, Building2, ArrowRight } from "lucide-react";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { RoleCard, roleCardsData } from "@/components/ui/role-card";
+import { RoleCard } from "@/components/ui/role-card";
+import { roleCardsData } from "@/constants/role-cards";
 import { ContactCard } from "@/components/ui/contact-card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { BRAND_ICONS } from "@/components/ui/icons";
 
 export const metadata: Metadata = {
   title: "Get Involved",
@@ -16,39 +17,39 @@ export const metadata: Metadata = {
 
 const communityLinks = [
   {
-    name: "Luma",
-    href: "https://luma.com/techtank",
-    icon: "/images/platforms/Luma_Logo.png",
-  },
-  {
-    name: "Meetup",
-    href: "https://meetup.com/techtank-to",
-    icon: "/images/platforms/Meetup_Logo.png",
-  },
-  {
     name: "Slack",
     href: "/links/slack",
-    icon: "/images/platforms/slack-cropped.png",
+    iconId: "slack",
+  },
+  {
+    name: "Luma",
+    href: "https://luma.com/techtank",
+    iconId: "luma",
   },
   {
     name: "LinkedIn",
     href: "https://linkedin.com/company/techtank-to",
-    icon: "/images/platforms/LinkedIn.png",
+    iconId: "linkedin",
   },
   {
     name: "Instagram",
     href: "https://instagram.com/techtankto",
-    icon: "/images/platforms/Instagram.svg",
+    iconId: "instagram",
   },
   {
     name: "GitHub",
     href: "https://github.com/techtankto",
-    icon: "/images/platforms/GitHub_Invertocat_Logo.svg",
+    iconId: "github",
   },
   {
     name: "YouTube",
     href: "https://youtube.com/@TechTankTo",
-    icon: "/images/platforms/youtube-logo.png",
+    iconId: "youtube",
+  },
+  {
+    name: "Meetup",
+    href: "https://meetup.com/techtank-to",
+    iconId: "meetup",
   },
 ];
 
@@ -98,20 +99,23 @@ export default function GetInvolvedPage() {
               Join the community
             </span>
             <div className="flex flex-wrap gap-4">
-              {communityLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group glass relative w-26 overflow-hidden rounded-2xl transition-transform hover:scale-[1.03]"
-                >
-                  <div className="flex flex-col items-center justify-center gap-1 p-5">
-                    <Image src={link.icon} alt="" width={40} height={40} className="size-10" />
-                    <h2 className="text-sm font-medium text-foreground">{link.name}</h2>
-                  </div>
-                </a>
-              ))}
+              {communityLinks.map((link) => {
+                const Icon = BRAND_ICONS[link.iconId];
+                return (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group glass relative w-26 overflow-hidden rounded-2xl transition-transform hover:scale-[1.03]"
+                  >
+                    <div className="flex flex-col items-center justify-center gap-1 p-5">
+                      {Icon && <Icon className="size-10 text-foreground" />}
+                      <h2 className="text-sm font-medium text-foreground">{link.name}</h2>
+                    </div>
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>

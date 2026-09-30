@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+﻿import { forwardRef } from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/theme";
@@ -15,7 +15,7 @@ const buttonVariants = cva(
           "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive",
-        ghost: "text-foreground/70 hover:bg-foreground/5 hover:text-foreground focus-visible:ring-ring",
+        ghost: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground focus-visible:ring-ring",
         nav: "font-medium text-muted-foreground hover:bg-muted/80 focus-visible:ring-ring dark:hover:bg-white/10 dark:hover:text-white",
       },
       isActive: {
@@ -44,15 +44,48 @@ const buttonVariants = cva(
   },
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
+type ButtonSize = NonNullable<VariantProps<typeof buttonVariants>["size"]>;
+type IconButtonSize = "icon";
+type TextButtonSize = Exclude<ButtonSize, IconButtonSize>;
+
+type ButtonBaseProps = React.ButtonHTMLAttributes<HTMLButtonElement> &
+  Omit<VariantProps<typeof buttonVariants>, "size"> & {
+    asChild?: boolean;
+  };
+
+/**
+ * An icon button takes exactly one name. `label` renders `.sr-only` text, which
+ * translation tools reach; `aria-label` stays for call sites not yet converted.
+ */
+type IconButtonLabel = { label: string; "aria-label"?: never } | { label?: never; "aria-label": string };
+
+export type ButtonProps =
+  | (ButtonBaseProps & {
+      size?: TextButtonSize | null;
+      label?: string;
+    })
+  | (ButtonBaseProps & { size: IconButtonSize } & IconButtonLabel);
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, isActive, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "button";
-    return <Comp className={cn(buttonVariants({ variant, size, isActive }), className)} ref={ref} {...props} />;
+  ({ className, variant, size, isActive, asChild = false, label, children, ...props }, ref) => {
+    const classes = cn(buttonVariants({ variant, size, isActive }), className);
+
+    // Radix `Slot` takes one child, so an `asChild` button carries its name in the
+    // element it renders.
+    if (asChild) {
+      return (
+        <Slot className={classes} ref={ref} {...props}>
+          {children}
+        </Slot>
+      );
+    }
+
+    return (
+      <button className={classes} ref={ref} {...props}>
+        {label ? <span className="sr-only">{label}</span> : null}
+        {children}
+      </button>
+    );
   },
 );
 

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
@@ -13,7 +13,7 @@ const teamCardVariants = cva("group relative w-full text-left", {
     variant: {
       board:
         "poster-card gradient-brand shadow-soft-lg hover:shadow-soft-lg flex cursor-pointer flex-col gap-6 overflow-hidden p-8 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
-      core: "shadow-soft hover:shadow-soft-lg flex cursor-pointer gap-4 rounded-2xl border border-border bg-card p-5 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+      core: "core-card shadow-soft hover:shadow-soft-lg flex cursor-pointer gap-4 rounded-2xl border border-border bg-card p-5 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
       compact:
         "flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-ring/30 hover:bg-accent/30",
     },
@@ -39,7 +39,7 @@ function BoardBody({ name, pronouns, role, bio }: TeamMember) {
       {bio ? (
         <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{bio}</p>
       ) : (
-        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground/40 italic">Bio coming soon</p>
+        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground italic">Bio coming soon</p>
       )}
       <TeamProfileHint />
     </div>
@@ -55,7 +55,7 @@ function CoreBody({ name, pronouns, role, bio }: TeamMember) {
       {bio ? (
         <p className="mt-4 line-clamp-2 text-sm leading-relaxed text-muted-foreground">{bio}</p>
       ) : (
-        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground/40 italic">Bio coming soon</p>
+        <p className="mt-4 line-clamp-2 text-sm text-muted-foreground italic">Bio coming soon</p>
       )}
       <TeamProfileHint />
     </div>

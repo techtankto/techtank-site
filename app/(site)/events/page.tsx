@@ -1,16 +1,17 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LumaIcon, MeetupIcon } from "@/components/ui/icons";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { EventBrowser } from "@/components/ui/event-browser";
-import { LumaCalendarEmbed } from "@/components/ui/luma-calendar-embed";
 import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
+import { TrackedLink } from "@/components/analytics/tracked-link";
 import { events } from "@/constants/events";
+import type { Event } from "@/app/(site)/events/actions";
 
 import { getAllLumaEvents } from "./actions";
+import { LumaEventCard } from "@/components/ui/luma-event-card";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -19,9 +20,18 @@ export const metadata: Metadata = {
 };
 
 export default async function EventsPage() {
-  const LUMA_CALENDAR_ID = process.env.LUMA_CALENDAR_ID;
   const { upcoming: lumaEvents, past: pastLumaEvents } = await getAllLumaEvents();
   const allLumaEvents = [...lumaEvents, ...pastLumaEvents];
+
+  const upcomingEventsGroupedByDate = (() => {
+    const dict: Record<string, Event[]> = {};
+    for (const event of lumaEvents) {
+      const dateStr = event.start_at.slice(0, 10);
+      dict[dateStr] ??= [];
+      dict[dateStr].push(event);
+    }
+    return dict;
+  })();
 
   const staticLumaSlugs = new Set(
     events
@@ -81,34 +91,92 @@ export default async function EventsPage() {
         </p>
         <div className="mb-8 flex flex-wrap justify-center gap-4">
           <Button variant="primary" asChild>
-            <Link href="https://lu.ma/techtank" target="_blank" rel="noopener noreferrer">
+            <TrackedLink
+              href="https://lu.ma/techtank"
+              target="_blank"
+              rel="noopener noreferrer"
+              event="events_cta_click"
+              properties={{ platform: "luma" }}
+            >
               <LumaIcon className="mr-2 size-4" />
               Follow us on Luma
-              <ExternalLink className="ml-2 size-4" />
-            </Link>
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
+            </TrackedLink>
           </Button>
           <Button variant="outline" asChild>
-            <Link href="https://meetup.com/techtank-to" target="_blank" rel="noopener noreferrer">
+            <TrackedLink
+              href="https://meetup.com/techtank-to"
+              target="_blank"
+              rel="noopener noreferrer"
+              event="events_cta_click"
+              properties={{ platform: "meetup" }}
+            >
               <MeetupIcon className="mr-2 size-4" />
               Follow us on Meetup
-              <ExternalLink className="ml-2 size-4" />
-            </Link>
+              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
+            </TrackedLink>
           </Button>
         </div>
-        {LUMA_CALENDAR_ID ? (
-          <div className="flex w-full justify-center">
-            <LumaCalendarEmbed
-              calendarId={LUMA_CALENDAR_ID}
-              className="h-300 w-full overflow-hidden sm:h-250 md:h-225 md:w-3/4 lg:h-200"
+        <div className="flex flex-col items-center">
+          <div
+            className="relative w-full max-w-[680px] border-l border-dashed border-l-black dark:border-l-white"
+            style={{
+              paddingLeft: "24px",
+            }}
+          >
+            <div
+              className="bg-[#f7f8f9] dark:bg-[#212325]"
+              style={{
+                position: "absolute",
+                width: "10px",
+                height: "26px",
+                left: "-5px",
+                top: 0,
+              }}
             />
+            <div
+              className="bg-gradient-to-b from-transparent to-[#f7f8f9] dark:to-[#212325]"
+              style={{
+                position: "absolute",
+                width: "10px",
+                height: "100%",
+                maxHeight: "300px",
+                left: "-5px",
+                bottom: 0,
+              }}
+            />
+            {lumaEvents.length === 0 ? (
+              <p className="text-muted-foreground">No upcoming events scheduled — check back soon.</p>
+            ) : (
+              Object.entries(upcomingEventsGroupedByDate).map(([date, groupEvents]) => (
+                <div key={date}>
+                  <div className="my-4 flex items-center">
+                    <div
+                      className="bg-black dark:bg-white"
+                      style={{
+                        width: "8px",
+                        height: "8px",
+                        borderRadius: "50%",
+                        transform: "translateX(-24px) translateX(-50%)",
+                      }}
+                    />
+                    <div className="text-left font-semibold" style={{}}>
+                      {Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(
+                        new Date(groupEvents[0].start_at),
+                      )}
+                    </div>
+                    <div className="ml-2 text-left text-zinc-500">
+                      {Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date(groupEvents[0].start_at))}
+                    </div>
+                  </div>
+                  {groupEvents.map((event) => (
+                    <LumaEventCard key={event.id} event={event} />
+                  ))}
+                </div>
+              ))
+            )}
           </div>
-        ) : (
-          <div className="flex w-full justify-center">
-            <p className="rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-              Luma calendar is unavailable (missing environment variables).
-            </p>
-          </div>
-        )}
+        </div>
       </Section>
 
       {/* All Events */}

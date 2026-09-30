@@ -1,0 +1,25 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "tags": ["-lintignore"],
+  "ignore": [
+    "app/(site)/events/actions.tsx",
+    "db/**",
+    "components/**/*.{ts,tsx}",
+    "constants/**/*.ts",
+    "hooks/**/*.ts",
+    "stores/**/*.ts",
+    "utils/**/*.ts",
+    "scripts/**/*.ts"
+  ],
+  "ignoreDependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "clsx",
+    "next-themes",
+    "posthog-js",
+    "tailwind-merge",
+    "zod",
+    "zustand"
+  ],
+  "ignoreUnresolved": ["^@/", "^\\."]
+}

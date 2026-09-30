@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, QrCode, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { SlackIcon } from "@/components/ui/icons";
+import { JoinDropdown } from "@/components/ui/join-dropdown";
 import { QrDialog } from "@/components/ui/qr-dialog";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useAppStore } from "@/stores/app-state";
@@ -22,7 +24,12 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+      {/* Named to tell it apart from the section sub-nav below. DOM text (translation
+          tools skip aria-label) in a span (a heading would precede the h1). */}
+      <nav aria-labelledby="primary-nav-name" className="flex items-center justify-start gap-8 px-6 py-4 lg:px-8">
+        <span id="primary-nav-name" className="sr-only">
+          Main
+        </span>
         {/* Logo */}
         <Link href="/" className="flex items-center">
           <Image
@@ -56,40 +63,35 @@ export function Header() {
           ))}
         </div>
 
+        <div className="flex-1"></div>
+
         {/* Desktop CTA + theme toggle */}
         <div className="hidden lg:flex lg:items-center lg:gap-2">
           <ThemeToggle />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setQrDialogOpen(true)}
-            aria-label="Show get involved QR code"
-          >
-            <QrCode className="size-5" />
+          <Button variant="ghost" size="icon" onClick={() => setQrDialogOpen(true)} label="Show get involved QR code">
+            <QrCode className="size-5" aria-hidden="true" />
           </Button>
-          <Button variant="primary" size="sm" asChild>
-            <Link href="/get-involved">Join us</Link>
-          </Button>
+          <JoinDropdown />
         </div>
 
         {/* Mobile: QR + theme toggle + menu button */}
         <div className="flex items-center gap-1 lg:hidden">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setQrDialogOpen(true)}
-            aria-label="Show get involved QR code"
-          >
-            <QrCode className="size-5" />
+          <Button variant="ghost" size="icon" onClick={() => setQrDialogOpen(true)} label="Show get involved QR code">
+            <QrCode className="size-5" aria-hidden="true" />
           </Button>
           <ThemeToggle />
           <button
             type="button"
             className="-m-2 p-2 text-foreground"
             onClick={toggleMobileMenu}
-            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileMenuOpen}
           >
-            {mobileMenuOpen ? <X className="size-6" /> : <Menu className="size-6" />}
+            <span className="sr-only">{mobileMenuOpen ? "Close menu" : "Open menu"}</span>
+            {mobileMenuOpen ? (
+              <X className="size-6" aria-hidden="true" />
+            ) : (
+              <Menu className="size-6" aria-hidden="true" />
+            )}
           </button>
         </div>
       </nav>
@@ -108,9 +110,15 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
-            <div className="border-t border-border pt-4">
-              <Button variant="primary" size="sm" className="w-full" asChild>
-                <Link href="/get-involved">Join us</Link>
+            <div className="space-y-2 border-t border-border pt-4">
+              <Button variant="primary" size="sm" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/get-involved">Get involved</Link>
+              </Button>
+              <Button variant="secondary" size="sm" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
+                <a href="/links/slack" target="_blank" rel="noopener noreferrer">
+                  <SlackIcon className="mr-2 size-4" />
+                  Join our Slack
+                </a>
               </Button>
             </div>
           </div>

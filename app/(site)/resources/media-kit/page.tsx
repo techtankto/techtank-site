@@ -7,6 +7,7 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { BRAND_ICONS } from "@/components/ui/icons";
 import { ContactCard } from "@/components/ui/contact-card";
 import { CopyButton } from "@/components/ui/copy-button";
+import { TrackedLink } from "@/components/analytics/tracked-link";
 import { getAllSocialLinks } from "@/constants/social-links";
 import { CONTACT_EMAIL } from "@/constants/contact";
 
@@ -88,10 +89,15 @@ export default function PressKitPage() {
               attribution.
             </p>
             <Button variant="primary" size="lg" asChild>
-              <a href="/downloads/techtank-media-kit.zip" download>
-                <Download className="mr-2 size-5" />
+              <TrackedLink
+                href="/downloads/techtank-media-kit.zip"
+                download
+                event="asset_download"
+                properties={{ asset: "media-kit-zip" }}
+              >
+                <Download className="mr-2 size-5" aria-hidden="true" />
                 Download all assets (ZIP)
-              </a>
+              </TrackedLink>
             </Button>
           </div>
         </div>
@@ -176,20 +182,25 @@ export default function PressKitPage() {
         </div>
 
         {/* Logo Download */}
-        <a
+        <TrackedLink
           href={logoDownload.href}
           download
+          event="asset_download"
+          properties={{ asset: "logos" }}
           className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-ring/50"
         >
           <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-background">
-            <FileText className="size-6 text-ring" />
+            <FileText className="size-6 text-ring" aria-hidden="true" />
           </div>
           <div className="min-w-0 flex-1">
             <p className="font-semibold text-foreground transition-colors group-hover:text-ring">{logoDownload.name}</p>
             <p className="text-sm text-muted-foreground">{logoDownload.description}</p>
           </div>
-          <Download className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
-        </a>
+          <Download
+            className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring"
+            aria-hidden="true"
+          />
+        </TrackedLink>
       </Section>
 
       {/* Brand Colors */}
@@ -246,7 +257,7 @@ export default function PressKitPage() {
                 className="group flex items-center gap-4 rounded-xl border border-border bg-card p-5 transition-all hover:border-ring/50"
               >
                 <div className="flex size-12 shrink-0 items-center justify-center rounded-lg bg-ring/10">
-                  <FileText className="size-6 text-ring" />
+                  <FileText className="size-6 text-ring" aria-hidden="true" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="font-semibold text-foreground transition-colors group-hover:text-ring">
@@ -255,9 +266,15 @@ export default function PressKitPage() {
                   <p className="text-sm text-muted-foreground">{resource.description}</p>
                 </div>
                 {resource.internal ? (
-                  <ExternalLink className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
+                  <ExternalLink
+                    className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring"
+                    aria-hidden="true"
+                  />
                 ) : (
-                  <Download className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring" />
+                  <Download
+                    className="size-5 shrink-0 text-muted-foreground transition-colors group-hover:text-ring"
+                    aria-hidden="true"
+                  />
                 )}
               </Wrapper>
             );
@@ -282,7 +299,7 @@ export default function PressKitPage() {
                     <a href={link.url} target="_blank" rel="noopener noreferrer">
                       {Icon && <Icon className="mr-2 size-4" />}
                       {link.name}
-                      <ExternalLink className="ml-2 size-4" />
+                      <ExternalLink className="ml-2 size-4" aria-hidden="true" />
                     </a>
                   </Button>
                 );

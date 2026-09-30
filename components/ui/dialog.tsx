@@ -42,28 +42,26 @@ export function Dialog({ open, onClose, className, children }: DialogProps) {
           <DialogPrimitive.Content
             aria-describedby={undefined}
             className={cn(
-              "shadow-soft-lg relative flex max-h-[85vh] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-border bg-background text-foreground outline-none",
-              "md:max-w-xl lg:max-w-2xl",
+              "shadow-soft-lg relative flex max-h-[85dvh] w-full max-w-md flex-col overflow-hidden rounded-2xl border border-border bg-background text-foreground outline-none",
+              "md:max-h-[80dvh] md:max-w-xl lg:max-w-2xl",
               "data-[state=open]:animate-[dialog-content-in_200ms_ease-out]",
               "data-[state=closed]:animate-[dialog-content-out_150ms_ease-in]",
               "motion-reduce:animate-none",
               className,
             )}
           >
-            <DialogPrimitive.Close asChild>
-              {/* Floats in the corner so it never adds an empty band above the title. */}
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                aria-label="Close dialog"
-                className="absolute top-4 right-4 z-10 size-9"
-              >
-                <X className="size-5" />
-              </Button>
-            </DialogPrimitive.Close>
+            {/* The close button gets its own row so a long title never runs under it. */}
+            <div className="flex shrink-0 items-center justify-end px-4 pt-4">
+              <DialogPrimitive.Close asChild>
+                <Button type="button" variant="ghost" size="icon" label="Close dialog" className="size-11">
+                  <X className="size-5" aria-hidden="true" />
+                </Button>
+              </DialogPrimitive.Close>
+            </div>
 
-            <div className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden p-6 md:p-8">{children}</div>
+            <div className="flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-6 pb-6 md:px-8 lg:px-10">
+              {children}
+            </div>
           </DialogPrimitive.Content>
         </div>
       </DialogPrimitive.Portal>

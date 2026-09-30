@@ -155,7 +155,8 @@ are route groups: they scope a shared layout without adding a URL segment.
 │   │   │   ├── speak-or-facilitate/#   /speak-or-facilitate  Speaker/facilitator intake
 │   │   │   ├── host/               #   /host              Host intake
 │   │   │   ├── sponsor/            #   /sponsor           Sponsor intake
-│   │   │   └── organizer/          #   /organizer         Organizer intake
+│   │   │   ├── organizer/          #   /organizer         Organizer intake
+│   │   │   └── donate/             #   /donate            (via next.config rewrites) Interac e-transfer donation info
 │   │   ├── tasks/                  # /tasks               Public board of tasks to pick up + apply
 │   │   ├── legal/                  # /legal               Legal documents (shared layout)
 │   │   │   ├── terms-of-service/   #   /terms-of-service
@@ -240,7 +241,7 @@ community they believe in. Thank you to everyone who shipped it 💙
 - [Tony Ko](https://github.com/tkodev)
 - [Rohan Villoth](https://github.com/RohanVilloth)
 - [Justin Bento](https://github.com/Justin-Bento)
-- [Jacky](https://github.com/jackytea)
+- [Jacky Tea](https://github.com/jackytea)
 - [John Malapit](https://github.com/johnmal-dev)
 - [Danyal Imran](https://github.com/imRanDan)
 - [Niki Fereidooni](https://github.com/nfereidooni)

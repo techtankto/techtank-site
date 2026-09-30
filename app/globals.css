@@ -24,6 +24,10 @@
   --color-muted: #ebf3f4;
   --color-muted-foreground: #4a6670;
 
+  /* Warm accent text for overlines/hover links — meets AA on light surfaces,
+     unlike raw amber-dark used as text on some backgrounds. */
+  --color-overline: #8a5200;
+
   --color-border: rgba(27, 75, 90, 0.12);
   --color-input: rgba(27, 75, 90, 0.18);
   --color-ring: #2a6b7c;
@@ -85,6 +89,10 @@
   --color-muted: #ebf3f4;
   --color-muted-foreground: #4a6670;
 
+  /* Warm accent text for overlines/hover links — meets AA on light surfaces,
+     unlike raw amber-dark used as text on some backgrounds. */
+  --color-overline: #8a5200;
+
   --color-border: rgba(27, 75, 90, 0.12);
   --color-input: rgba(27, 75, 90, 0.18);
   --color-ring: #2a6b7c;
@@ -138,6 +146,9 @@
 
   --color-muted: #1a3d4a;
   --color-muted-foreground: #8bbec6;
+
+  /* Warm accent text for overlines/hover links — meets AA on dark surfaces. */
+  --color-overline: #ffbc55;
 
   --color-border: rgba(168, 213, 216, 0.15);
   --color-input: rgba(168, 213, 216, 0.2);
@@ -204,6 +215,9 @@
   :focus-visible {
     outline: 2px solid var(--color-ring);
     outline-offset: 2px;
+  }
+  footer a:focus-visible {
+    outline: 2px solid var(--color-seafoam);
   }
 }
 
@@ -333,6 +347,13 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
 }
+.poster-card:focus {
+  border: 2px solid var(--color-primary);
+}
+
+.core-card:focus {
+  border: 2px solid var(--color-primary);
+}
 
 .poster-card::before {
   content: "";
@@ -447,5 +468,27 @@
       animation: scroll-mask-x-scroll linear;
       animation-timeline: scroll(self inline);
     }
+  }
+}
+
+.luma-event-card {
+  .avatar {
+    --size: var(--size-default);
+    @media (width >= theme(breakpoint.sm)) {
+      --size: var(--size-sm);
+    }
+    width: var(--size);
+    height: var(--size);
+    max-width: var(--size);
+    max-height: var(--size);
+    margin-left: calc(var(--size) / 2 * -1);
+  }
+
+  .avatar-row {
+    --size: var(--size-default);
+    @media (width >= theme(breakpoint.sm)) {
+      --size: var(--size-sm);
+    }
+    margin-left: calc(var(--size) / 2);
   }
 }

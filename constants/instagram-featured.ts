@@ -1,4 +1,4 @@
-import { generatedPosts } from "./instagram-posts.generated";
+﻿import { generatedPosts } from "./instagram-posts.generated";
 
 // Human-owned curation. The scraper NEVER writes here.
 // Typing the array as PostKey[] makes a mistyped or stale key a compile error

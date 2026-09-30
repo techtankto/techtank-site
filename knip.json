@@ -1,5 +1,16 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "tags": ["-lintignore"],
-  "ignore": ["components/ui/example.tsx", "db/**"]
+  "ignore": ["components/ui/example.tsx", "db/**"],
+  "ignoreDependencies": [
+    "@radix-ui/react-slot",
+    "class-variance-authority",
+    "clsx",
+    "next-themes",
+    "posthog-js",
+    "tailwind-merge",
+    "zod",
+    "zustand"
+  ],
+  "ignoreUnresolved": ["^@/", "^\\."]
 }

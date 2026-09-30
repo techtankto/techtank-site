@@ -1,4 +1,4 @@
-import type { InstagramPost } from "../../constants/instagram-posts";
+﻿import type { InstagramPost } from "../../constants/instagram-posts";
 
 // Sort by key so the generated file has a stable order and scrape runs produce
 // minimal, reviewable diffs.

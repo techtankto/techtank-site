@@ -1,4 +1,4 @@
-import { z } from "zod";
+﻿import { z } from "zod";
 
 // Shapes returned by the Instagram Graph API media endpoint. We validate at this
 // boundary so a malformed/changed payload fails loudly instead of silently
@@ -28,5 +28,4 @@ export const mediaResponseSchema = z.object({
 });
 
 export type MediaNode = z.infer<typeof mediaNodeSchema>;
-export type MediaChild = z.infer<typeof childSchema>;
 export type MediaResponse = z.infer<typeof mediaResponseSchema>;

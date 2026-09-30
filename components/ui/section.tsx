@@ -1,4 +1,4 @@
-import { cva, type VariantProps } from "class-variance-authority";
+﻿import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/utils/theme";
 
 const sectionVariants = cva("py-10 lg:py-14", {
@@ -54,7 +54,7 @@ export function SectionHeader({ overline, title, description, align, className }
   return (
     <div className={cn(sectionHeaderVariants({ align }), className)}>
       {overline && (
-        <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-foreground uppercase dark:text-amber-dark">
+        <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-foreground uppercase dark:text-overline">
           {overline}
         </span>
       )}

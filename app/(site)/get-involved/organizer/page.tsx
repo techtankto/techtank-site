@@ -89,7 +89,7 @@ export default function OrganizerPage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {whatYouGet.map((item, index) => (
               <div key={index} className="flex items-center gap-3 rounded-lg bg-card p-4">
-                <Check className="size-5 shrink-0 text-ring" />
+                <Check className="size-5 shrink-0 text-ring" aria-hidden="true" />
                 <span className="text-foreground">{item}</span>
               </div>
             ))}

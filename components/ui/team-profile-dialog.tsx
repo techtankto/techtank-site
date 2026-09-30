@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { TeamAvatar } from "@/components/ui/team-avatar";
@@ -40,7 +40,7 @@ export function TeamProfileDialog({ member, open, onClose }: TeamProfileDialogPr
               ))}
           </div>
         ) : (
-          <p className="text-sm text-muted-foreground/40 italic">Bio coming soon</p>
+          <p className="text-sm text-muted-foreground italic">Bio coming soon</p>
         )}
       </div>
     </Dialog>

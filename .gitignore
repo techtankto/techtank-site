@@ -7,6 +7,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+.idea
 
 # lockfiles from other package managers (this repo uses pnpm)
 package-lock.json

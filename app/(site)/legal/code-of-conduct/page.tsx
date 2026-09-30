@@ -19,7 +19,7 @@ export default function CodeOfConductPage() {
       {/* Quick Report */}
       <div className="mb-8 rounded-xl border border-ring/20 bg-ring/5 p-6">
         <div className="flex flex-col items-start gap-4 sm:flex-row">
-          <Mail className="size-6 shrink-0 text-ring sm:mt-0.5" />
+          <Mail className="size-6 shrink-0 text-ring sm:mt-0.5" aria-hidden="true" />
           <div>
             <h2 className="mb-1 font-semibold text-foreground">Need to report something?</h2>
             <p className="mb-2 text-sm text-muted-foreground">

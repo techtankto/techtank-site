@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Check, Clock, Users, Building, MapPin, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { Stepper, type Step } from "@/components/ui/stepper";
 import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { CONTACT_EMAIL } from "@/constants/contact";
 import { ContactCard } from "@/components/ui/contact-card";
@@ -66,12 +67,12 @@ const whatYouGet = [
   "Karma in the Toronto tech community",
 ];
 
-const process = [
-  { step: 1, title: "Initial contact", description: "Fill out the form or email us" },
-  { step: 2, title: "Scoping call", description: "We'll discuss venue, capacity, and timing" },
-  { step: 3, title: "Confirm details", description: "Date, speaker, and logistics locked in" },
-  { step: 4, title: "Marketing kickoff", description: "We promote the event across channels" },
-  { step: 5, title: "Event day", description: "We run the show; you enjoy the night" },
+const process: Step[] = [
+  { title: "Initial contact", description: "Fill out the form or email us" },
+  { title: "Scoping call", description: "We'll discuss venue, capacity, and timing" },
+  { title: "Confirm details", description: "Date, speaker, and logistics locked in" },
+  { title: "Marketing kickoff", description: "We promote the event across channels" },
+  { title: "Event day", description: "We run the show; you enjoy the night" },
 ];
 
 export default function HostPage() {
@@ -138,7 +139,7 @@ export default function HostPage() {
             <ul className="space-y-3">
               {techTankHandles.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-ring" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
                   <span className="text-foreground">{item}</span>
                 </li>
               ))}
@@ -150,7 +151,7 @@ export default function HostPage() {
             <ul className="space-y-3">
               {youProvide.map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-amber" />
+                  <Check className="mt-0.5 size-5 shrink-0 text-amber" aria-hidden="true" />
                   <span className="text-foreground">{item}</span>
                 </li>
               ))}
@@ -166,7 +167,7 @@ export default function HostPage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {whatYouGet.map((item, index) => (
               <div key={index} className="flex items-center gap-3 rounded-lg bg-card p-4">
-                <Check className="size-5 shrink-0 text-ring" />
+                <Check className="size-5 shrink-0 text-ring" aria-hidden="true" />
                 <span className="text-foreground">{item}</span>
               </div>
             ))}
@@ -177,17 +178,7 @@ export default function HostPage() {
       {/* Process */}
       <Section>
         <SectionHeader overline="The process" title="How it works" className="mb-12" />
-        <div className="grid gap-6 lg:grid-cols-5">
-          {process.map((item) => (
-            <div key={item.step} className="relative">
-              <div className="mb-4 flex size-10 items-center justify-center rounded-full bg-ring font-semibold text-white">
-                {item.step}
-              </div>
-              <h4 className="mb-1 font-semibold text-foreground">{item.title}</h4>
-              <p className="text-sm text-muted-foreground">{item.description}</p>
-            </div>
-          ))}
-        </div>
+        <Stepper steps={process} className="lg:grid-cols-5" />
       </Section>
 
       {/* Past Hosts Logo Cloud */}
@@ -207,7 +198,7 @@ export default function HostPage() {
           <Button variant="outline" asChild>
             <Link href="/resources/media-kit">
               Open the Media Kit
-              <ArrowRight className="ml-2 size-4" />
+              <ArrowRight className="ml-2 size-4" aria-hidden="true" />
             </Link>
           </Button>
         </div>
