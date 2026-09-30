@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function TeamPage() {
-  const [board, coreTeam, designTeam, websiteTeam, socialMedia, volunteers] = teamGroups;
+  const [board, coreTeam, designTeam, digitalTeam, socialMedia, volunteers] = teamGroups;
 
   return (
     <>
@@ -67,13 +67,13 @@ export default function TeamPage() {
         </div>
       </Section>
 
-      {/* Website + Social/Design side-by-side */}
+      {/* Digital + Social/Design side-by-side */}
       <Section background="brand-soft">
         <div className="grid gap-12 lg:grid-cols-2">
           <div>
-            <SectionHeader overline="Website team" title="Developers" className="mb-8" />
+            <SectionHeader overline="Digital team" title="Developers" className="mb-8" />
             <div className="grid gap-3">
-              {websiteTeam.members.map((m) => (
+              {digitalTeam.members.map((m) => (
                 <TeamCard key={m.name} variant="compact" member={m} />
               ))}
             </div>

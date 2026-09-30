@@ -150,7 +150,7 @@ Outside of work, she’s passionate about art, travelling, and discovering new e
     ],
   },
   {
-    title: "Website Team",
+    title: "Digital Team",
     members: [
       { name: "Tony Ko", pronouns: "he/him", avatar: "/images/team/tony-ko.webp" },
       { name: "Danny Kim", pronouns: "he/him", avatar: "/images/team/danny-kim.webp" },
