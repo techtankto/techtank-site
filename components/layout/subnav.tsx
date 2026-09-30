@@ -12,7 +12,7 @@ export function Subnav(props: Props) {
   const pathname = usePathname();
 
   return (
-    <div className="px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-6 lg:px-8">
       <div className="flex items-center justify-start py-3">
         <div className="flex flex-wrap items-center justify-center gap-1">
           {props.items.map((item) => {
