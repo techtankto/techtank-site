@@ -14,14 +14,14 @@ import { signOutAdmin } from "./actions";
  *     out (no redirect, so a stray non-admin account can't loop).
  *   - admin    → the back-office chrome around the page.
  * The SQL RPC gate is the real boundary; this is the UX layer.
+ * `getClaims()` verifies the JWT locally, so the only round trip here is
+ * the admin check.
  */
 export default async function AdminLayout({ children }: { children: ReactNode }) {
   const supabase = await createServerSupabaseClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data } = await supabase.auth.getClaims();
 
-  if (!user) {
+  if (!data?.claims) {
     return <>{children}</>;
   }
 

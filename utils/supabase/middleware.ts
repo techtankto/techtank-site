@@ -38,10 +38,10 @@ export async function updateSession(request: NextRequest) {
     },
   );
 
-  // Refresh session — do NOT remove this call.
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Refreshes the session; do NOT remove. `getClaims()` verifies the JWT
+  // locally rather than calling the auth server on every admin request.
+  const { data } = await supabase.auth.getClaims();
+  const user = data?.claims ?? null;
 
   const { pathname } = request.nextUrl;
 
