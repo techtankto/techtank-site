@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
+import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { QrCodeIcon, SlackIcon } from "@/components/ui/icons";
 import { useAppStore } from "@/stores/app-state";
 
 // The QR SVG below encodes https://www.techtankto.com/get-involved
 // (regenerate the asset if that URL changes).
-const titleId = "qr-dialog-title";
 
 export function QrDialog() {
   const { qrDialogOpen, setQrDialogOpen } = useAppStore();
@@ -16,15 +15,13 @@ export function QrDialog() {
   const onClose = () => setQrDialogOpen(false);
 
   return (
-    <Dialog open={qrDialogOpen} onClose={onClose} labelledBy={titleId} className="md:max-w-md lg:max-w-md">
+    <Dialog open={qrDialogOpen} onClose={onClose} className="md:max-w-md lg:max-w-md">
       <div className="flex flex-col items-center gap-1.5 text-center">
         <div>
           <span className="mb-1 inline-block text-xs font-semibold tracking-widest text-ring uppercase">
             Scan to join
           </span>
-          <h2 id={titleId} className="font-display text-xl leading-tight font-bold text-foreground">
-            Get involved with TechTank
-          </h2>
+          <DialogTitle className="text-xl leading-tight font-bold">Get involved with TechTank</DialogTitle>
           <p className="mt-1 text-sm text-foreground">
             Point your phone camera at the code to open the get involved page.
           </p>

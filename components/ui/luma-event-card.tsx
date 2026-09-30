@@ -3,7 +3,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Calendar, MapPin, Video } from "lucide-react";
-import type { Event } from "@/app/events/actions";
+import type { Event } from "@/app/(site)/events/actions";
 
 const AVATAR_DIMENSIONS = {
   default: {

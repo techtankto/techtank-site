@@ -54,46 +54,137 @@ See `scripts/instagram/README.md` for Instagram-specific environment variables.
 | `pnpm dev`          | Start the dev server with Turbopack |
 | `pnpm build`        | Production build                    |
 | `pnpm start`        | Serve the production build          |
-| `pnpm lint`         | Run Next.js' linter                 |
+| `pnpm lint`         | Lint with oxlint                    |
+| `pnpm type:check`   | Type-check with tsc (no emit)       |
 | `pnpm format`       | Format the repo with oxfmt          |
 | `pnpm format:check` | Check formatting without writing    |
+| `pnpm db:start`     | Start the local Supabase stack      |
+| `pnpm db:stop`      | Stop the local Supabase stack       |
+| `pnpm db:reset`     | Reapply migrations + seed           |
+
+### Backend (Supabase)
+
+The app's dynamic features — a task board (`/tasks`) and its organizer
+back office (`/admin/tasks`) — are backed by Supabase Postgres under
+[`db/`](./db); Slack notifications run in the app's server actions. The
+rest of the app runs without it.
+
+Requires [Docker](https://www.docker.com/). The Supabase CLI is pinned
+as a devDependency, so use the `pnpm db:*` scripts rather than a global
+install (an older global CLI will silently ignore parts of
+`config.toml`).
+
+```bash
+pnpm db:start                 # boots Postgres, Studio, etc.
+cp .env.example .env.local    # then paste the anon key from db:start output
+cp db/.env.example db/.env    # Slack OIDC credentials
+pnpm dev
+```
+
+The local stack runs on its own port block (`5452x`, `project_id =
+"techtank"`) so it never collides with any other local Supabase stack.
+Studio is at <http://localhost:54523>.
+
+**Everything is browsable without signing in.** Applying for a task and
+the admin back office both require Slack, so those need the setup below.
+
+## Slack + Supabase setup
+
+Slack is the only identity here — it's how applicants prove they're in the
+community and how organizers sign in (no passwords, no email). One Slack
+app ([api.slack.com/apps](https://api.slack.com/apps) → _Create New App_)
+carries all of it; note its **Client ID / Secret** (_Basic Information_)
+and your **workspace / team ID** (`T…`, from _About this workspace_). Then:
+
+1. **Sign in with Slack** — enable it on the Slack app (scopes `openid`,
+   `profile`, `email`). In Supabase (_Authentication → Providers → Slack
+   (OIDC)_) enable it and paste the Client ID / Secret; locally put them in
+   `db/.env`. Add your app callback (`…/auth/callback`) to
+   _Authentication → URL Configuration_.
+2. **OAuth redirect URL** — the Slack app and Supabase must agree on it
+   exactly. Locally that needs HTTPS (Slack rejects `http://localhost`):
+   run `ngrok http 54521` and set both the Slack app's _Redirect URLs_ and
+   `SLACK_OIDC_REDIRECT_URI` in `db/.env` to
+   `https://<tunnel>/auth/v1/callback` (a free ngrok URL changes on every
+   restart). In production it's the hosted project's own
+   `https://<ref>.supabase.co/auth/v1/callback` — no tunnel, no override.
+3. **Bot** (_OAuth & Permissions → Bot Token Scopes_): `chat:write`,
+   `im:write`, `mpim:write` — the 1:1 and group DMs open a channel before
+   posting. Name it **Tanky**, install it, and copy the `xoxb-…` **Bot
+   User OAuth Token**. Add an **Incoming Webhook** on the organizers'
+   channel for the alert.
+4. **Secrets** — `db/.env`: `SLACK_OIDC_CLIENT_ID/SECRET`. `.env.local`:
+   `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY`, `NEXT_PUBLIC_SLACK_TEAM_ID`,
+   `SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`, `PUBLIC_SITE_URL`. Hosted: OIDC
+   creds in the Supabase dashboard, everything else in Vercel.
+5. **Lock the workspace** — `NEXT_PUBLIC_SLACK_TEAM_ID` only pre-selects
+   the workspace on the consent screen; the database is the real gate. Set
+   it, or the check stays disabled (fails open):
+
+   ```sql
+   update public.app_settings set value = 'T…' where key = 'slack_team_id';
+   ```
+
+6. **Add yourself as an organizer** — allowlist by email (matched on first
+   sign-in, so it must be your Slack email):
+
+   ```sql
+   insert into public.admins (email) values ('you@example.com');
+   ```
+
+See [`AGENTS.md`](./AGENTS.md) for the backend conventions.
 
 ## Project structure
 
 The tree below doubles as a route map — each directory under `app/` is a
-route, annotated with its purpose.
+route, annotated with its purpose. Folders in parentheses (e.g. `(site)`)
+are route groups: they scope a shared layout without adding a URL segment.
 
 ```
 .
 ├── app/                            # Next.js App Router routes
-│   ├── layout.tsx                  # Root layout (header, footer, fonts, SEO)
-│   ├── page.tsx                    # /                    Social-proof-driven home
-│   ├── about/                      # /about               Values & community manifesto
-│   ├── events/                     # /events              Upcoming (Luma) + past event timeline
-│   ├── get-involved/               # /get-involved        Onboarding hub (shared layout)
-│   │   ├── speak-or-facilitate/    #   /speak-or-facilitate  Speaker/facilitator intake
-│   │   ├── host/                   #   /host              Host intake
-│   │   ├── sponsor/                #   /sponsor           Sponsor intake
-│   │   ├── organizer/              #   /organizer         Organizer intake
-│   │   └── donate/                 #   /donate            (via next.config rewrites) Interac e-transfer donation info
-│   ├── legal/                      # /legal               Legal documents (shared layout)
-│   │   ├── terms-of-service/       #   /terms-of-service
-│   │   ├── privacy-policy/         #   /privacy-policy
-│   │   └── code-of-conduct/        #   /code-of-conduct
-│   ├── resources/                  # /resources
-│   │   ├── media-kit/              #   /resources/media-kit     Brand assets + fast facts
-│   │   └── design-system/          #   /resources/design-system  Brand guidelines — design tokens & component reference
+│   ├── layout.tsx                  # Root layout (fonts, SEO, theme provider)
+│   ├── (site)/                     # Public site route group (no URL segment)
+│   │   ├── layout.tsx              # Site chrome (header, footer)
+│   │   ├── page.tsx                # /                    Social-proof-driven home
+│   │   ├── about/                  # /about               Values & community manifesto
+│   │   ├── events/                 # /events              Upcoming (Luma) + past event timeline
+│   │   ├── get-involved/           # /get-involved        Onboarding hub (shared layout)
+│   │   │   ├── speak-or-facilitate/#   /speak-or-facilitate  Speaker/facilitator intake
+│   │   │   ├── host/               #   /host              Host intake
+│   │   │   ├── sponsor/            #   /sponsor           Sponsor intake
+│   │   │   ├── organizer/          #   /organizer         Organizer intake
+│   │   │   └── donate/             #   /donate            (via next.config rewrites) Interac e-transfer donation info
+│   │   ├── tasks/                  # /tasks               Public board of tasks to pick up + apply
+│   │   ├── legal/                  # /legal               Legal documents (shared layout)
+│   │   │   ├── terms-of-service/   #   /terms-of-service
+│   │   │   ├── privacy-policy/     #   /privacy-policy
+│   │   │   └── code-of-conduct/    #   /code-of-conduct
+│   │   └── resources/              # /resources
+│   │       ├── media-kit/          #   /resources/media-kit     Brand assets + fast facts
+│   │       └── design-system/      #   /resources/design-system  Brand guidelines — design tokens & component reference
+│   ├── admin/                      # /admin               Organizer back office (Supabase auth)
+│   │   ├── layout.tsx              # Admin chrome + auth gate
+│   │   ├── login/                  #   /admin/login       Sign in with Slack
+│   │   └── tasks/                  #   /admin/tasks       Manage tasks + applicants
+│   ├── auth/callback/              #   /auth/callback     Slack OAuth callback
 │   └── globals.css
 ├── components/
 │   ├── layout/                     # Header, Footer
-│   └── ui/                         # Reusable UI (buttons, cards, sections, etc.)
-├── constants/                      # Structured data (events, sponsors, social links)
+│   ├── ui/                         # Reusable UI (buttons, cards, sections, etc.)
+│   ├── contribution/              # Public contribution-board UI
+│   ├── admin/                      # Admin back-office UI
+│   └── auth/                       # Admin login form
+├── constants/                      # Structured data (events, sponsors, board vocabulary)
+├── hooks/                          # Reusable React hooks (useMutation)
+├── utils/                          # Helpers (theme, Supabase clients)
+├── db/                             # Supabase — config, migrations, seed
+├── middleware.ts                   # Admin session refresh + route guard
 ├── docs/prd/                       # Product requirements pipeline (01-brief → 06-plan)
 ├── .agents/skills/                 # Vendored house-standard skills (copied, portable)
 ├── .claude/skills/                 # Same skills (symlinked to .agents/skills/)
 ├── public/                         # Static assets (images, downloads, social media dumps)
 ├── next.config.ts
-├── vercel.json                     # Vercel deployment config (noindex header)
 └── tsconfig.json
 ```
 
@@ -106,6 +197,26 @@ design tokens, architecture, and the delivery plan.
 The site deploys to [Vercel](https://vercel.com/). Search engine indexing is
 enabled site-wide via the `robots` metadata in
 [`app/layout.tsx`](./app/layout.tsx).
+
+### Deploying the backend
+
+Vercel deploys the whole app; the Supabase-backed features (`/tasks` and
+`/admin/tasks`) additionally need the Supabase project deployed.
+
+```bash
+pnpm exec supabase link --project-ref <ref> --workdir db
+pnpm exec supabase db push --workdir db
+```
+
+Then finish the production wiring: configure Slack for prod (the redirect
+URL is the hosted project's `https://<ref>.supabase.co/auth/v1/callback` —
+no tunnel); set `NEXT_PUBLIC_SUPABASE_URL/ANON_KEY` and
+`NEXT_PUBLIC_SLACK_TEAM_ID`, plus `SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`,
+and `PUBLIC_SITE_URL`, in Vercel (read at request time — if missing,
+the task routes error rather than show an empty board); and set
+`app_settings.slack_team_id` + seed the first organizer in the production
+DB (steps 5–6 above). A missing notification secret degrades to a log
+line: applications still record, but **nobody is told about them**.
 
 ## Contributing
 

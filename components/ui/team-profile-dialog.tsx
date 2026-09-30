@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { Dialog } from "@/components/ui/dialog";
+import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { TeamAvatar } from "@/components/ui/team-avatar";
 import type { TeamMember } from "@/constants/team";
 
@@ -8,20 +8,19 @@ interface TeamProfileDialogProps {
   member: TeamMember;
   open: boolean;
   onClose: () => void;
-  titleId: string;
 }
 
-export function TeamProfileDialog({ member, open, onClose, titleId }: TeamProfileDialogProps) {
+export function TeamProfileDialog({ member, open, onClose }: TeamProfileDialogProps) {
   const { name, pronouns, role, bio, avatar } = member;
 
   return (
-    <Dialog open={open} onClose={onClose} labelledBy={titleId}>
+    <Dialog open={open} onClose={onClose}>
       <div className="flex shrink-0 flex-col items-center gap-4 text-center">
         <TeamAvatar name={name} avatar={avatar} size="xl" />
         <div>
-          <p id={titleId} className="font-display text-2xl leading-tight font-bold text-foreground">
-            {name}
-          </p>
+          <DialogTitle asChild>
+            <p className="text-2xl leading-tight font-bold">{name}</p>
+          </DialogTitle>
           <p className="mt-1 text-sm text-muted-foreground">{pronouns}</p>
           {role && <span className="tag mt-3 inline-block text-xs">{role}</span>}
         </div>

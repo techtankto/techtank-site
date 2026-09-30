@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CONTACT_EMAIL } from "@/constants/contact";
 
 export const metadata: Metadata = {
@@ -41,6 +42,16 @@ export default function PrivacyPolicyPage() {
               filling out a form
             </li>
             <li>
+              <strong>Task applications</strong>: applying for a task on our{" "}
+              <Link href="/tasks" className="text-ring underline">
+                Pick a Task
+              </Link>{" "}
+              board requires connecting your Slack account from the TechTank workspace. From Slack we receive your name,
+              email address, and Slack user ID. We store those together with the task you applied to, your optional
+              message, and the date, in our own database (hosted with Supabase) rather than a third-party form. We do
+              not receive your Slack password, and we cannot read your Slack messages.
+            </li>
+            <li>
               <strong>Contact emails</strong> you send to {CONTACT_EMAIL}
             </li>
             <li>
@@ -50,9 +61,39 @@ export default function PrivacyPolicyPage() {
         </section>
 
         <section>
+          <h2 className="mb-4 font-display text-xl font-semibold text-foreground">2a. How We Use Task Applications</h2>
+          <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
+            <li>
+              <strong>To contact you about the task</strong> you applied for, and to pair you with an organizer. We
+              message you on Slack, including a confirmation when you apply. We do not send you email.
+            </li>
+            <li>
+              <strong>Organizers are notified</strong> of new applications in our private Slack workspace. That
+              notification includes your name, email, and message.
+            </li>
+            <li>
+              <strong>Only organizers can see applications.</strong> They are never shown on the public board. If an
+              organizer assigns you a task, only the name you gave is displayed publicly alongside it.
+            </li>
+            <li>
+              <strong>We retain them</strong> for as long as the task is on the board. Deleting a task deletes its
+              applications. You can ask us to remove yours at any time by emailing techtankto@gmail.com.
+            </li>
+            <li>
+              <strong>Sub-processors:</strong> Supabase (database and authentication) and Slack (sign-in, notifications,
+              and messages to you).
+            </li>
+          </ul>
+        </section>
+
+        <section>
           <h2 className="mb-4 font-display text-xl font-semibold text-foreground">3. Data We Don&apos;t Collect</h2>
           <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
-            <li>No user accounts or passwords on this website</li>
+            <li>
+              No TechTank accounts or passwords. Browsing the site never requires signing in. Applying for a task and
+              signing in as an organizer both use your existing Slack account, so we never create a password for you or
+              see the one you have.
+            </li>
             <li>No payment or financial data</li>
             <li>No tracking cookies beyond essential analytics</li>
             <li>No cross-site tracking</li>

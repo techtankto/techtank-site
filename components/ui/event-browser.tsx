@@ -5,7 +5,7 @@ import { LayoutGrid, List, Columns2, Calendar, MapPin, Camera, Play } from "luci
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EventCard } from "@/components/ui/event-card";
-import type { Event } from "@/app/events/actions";
+import type { Event } from "@/app/(site)/events/actions";
 import Image from "next/image";
 
 type CategoryFilter = "all" | "tech-talks" | "build-nights" | "coffee-chats" | "socials" | "sports" | "other";

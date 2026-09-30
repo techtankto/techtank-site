@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useId, useState } from "react";
+import { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { TeamAvatar } from "@/components/ui/team-avatar";
 import { TeamProfileDialog } from "@/components/ui/team-profile-dialog";
@@ -76,7 +76,6 @@ function CompactBody({ name, pronouns, role }: TeamMember) {
 
 export function TeamCard({ member, variant = "core", className }: TeamCardProps) {
   const [open, setOpen] = useState(false);
-  const titleId = useId();
   const { name, avatar } = member;
   const avatarSize = avatarSizes[variant ?? "core"];
 
@@ -101,7 +100,7 @@ export function TeamCard({ member, variant = "core", className }: TeamCardProps)
         <TeamAvatar name={name} avatar={avatar} size={avatarSize} />
         {variant === "board" ? <BoardBody {...member} /> : <CoreBody {...member} />}
       </button>
-      <TeamProfileDialog member={member} open={open} onClose={() => setOpen(false)} titleId={titleId} />
+      <TeamProfileDialog member={member} open={open} onClose={() => setOpen(false)} />
     </>
   );
 }

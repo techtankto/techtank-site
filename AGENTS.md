@@ -118,6 +118,69 @@ When a skill is added or removed, update this table in the same change.
 - Use Zustand (`stores/app-state.ts`) for sitewide UI state (mobile menu, future modal/drawer state, etc.).
 - Keep `next-themes` as the single source of truth for theme — do not duplicate theme state in Zustand.
 
+### Backend / Supabase
+
+The **task board** (`/tasks`, public) and its **admin back office**
+(`/admin/tasks`, organizer-only) are backed by Supabase Postgres under
+`db/`, with Slack notifications in the app's server actions; the rest of
+the app doesn't touch it. The code still uses "contribution" internally (`contribution_tasks`,
+`components/contribution/*`, `/admin/tasks`); "Pick a Task" is the
+user-facing name.
+
+- **Local stack lives on a dedicated port block** so it never collides
+  with any other local Supabase stack on the machine. TechTank is
+  `project_id = "techtank"` on the `5452x` block — API `54521`,
+  Studio `54523`. Run it with `pnpm db:start` / `db:stop` /
+  `db:reset`.
+  Multiple stacks can run at once.
+- **Env:** copy `.env.example` → `.env.local` and fill the anon key
+  from `pnpm db:start` output, plus the Slack notification secrets
+  (`SLACK_WEBHOOK_URL`, `SLACK_BOT_TOKEN`, `PUBLIC_SITE_URL`). The Slack
+  OIDC credentials go in `db/.env.example` → `db/.env`.
+- **Everyone signs in with Slack; nobody gets a TechTank account.**
+  Applying requires connecting Slack, so an applicant's name, email and
+  Slack id come from the verified token rather than the request body.
+  Organizers sign in at `/admin/login` **with Slack** (Supabase
+  `slack_oidc`) — there is no password and no login code. Allowlist an
+  organizer by inserting a row into `public.admins` with just their
+  email; their first sign-in claims it via `claim_admin_membership()`
+  and records their Slack user ID.
+- **The Slack workspace is enforced in SQL, not the client.** The
+  sign-in URL passes `team=<id>` so Slack pre-selects the right
+  workspace, but that is only a hint. `caller_workspace_ok()` compares
+  the caller's `team_id` claim against `app_settings.slack_team_id`, and
+  `assert_caller_is_admin()` / `is_caller_admin()` both apply it. A NULL
+  setting disables the check so a misconfigured environment can't lock
+  everyone out.
+- **Every admin write goes through a `SECURITY DEFINER` RPC gated by
+  `assert_caller_is_admin()`** — the SQL boundary is the real gate, not
+  the UI. Public reads use the anon `get_public_contribution_task(s)`
+  RPCs.
+- **This project sends no email at all.** Slack is the only channel:
+  the `applyToTask` server action DMs the applicant their receipt (the
+  bot is **Tanky**) and `assignApplication` opens a group DM introducing an
+  assignee to the assigning organizer (`SLACK_BOT_TOKEN`, needing
+  `chat:write`, `im:write`, and `mpim:write` — a channel is opened
+  before posting), then POSTs to `SLACK_WEBHOOK_URL` to alert
+  organizers, @-mentioning the applicant.
+  If the DM failed, that organizer message says so, so a missing scope
+  or revoked token can't silently leave an applicant un-contacted.
+  Neither call may throw: the row is already committed by then, so a
+  notification hiccup must never turn a successful apply into a 500.
+  The Supabase email provider is disabled; don't reintroduce a delivery
+  dependency without a deliberate decision.
+- **Slack OAuth locally needs an ngrok tunnel** (Slack rejects
+  `http://localhost` redirect URLs). Point it at port `54521` and set
+  `SLACK_OIDC_REDIRECT_URI` in `db/.env` to the tunnel's
+  `/auth/v1/callback`. See the README's Slack + Supabase setup.
+- **The Supabase CLI is a devDependency**, so always use the `pnpm db:*`
+  scripts. An older global CLI silently drops the `slack_oidc` block
+  from `config.toml` and the provider never turns on.
+- **Homes:** Supabase clients in `utils/supabase/*`; board
+  vocabulary/types/helpers in `constants/contribution-board.ts`; data
+  access in `app/**/actions.ts` (server-first, no react-query); Slack
+  helpers and message templates in `utils/slack/*`.
+
 ### After making code changes
 
 - Use `pnpm` (not npm or yarn) for all package operations in this repo.
