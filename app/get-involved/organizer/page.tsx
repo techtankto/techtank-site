@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Join the Organizer Team",
   description:
     "Help shape what TechTank becomes. We're building a structured volunteer leadership team with defined roles and a 6-month commitment.",
+  alternates: { canonical: "/get-involved/organizer" },
 };
 
 const whyOrganize = [

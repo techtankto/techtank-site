@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Speak or Facilitate",
   description:
     "Got something to share? We're always looking for speakers, panelists, and workshop facilitators. You don't need to be a senior engineer or a public figure.",
+  alternates: { canonical: "/get-involved/speak-or-facilitate" },
 };
 
 const whyParticipate = [

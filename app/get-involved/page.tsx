@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Get Involved",
   description:
     "Get involved with TechTank TO. Speak, host, sponsor, or volunteer — there are multiple ways to contribute to Toronto's tech community.",
+  alternates: { canonical: "/get-involved" },
 };
 
 const communityLinks = [

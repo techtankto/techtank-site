@@ -8,6 +8,7 @@ import { teamGroups } from "@/constants/team";
 export const metadata: Metadata = {
   title: "Team",
   description: "Meet the volunteers, organizers, and board members who make TechTank TO happen.",
+  alternates: { canonical: "/about/team" },
 };
 
 export default function TeamPage() {

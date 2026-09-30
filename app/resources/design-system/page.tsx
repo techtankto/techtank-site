@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   title: "Design System",
   description: "TechTank TO design system — colors, typography, components, and patterns.",
   robots: { index: true, follow: true },
+  alternates: { canonical: "/resources/design-system" },
 };
 
 const brandColors = [

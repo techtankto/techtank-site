@@ -14,6 +14,7 @@ import { CONTACT_EMAIL } from "@/constants/contact";
 export const metadata: Metadata = {
   title: "Media Kit",
   description: "TechTank TO media kit — logos, brand guidelines, and fast facts for press, sponsors, and partners.",
+  alternates: { canonical: "/resources/media-kit" },
 };
 
 const fastFacts = [

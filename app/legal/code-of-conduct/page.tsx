@@ -5,6 +5,7 @@ import { CONTACT_EMAIL } from "@/constants/contact";
 export const metadata: Metadata = {
   title: "Code of Conduct",
   description: "TechTank TO Code of Conduct — our commitment to a safe, inclusive community.",
+  alternates: { canonical: "/legal/code-of-conduct" },
 };
 
 export default function CodeOfConductPage() {

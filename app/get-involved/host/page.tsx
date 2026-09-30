@@ -12,6 +12,7 @@ export const metadata: Metadata = {
   title: "Host a TechTank Event",
   description:
     "Bring Toronto's tech community to your office. Great for recruiting, brand visibility, and giving back.",
+  alternates: { canonical: "/get-involved/host" },
 };
 
 const whyHost = [

@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "FAQ",
   description:
     "Answers to common questions about TechTank TO — events, membership, sponsorship, volunteering, and more.",
+  alternates: { canonical: "/about/faq" },
 };
 
 const faqs = [

@@ -4,6 +4,7 @@ import { CONTACT_EMAIL } from "@/constants/contact";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description: "Privacy Policy for TechTank TO — what data we collect and how we use it.",
+  alternates: { canonical: "/legal/privacy-policy" },
 };
 
 export default function PrivacyPolicyPage() {

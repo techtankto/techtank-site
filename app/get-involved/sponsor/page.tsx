@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   title: "Sponsor TechTank",
   description:
     "Support Toronto's most inclusive tech community. Request sponsorship info and see how you can help the community thrive.",
+  alternates: { canonical: "/get-involved/sponsor" },
 };
 
 const whySponsor = [

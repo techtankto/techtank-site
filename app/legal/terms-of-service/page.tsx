@@ -5,6 +5,7 @@ import { CONTACT_EMAIL } from "@/constants/contact";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description: "Terms of Service for TechTank TO website and community events.",
+  alternates: { canonical: "/legal/terms-of-service" },
 };
 
 export default function TermsOfServicePage() {
