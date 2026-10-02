@@ -140,19 +140,19 @@ Outside of tech and community work, he can usually be found at a coffee shop, pl
     title: "Design Team",
     members: [
       {
-        name: "Mabel Kasunic",
-        pronouns: "she/her",
-        avatar: "/images/team/mabel-kasunic.webp",
-        bio: `Mabel is a product designer who enjoys creating thoughtful digital and physical experiences that connect people, technology, and the world around them. She specializes in product thinking, systems thinking, and human-centered design, with a growing curiosity about how AI is shaping the future of design.
-Outside of design, Mabel loves reading, travelling, discovering new places, and experiencing different cultures through food, people, and everyday life. Her curiosity about how people live and interact with the world around them often finds its way into the things she designs.`,
-      },
-      {
         name: "Victoria Sze",
         pronouns: "she/her",
         avatar: "/images/team/victoria-sze.webp",
         bio: `Victoria is on TechTank’s design team and is curious about people, places, and the stories behind what she creates. Her work has spanned B2B and B2C, technology, financial services, and campus planning, giving her a broad perspective on how design can shape both products and experiences.
 She’s drawn to the intersection of creativity and problem-solving, always looking for ways to make complex ideas feel simple, thoughtful, and human. For Victoria, good design starts with understanding people—and often begins with a conversation.
 Outside of work, she’s passionate about art, travelling, and discovering new experiences. She loves exploring new cities, finding inspiration in unexpected places, and meeting people from different backgrounds. Her curiosity about the world often finds its way back into her work, keeping her perspective fresh and her approach to design always evolving.`,
+      },
+      {
+        name: "Mabel Kasunic",
+        pronouns: "she/her",
+        avatar: "/images/team/mabel-kasunic.webp",
+        bio: `Mabel is a product designer who enjoys creating thoughtful digital and physical experiences that connect people, technology, and the world around them. She specializes in product thinking, systems thinking, and human-centered design, with a growing curiosity about how AI is shaping the future of design.
+Outside of design, Mabel loves reading, travelling, discovering new places, and experiencing different cultures through food, people, and everyday life. Her curiosity about how people live and interact with the world around them often finds its way into the things she designs.`,
       },
     ],
   },
