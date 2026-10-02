@@ -140,6 +140,13 @@ Outside of tech and community work, he can usually be found at a coffee shop, pl
     title: "Design Team",
     members: [
       {
+        name: "Mabel Kasunic",
+        pronouns: "she/her",
+        avatar: "/images/team/mabel-kasunic.webp",
+        bio: `Mabel is a product designer who enjoys creating thoughtful digital and physical experiences that connect people, technology, and the world around them. She specializes in product thinking, systems thinking, and human-centered design, with a growing curiosity about how AI is shaping the future of design.
+Outside of design, Mabel loves reading, travelling, discovering new places, and experiencing different cultures through food, people, and everyday life. Her curiosity about how people live and interact with the world around them often finds its way into the things she designs.`,
+      },
+      {
         name: "Victoria Sze",
         pronouns: "she/her",
         avatar: "/images/team/victoria-sze.webp",
