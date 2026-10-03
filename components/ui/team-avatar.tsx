@@ -1,5 +1,31 @@
 ﻿import Image from "next/image";
-import { cn } from "@/utils/theme";
+import { cn, cva } from "@/utils/theme";
+
+const textVariants = cva("", {
+  variants: {
+    size: {
+      sm: "text-xs",
+      md: "text-base",
+      lg: "text-2xl",
+      xl: "text-3xl",
+    },
+  },
+});
+
+const teamAvatarVariants = cva("", {
+  variants: {
+    size: {
+      sm: "size-10",
+      md: "size-14 ring ring-2",
+      lg: "shadow-soft size-24 ring ring-4",
+      xl: "shadow-soft size-40 ring-4",
+    },
+    avatar: {
+      true: "relative shrink-0 overflow-hidden rounded-full",
+      false: "flex shrink-0 items-center justify-center rounded-full",
+    },
+  },
+});
 
 const AVATAR_PALETTES = [
   { bg: "bg-teal/15 dark:bg-teal/20", text: "text-teal dark:text-seafoam", ring: "ring-teal/20" },
@@ -42,19 +68,10 @@ interface TeamAvatarProps {
 
 export function TeamAvatar({ name, avatar, size = "md", className }: TeamAvatarProps) {
   const p = paletteFor(name);
-  const s = sizeClasses[size];
 
   if (avatar) {
     return (
-      <div
-        className={cn(
-          "relative shrink-0 overflow-hidden rounded-full",
-          s.box,
-          s.ring && `ring ${p.ring}`,
-          s.ring,
-          className,
-        )}
-      >
+      <div className={cn(className, teamAvatarVariants({ size: size, avatar: true }), textVariants({ size: size }))}>
         <Image
           src={avatar}
           alt={name}
@@ -68,16 +85,9 @@ export function TeamAvatar({ name, avatar, size = "md", className }: TeamAvatarP
 
   return (
     <div
-      className={cn(
-        "flex shrink-0 items-center justify-center rounded-full",
-        s.box,
-        s.ring && `ring ${p.ring}`,
-        s.ring,
-        p.bg,
-        className,
-      )}
+      className={cn(teamAvatarVariants({ size: size, avatar: false }), textVariants({ size: size }), p.bg, className)}
     >
-      <span className={cn("font-display font-bold", s.text, p.text)}>{initials(name)}</span>
+      <span className={cn("font-display font-bold", textVariants({ size: size }), p.text)}>{initials(name)}</span>
     </div>
   );
 }
