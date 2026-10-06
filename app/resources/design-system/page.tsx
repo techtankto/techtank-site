@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -162,6 +164,33 @@ export default function DesignSystemPage() {
           </div>
         </div>
       </section>
+
+      <Section>
+        <SectionHeader overline="Brand" title="Logo" className="mb-8" />
+        <div className="mb-6 grid gap-6 sm:grid-cols-2">
+          <div className="light flex items-center justify-center rounded-xl border border-border bg-background p-8">
+            <Image
+              src="/images/logos/light.svg"
+              alt="TechTank logo for light backgrounds"
+              width={123}
+              height={27}
+              className="h-auto w-full max-w-60"
+            />
+          </div>
+          <div className="glass-dark flex items-center justify-center rounded-xl p-8">
+            <Image
+              src="/images/logos/dark.svg"
+              alt="TechTank logo for dark backgrounds"
+              width={691}
+              height={157}
+              className="h-auto w-full max-w-60"
+            />
+          </div>
+        </div>
+        <Button asChild variant="outline">
+          <Link href="/resources/media-kit">Download logos from the media kit</Link>
+        </Button>
+      </Section>
 
       {/* Color palette */}
       <Section>

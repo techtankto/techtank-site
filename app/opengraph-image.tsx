@@ -29,7 +29,7 @@ export default async function OGImage() {
         justifyContent: "center",
       }}
     >
-      <img src={base64Image} alt="TechTank TO" />
+      <img src={base64Image} alt="TechTank TO" width={820} height={180} />
     </div>,
     {
       ...size,

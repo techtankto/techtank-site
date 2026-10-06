@@ -37,16 +37,16 @@ export function Header() {
           <Image
             src="/images/logos/light.svg"
             alt="TechTank TO"
-            width={192}
-            height={56}
+            width={123}
+            height={27}
             className="h-10 w-auto dark:hidden"
             priority
           />
           <Image
             src="/images/logos/dark.svg"
             alt="TechTank TO"
-            width={192}
-            height={56}
+            width={691}
+            height={157}
             className="hidden h-10 w-auto dark:block"
             priority
           />
