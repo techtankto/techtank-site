@@ -13,7 +13,7 @@ export default function CodeOfConductPage() {
     <div className="rounded-2xl border border-border bg-card p-6 lg:p-10">
       {/* Header */}
       <div className="mb-8 border-b border-border pb-8">
-        <p className="mb-2 text-sm text-muted-foreground">Last updated: June 5, 2026</p>
+        <p className="mb-2 text-sm text-muted-foreground">Last updated: October 7, 2026</p>
         <h1 className="font-display text-3xl font-semibold text-foreground lg:text-4xl">Code of Conduct</h1>
       </div>
 
@@ -90,7 +90,10 @@ export default function CodeOfConductPage() {
                 <li>Respect physical and digital boundaries</li>
                 <li>Ask before recording or photographing anyone</li>
                 <li>Respect delays in responses</li>
-                <li>Represent yourself honestly when registering for events</li>
+                <li>
+                  Be who you say you are: register for in-person events under your legal name, and be honest about your
+                  background and your employer
+                </li>
               </ul>
             </div>
 
@@ -128,6 +131,25 @@ export default function CodeOfConductPage() {
                     <li>No spamming, unsolicited self-promotion, or solicitation without organizer approval</li>
                   </ul>
                 </div>
+                <div>
+                  <h4 className="mb-2 font-medium text-foreground">Fraud and Misrepresentation</h4>
+                  <ul className="list-disc space-y-2 pl-6 text-muted-foreground">
+                    <li>
+                      Asking anyone to pose as you or as another person, including in a job interview, a technical
+                      assessment, or an identity or background check
+                    </li>
+                    <li>Offering to take an interview or assessment on someone else&apos;s behalf</li>
+                    <li>
+                      Lying about who you are, your credentials, or who you work for, including claiming to represent a
+                      company you don&apos;t
+                    </li>
+                    <li>
+                      Scams of any kind: fake job postings or offers, phishing, or asking members for money, banking
+                      details, account logins, or to receive payments or equipment on someone else&apos;s behalf
+                    </li>
+                    <li>Using TechTank spaces to recruit people into any of the above</li>
+                  </ul>
+                </div>
               </div>
             </div>
 
@@ -138,6 +160,43 @@ export default function CodeOfConductPage() {
                 referrals from someone they have not built a genuine relationship with. A single interaction is not
                 enough. Be thoughtful about what you&apos;re asking someone to put their reputation behind.
               </p>
+            </div>
+
+            <div>
+              <h3 className="mb-3 font-semibold text-foreground">Profiles and Identity</h3>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  TechTank is a professional community that meets in person, so people should be able to tell who they
+                  are talking to before they meet them. How much we ask depends on what you are doing.
+                </p>
+                <ul className="list-disc space-y-2 pl-6">
+                  <li>
+                    <span className="font-medium text-foreground">On Slack:</span> we encourage everyone to add the name
+                    they go by and a profile photo, and a LinkedIn, GitHub, or portfolio link if they have one. You can
+                    read and chat without them.
+                  </li>
+                  <li>
+                    <span className="font-medium text-foreground">At in-person events:</span> register under your legal
+                    name and check in with an organizer at the door. Venues may check ID for building access, and we
+                    need an accurate record of who was in the room.
+                  </li>
+                  <li>
+                    <span className="font-medium text-foreground">When arranging to meet people:</span> if you ask who
+                    is attending an event, organize a meetup, or message members to meet in person, your profile should
+                    show the name you go by. No one owes you an answer about where they will be.
+                  </li>
+                </ul>
+                <p>
+                  Your legal name is only for registration: it is seen by organizers and, where building access requires
+                  it, the venue. Everywhere else, including Slack and at the event itself, use the name you go by. If
+                  you have a privacy or safety reason to keep a low profile, tell an organizer privately and we will
+                  work it out with you.
+                </p>
+                <p>
+                  Organizers may ask any member to confirm who they are. An account that won&apos;t may be limited or
+                  removed from community spaces.
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -287,6 +346,16 @@ export default function CodeOfConductPage() {
             </div>
 
             <div>
+              <h3 className="mb-3 font-semibold text-foreground">Suspicious Messages and Requests</h3>
+              <p className="text-muted-foreground">
+                You don&apos;t need to be certain before you report. If a message, a job offer, or a request from
+                another member feels off, tell an organizer and include screenshots if you have them. You are never
+                obligated to reply to a direct message, share personal information, or meet anyone one on one. A report
+                made in good faith will never count against you.
+              </p>
+            </div>
+
+            <div>
               <h3 className="mb-3 font-semibold text-foreground">Reports Involving an Organizer or Board Member</h3>
               <div className="space-y-4 text-muted-foreground">
                 <p>
@@ -342,7 +411,9 @@ export default function CodeOfConductPage() {
 
             <p className="text-sm text-muted-foreground">
               Note: some behaviours may warrant skipping directly to a temporary or permanent ban without a prior notice
-              of correction, at the board&apos;s discretion.
+              of correction, at the board&apos;s discretion. Fraud, impersonation, and threats to member safety result
+              in immediate removal. Where we believe a law has been broken, we may report it to the relevant platform or
+              authorities.
             </p>
           </div>
         </section>
