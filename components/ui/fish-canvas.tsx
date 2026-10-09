@@ -88,7 +88,7 @@ function drawFish(ctx: CanvasRenderingContext2D, f: Fish, t: number) {
   ctx.restore();
 }
 
-export default function FishCanvas() {
+export function FishCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -999, y: -999 });
   const fishRef = useRef<Fish[]>([]);

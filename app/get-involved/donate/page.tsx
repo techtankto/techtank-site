@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Banknote, CreditCard, ShieldCheck, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
@@ -107,13 +108,13 @@ export default function DonatePage() {
                 {CONTACT_EMAIL}
               </a>
               . We&apos;re also always looking for{" "}
-              <a href="/get-involved/sponsor" className="underline underline-offset-2 hover:text-foreground">
+              <Link href="/get-involved/sponsor" className="underline underline-offset-2 hover:text-foreground">
                 sponsors
-              </a>{" "}
+              </Link>{" "}
               and{" "}
-              <a href="/get-involved/host" className="underline underline-offset-2 hover:text-foreground">
+              <Link href="/get-involved/host" className="underline underline-offset-2 hover:text-foreground">
                 event hosts
-              </a>
+              </Link>
               .
             </p>
           </div>

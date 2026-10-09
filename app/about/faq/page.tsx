@@ -121,7 +121,7 @@ const faqs = [
             roles, we ask that you get involved in the community first so you know what TechTank is all about. Time
             commitment varies.{" "}
             <Link
-              href="/get-involved/volunteer"
+              href="/get-involved/organizer"
               className="underline underline-offset-2 transition-colors hover:text-foreground"
             >
               Fill out the volunteer form
