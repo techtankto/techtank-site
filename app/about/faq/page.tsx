@@ -124,7 +124,7 @@ const faqs = [
               href="/get-involved/organizer"
               className="underline underline-offset-2 transition-colors hover:text-foreground"
             >
-              Fill out the volunteer form
+              Reach out through the organizer team page
             </Link>{" "}
             and we'll be in touch.
           </>
