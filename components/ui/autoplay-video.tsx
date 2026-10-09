@@ -63,9 +63,10 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     video.addEventListener("pause", handlePause);
 
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    let inView = false;
+    const visibility = { inView: false };
     const syncPlayback = () => {
-      const shouldPlay = inView && (userIntentRef.current ? userIntentRef.current === "play" : !query.matches);
+      const shouldPlay =
+        visibility.inView && (userIntentRef.current ? userIntentRef.current === "play" : !query.matches);
       if (!shouldPlay) {
         video.pause();
       } else {
@@ -76,7 +77,7 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
       }
     };
     const observer = new IntersectionObserver(([entry]) => {
-      inView = entry.isIntersecting;
+      visibility.inView = entry.isIntersecting;
       syncPlayback();
     });
     observer.observe(video);
