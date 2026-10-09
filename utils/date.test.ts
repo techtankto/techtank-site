@@ -15,6 +15,10 @@ describe("formatEventDate", () => {
   it("formats the Toronto calendar date", () => {
     expect(formatEventDate("2026-10-16T01:30:00.000Z")).toBe("Oct 15, 2026");
   });
+
+  it("keeps a date-only value on its calendar date", () => {
+    expect(formatEventDate("2026-07-08")).toBe("Jul 8, 2026");
+  });
 });
 
 describe("toAppDateKey", () => {
