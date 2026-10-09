@@ -49,7 +49,7 @@ const faqs = [
               href="/get-involved/sponsor"
               className="underline underline-offset-2 transition-colors hover:text-foreground"
             >
-              Fill out the sponsor and host inquiry form
+              Reach out through the sponsor page
             </Link>{" "}
             and an organizer will follow up.
           </>
@@ -107,8 +107,8 @@ const faqs = [
               className="underline underline-offset-2 transition-colors hover:text-foreground"
             >
               reach out
-            </a>{" "}
-            or fill out the organizer interest form. We'd love to hear it.
+            </a>
+            . We'd love to hear it.
           </>
         ),
       },
