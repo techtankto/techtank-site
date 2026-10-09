@@ -45,20 +45,17 @@ export function EventBrowser({ events }: EventBrowserProps) {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("cards");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const filtered = useMemo(() => {
-    let result = events.filter((e) => {
-      if (!matchesCategory(e, category)) return false;
-      return true;
-    });
-
-    result = result.sort((a, b) => {
-      if (a.status !== b.status) return a.status === "upcoming" ? -1 : 1;
-      const diff = new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
-      return a.status === "upcoming" ? diff : -diff;
-    });
-
-    return result;
-  }, [events, category]);
+  const filtered = useMemo(
+    () =>
+      events
+        .filter((e) => matchesCategory(e, category))
+        .sort((a, b) => {
+          if (a.status !== b.status) return a.status === "upcoming" ? -1 : 1;
+          const diff = new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
+          return a.status === "upcoming" ? diff : -diff;
+        }),
+    [events, category],
+  );
 
   // Switching filter resets the count here, on the click, not in an effect.
   const selectCategory = (next: CategoryFilter) => {
