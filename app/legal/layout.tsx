@@ -1,6 +1,4 @@
-"use client";
-
-import { Subnav } from "@/components/layout/subnav";
+import { SectionNav } from "@/components/layout/section-nav";
 
 const subMenu = [
   { name: "Code of Conduct", href: "/legal/code-of-conduct" },
@@ -12,15 +10,7 @@ export default function LegalLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-screen bg-background">
       {/* Sticky Sub-Nav */}
-      <nav
-        aria-labelledby="legal-nav-name"
-        className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl"
-      >
-        <span id="legal-nav-name" className="sr-only">
-          Legal documents
-        </span>
-        <Subnav items={subMenu} />
-      </nav>
+      <SectionNav label="Legal documents" items={subMenu} />
 
       {/* Main Content */}
       <div className="mx-auto max-w-7xl px-6 py-12 lg:px-8 lg:pb-16">
