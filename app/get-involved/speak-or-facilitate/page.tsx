@@ -7,6 +7,7 @@ import { FeatureCard } from "@/components/ui/feature-card";
 import { CheckGrid } from "@/components/ui/check-grid";
 import { ChecklistPanel } from "@/components/ui/checklist-panel";
 import { ContactCard } from "@/components/ui/contact-card";
+import { SPEAKER_PROPOSAL_URL } from "@/constants/contact";
 
 export const metadata: Metadata = {
   title: "Speak or Facilitate",
@@ -87,11 +88,7 @@ export default function SpeakOrFacilitatePage() {
               want to hear it.
             </p>
             <Button variant="primary" size="lg" asChild>
-              <a
-                href="https://docs.google.com/forms/d/e/1FAIpQLSdtei1QBJb45fF8Fw29yApWCJEiwHROrJEhPhI5X3eXcAnUjQ/viewform?usp=sf_link"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={SPEAKER_PROPOSAL_URL} target="_blank" rel="noopener noreferrer">
                 Submit your proposal
               </a>
             </Button>
@@ -171,11 +168,7 @@ export default function SpeakOrFacilitatePage() {
             Tell us about yourself and your idea — talk, panel, or workshop. We&apos;ll get back to you within a week.
           </p>
           <Button variant="primary" size="lg" asChild>
-            <a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSdtei1QBJb45fF8Fw29yApWCJEiwHROrJEhPhI5X3eXcAnUjQ/viewform?usp=sf_link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={SPEAKER_PROPOSAL_URL} target="_blank" rel="noopener noreferrer">
               Submit your proposal
             </a>
           </Button>

@@ -8,6 +8,7 @@ import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 import { events } from "@/constants/events";
+import { socialLinks } from "@/constants/social-links";
 import type { Event } from "@/types/event";
 
 import { getAllLumaEvents } from "./actions";
@@ -94,7 +95,7 @@ export default async function EventsPage() {
         <div className="mb-8 flex flex-wrap justify-center gap-4">
           <Button variant="primary" asChild>
             <TrackedLink
-              href="https://lu.ma/techtank"
+              href={socialLinks.luma.url}
               target="_blank"
               rel="noopener noreferrer"
               event="events_cta_click"
@@ -107,7 +108,7 @@ export default async function EventsPage() {
           </Button>
           <Button variant="outline" asChild>
             <TrackedLink
-              href="https://meetup.com/techtank-to"
+              href={socialLinks.meetup.url}
               target="_blank"
               rel="noopener noreferrer"
               event="events_cta_click"
