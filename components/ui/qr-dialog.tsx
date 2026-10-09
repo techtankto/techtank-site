@@ -1,12 +1,13 @@
 ﻿"use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Dialog } from "@/components/ui/dialog";
-import { QrCodeIcon, SlackIcon } from "@/components/ui/icons";
+import { SlackIcon } from "@/components/ui/icons";
 import { useAppStore } from "@/stores/app-state";
 
-// The QR SVG below encodes https://www.techtankto.com/get-involved
+// The QR SVG at /images/qr/get-involved.svg encodes https://www.techtankto.com/get-involved
 // (regenerate the asset if that URL changes).
 const titleId = "qr-dialog-title";
 
@@ -31,7 +32,13 @@ export function QrDialog() {
         </div>
 
         {/* The copy above and the link below already say this, so the graphic adds nothing. */}
-        <QrCodeIcon className="size-40 max-w-full text-black dark:text-white" />
+        <Image
+          src="/images/qr/get-involved.svg"
+          alt=""
+          width={160}
+          height={160}
+          className="size-40 max-w-full dark:invert"
+        />
 
         <Button variant="primary" size="sm" className="w-full" asChild onClick={onClose}>
           <Link href="/get-involved">Visit Get Involved</Link>
