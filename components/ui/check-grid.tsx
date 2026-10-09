@@ -15,10 +15,8 @@ type CheckGridProps = HTMLAttributes<CheckGridRef> & {
 };
 
 const CheckGrid = forwardRef<CheckGridRef, CheckGridProps>((props, ref) => {
-  // props
   const { items, className, ...rest } = props;
 
-  // jsx
   return (
     <ul ref={ref} className={cn(styles.root({ className }))} {...rest}>
       {items.map((item) => (

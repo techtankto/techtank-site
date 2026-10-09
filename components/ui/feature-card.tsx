@@ -17,10 +17,8 @@ type FeatureCardProps = Omit<HTMLAttributes<FeatureCardRef>, "title"> & {
 };
 
 const FeatureCard = forwardRef<FeatureCardRef, FeatureCardProps>((props, ref) => {
-  // props
   const { icon: Icon, title, description, className, ...rest } = props;
 
-  // jsx
   return (
     <div ref={ref} className={cn(styles.root({ className }))} {...rest}>
       <div className={cn(styles.icon())}>

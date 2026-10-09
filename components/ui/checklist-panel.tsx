@@ -39,10 +39,8 @@ type ChecklistPanelProps = Omit<HTMLAttributes<ChecklistPanelRef>, "title"> &
   };
 
 const ChecklistPanel = forwardRef<ChecklistPanelRef, ChecklistPanelProps>((props, ref) => {
-  // props
   const { title, items, tone, className, ...rest } = props;
 
-  // jsx
   return (
     <div ref={ref} className={cn(styles.root({ tone, className }))} {...rest}>
       <h3 className={cn(styles.title())}>{title}</h3>

@@ -13,13 +13,10 @@ type SectionNavProps = HTMLAttributes<SectionNavRef> & {
 };
 
 const SectionNav = forwardRef<SectionNavRef, SectionNavProps>((props, ref) => {
-  // props
   const { label, items, className, ...rest } = props;
 
-  // hooks
   const labelId = useId();
 
-  // jsx
   return (
     <nav ref={ref} aria-labelledby={labelId} className={cn(styles.root({ className }))} {...rest}>
       <span id={labelId} className="sr-only">
