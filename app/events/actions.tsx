@@ -1,7 +1,8 @@
-﻿import { z } from "zod";
+﻿"use server";
 
 import type { Sponsor } from "@/constants/sponsors";
 
+import { z } from "zod";
 import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
 
 export interface Event {
