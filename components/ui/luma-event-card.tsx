@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Calendar, MapPin, Video } from "lucide-react";
 import type { Event } from "@/types/event";
+import { formatEventTime } from "@/utils/date";
 
 const AVATAR_DIMENSIONS = {
   default: {
@@ -28,11 +29,7 @@ export function LumaEventCard({ event }: Props) {
     event.featured_guests?.filter((g) => g.avatar_url).slice(0, AVATAR_DIMENSIONS.default.guestCount) ?? [];
   const overflowCount = (event.guest_count ?? 0) - renderedGuests.length;
 
-  const dateObj = new Date(event.start_at);
-  const formattedTime = dateObj.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  const formattedTime = formatEventTime(event.start_at);
   const showTime = !event.start_at.includes("T12:00:00");
 
   const isOnline = Boolean(event.virtual_info?.raw_join_url);

@@ -12,6 +12,7 @@ import type { Event } from "@/types/event";
 
 import { getAllLumaEvents } from "./actions";
 import { LumaEventCard } from "@/components/ui/luma-event-card";
+import { formatInAppTimeZone, toAppDateKey } from "@/utils/date";
 
 export const metadata: Metadata = {
   title: "Events",
@@ -27,7 +28,7 @@ export default async function EventsPage() {
   const upcomingEventsGroupedByDate = (() => {
     const dict: Record<string, Event[]> = {};
     for (const event of lumaEvents) {
-      const dateStr = event.start_at.slice(0, 10);
+      const dateStr = toAppDateKey(event.start_at);
       dict[dateStr] ??= [];
       dict[dateStr].push(event);
     }
@@ -162,12 +163,10 @@ export default async function EventsPage() {
                       }}
                     />
                     <div className="text-left font-semibold" style={{}}>
-                      {Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(
-                        new Date(groupEvents[0].start_at),
-                      )}
+                      {formatInAppTimeZone(groupEvents[0].start_at, { month: "short", day: "numeric" })}
                     </div>
                     <div className="ml-2 text-left text-zinc-500">
-                      {Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date(groupEvents[0].start_at))}
+                      {formatInAppTimeZone(groupEvents[0].start_at, { weekday: "long" })}
                     </div>
                   </div>
                   {groupEvents.map((event) => (

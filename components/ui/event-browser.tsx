@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EventCard } from "@/components/ui/event-card";
 import type { Event } from "@/types/event";
+import { formatEventDate } from "@/utils/date";
 import Image from "next/image";
 
 type CategoryFilter = "all" | "tech-talks" | "build-nights" | "coffee-chats" | "socials" | "sports" | "other";
@@ -189,13 +190,7 @@ function GridView({ events }: { events: Event[] }) {
       {events.map((event) => {
         const img = event.cover_url;
         const isUpcoming = event.status === "upcoming";
-        const dateObj = new Date(event.start_at);
-        const formattedDate = dateObj.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-          timeZone: "America/Toronto",
-        });
+        const formattedDate = formatEventDate(event.start_at);
         const locationText = event.host ? event.host.name : (event.venue ?? null);
         const locationUrl = event.host?.url ?? null;
 
@@ -296,13 +291,7 @@ function ListView({ events }: { events: Event[] }) {
   return (
     <div className="divide-y divide-border overflow-hidden rounded-xl border border-border">
       {events.map((event) => {
-        const dateObj = new Date(event.start_at);
-        const formattedDate = dateObj.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-          timeZone: "America/Toronto",
-        });
+        const formattedDate = formatEventDate(event.start_at);
         const location = event.host ? event.host.name : event.venue;
 
         return (

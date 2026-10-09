@@ -2,6 +2,7 @@
 import { Camera, Calendar, MapPin, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import type { Event } from "@/types/event";
+import { formatEventDate, formatEventTime } from "@/utils/date";
 
 interface EventTitleProps {
   href?: string;
@@ -35,18 +36,8 @@ interface EventCardProps {
 export function EventCard({ event, variant = "compact" }: EventCardProps) {
   const isUpcoming = event.status === "upcoming";
 
-  const dateObj = new Date(event.start_at);
-  const formattedDate = dateObj.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "America/Toronto",
-  });
-  const formattedTime = dateObj.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-    timeZone: "America/Toronto",
-  });
+  const formattedDate = formatEventDate(event.start_at);
+  const formattedTime = formatEventTime(event.start_at);
   const showTime = !event.start_at.includes("T12:00:00");
 
   const locationText = event.host ? event.host.name : (event.venue ?? null);
