@@ -1,6 +1,7 @@
 ﻿import "server-only";
 
 import type { Sponsor } from "@/constants/sponsors";
+import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
 
 import { z } from "zod";
 
@@ -69,7 +70,9 @@ LUMA_EVENT_API_PAST.search = new URLSearchParams({
 
 const SIX_HOURS_IN_SECONDS = 6 * 60 * 60;
 
-const ImageUrlSchema = z.url({ protocol: /^https$/ });
+const ImageUrlSchema = z
+  .url({ protocol: /^https$/ })
+  .refine((url) => REMOTE_IMAGE_HOSTS.includes(new URL(url).hostname));
 
 const EventSchema = z.object({
   api_id: z.string(),

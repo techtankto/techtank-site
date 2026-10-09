@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { REMOTE_IMAGE_HOSTS } from "./constants/remote-images";
 
 const contentSecurityPolicy = [
   "base-uri 'self'",
@@ -24,12 +25,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "images.lumacdn.com",
-      },
-    ],
+    remotePatterns: REMOTE_IMAGE_HOSTS.map((hostname) => ({ protocol: "https" as const, hostname })),
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
