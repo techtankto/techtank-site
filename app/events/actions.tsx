@@ -1,9 +1,9 @@
 ﻿import "server-only";
 
 import type { Sponsor } from "@/constants/sponsors";
-import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
 
 import { z } from "zod";
+import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
 
 export interface Event {
   id: string;
