@@ -8,7 +8,7 @@ import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 import { events } from "@/constants/events";
-import type { Event } from "@/app/events/actions";
+import type { Event } from "@/types/event";
 
 import { getAllLumaEvents } from "./actions";
 import { LumaEventCard } from "@/components/ui/luma-event-card";

@@ -1,7 +1,7 @@
 ﻿import type { ReactNode } from "react";
 import { Camera, Calendar, MapPin, Play } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import type { Event } from "@/app/events/actions";
+import type { Event } from "@/types/event";
 
 interface EventTitleProps {
   href?: string;
