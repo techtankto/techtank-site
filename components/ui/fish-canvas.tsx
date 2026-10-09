@@ -1,5 +1,5 @@
 ﻿"use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 interface Fish {
   x: number;
@@ -93,7 +93,6 @@ export default function FishCanvas() {
   const mouseRef = useRef({ x: -999, y: -999 });
   const fishRef = useRef<Fish[]>([]);
   const rafRef = useRef<number>(0);
-  const [, setCursorPos] = useState({ x: -999, y: -999 });
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -148,19 +147,17 @@ export default function FishCanvas() {
   useEffect(() => {
     function handleMouseMove(e: MouseEvent) {
       mouseRef.current = { x: e.clientX, y: e.clientY };
-      setCursorPos({ x: e.clientX, y: e.clientY });
     }
 
     function handleTouchMove(e: TouchEvent) {
       if (e.touches.length > 0) {
         mouseRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-        setCursorPos({ x: e.touches[0].clientX, y: e.touches[0].clientY });
       }
     }
 
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleTouchMove);
-    window.addEventListener("touchstart", handleTouchMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchstart", handleTouchMove, { passive: true });
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
