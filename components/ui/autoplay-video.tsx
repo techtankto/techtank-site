@@ -49,6 +49,7 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
   // hooks
   const videoRef = useRef<HTMLVideoElement>(null);
   const userIntentRef = useRef<"play" | "pause" | null>(null);
+  const inViewRef = useRef(false);
   const [paused, setPaused] = useState(true);
 
   // Playback is driven entirely by play()/pause() calls, never by a static
@@ -63,10 +64,9 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     video.addEventListener("pause", handlePause);
 
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const visibility = { inView: false };
     const syncPlayback = () => {
       const shouldPlay =
-        visibility.inView && (userIntentRef.current ? userIntentRef.current === "play" : !query.matches);
+        inViewRef.current && (userIntentRef.current ? userIntentRef.current === "play" : !query.matches);
       if (!shouldPlay) {
         video.pause();
       } else {
@@ -77,7 +77,7 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
       }
     };
     const observer = new IntersectionObserver((entries) => {
-      visibility.inView = entries[entries.length - 1].isIntersecting;
+      inViewRef.current = entries[entries.length - 1].isIntersecting;
       syncPlayback();
     });
     observer.observe(video);
