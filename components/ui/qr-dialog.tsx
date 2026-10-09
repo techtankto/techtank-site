@@ -7,7 +7,7 @@ import { Dialog } from "@/components/ui/dialog";
 import { SlackIcon } from "@/components/ui/icons";
 import { useAppStore } from "@/stores/app-state";
 
-// The QR SVG at /images/qr/get-involved.svg encodes https://www.techtankto.com/get-involved
+// The QR SVG below encodes https://www.techtankto.com/get-involved
 // (regenerate the asset if that URL changes).
 const titleId = "qr-dialog-title";
 
