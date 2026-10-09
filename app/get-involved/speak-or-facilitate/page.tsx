@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Check, Clock, Users, Video, Mic, ArrowRight } from "lucide-react";
+import { Clock, Users, Video, Mic, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { FeatureCard } from "@/components/ui/feature-card";
+import { CheckGrid } from "@/components/ui/check-grid";
+import { ChecklistPanel } from "@/components/ui/checklist-panel";
 import { ContactCard } from "@/components/ui/contact-card";
 
 export const metadata: Metadata = {
@@ -101,13 +104,7 @@ export default function SpeakOrFacilitatePage() {
         <SectionHeader overline="Why speak or facilitate" title="What you get out of it" className="mb-12" />
         <div className="grid gap-8 lg:grid-cols-3">
           {whyParticipate.map((item) => (
-            <div key={item.title} className="rounded-2xl border border-border bg-card p-6 lg:p-8">
-              <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-ring/10 text-ring">
-                <item.icon className="size-6" />
-              </div>
-              <h3 className="mb-3 font-display text-xl font-semibold text-foreground">{item.title}</h3>
-              <p className="leading-relaxed text-muted-foreground">{item.description}</p>
-            </div>
+            <FeatureCard key={item.title} icon={item.icon} title={item.title} description={item.description} />
           ))}
         </div>
       </Section>
@@ -131,29 +128,9 @@ export default function SpeakOrFacilitatePage() {
       {/* What TechTank Handles vs What You Provide */}
       <Section>
         <div className="grid gap-8 lg:grid-cols-2">
-          <div className="rounded-2xl border border-ring/30 bg-ring/8 p-6 lg:p-8">
-            <h3 className="mb-6 font-display text-xl font-semibold text-foreground">What TechTank handles</h3>
-            <ul className="space-y-3">
-              {techTankHandles.map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-ring" aria-hidden="true" />
-                  <span className="text-foreground">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ChecklistPanel tone="ring" title="What TechTank handles" items={techTankHandles} />
 
-          <div className="rounded-2xl border border-amber/30 bg-amber/8 p-6 lg:p-8">
-            <h3 className="mb-6 font-display text-xl font-semibold text-foreground">What you provide</h3>
-            <ul className="space-y-3">
-              {youProvide.map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <Check className="mt-0.5 size-5 shrink-0 text-amber" aria-hidden="true" />
-                  <span className="text-foreground">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <ChecklistPanel tone="amber" title="What you provide" items={youProvide} />
         </div>
       </Section>
 
@@ -161,14 +138,7 @@ export default function SpeakOrFacilitatePage() {
       <Section background="brand-soft">
         <div className="mx-auto max-w-3xl">
           <SectionHeader overline="What you get" title="What you get" align="center" className="mb-12" />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {whatYouGet.map((item, index) => (
-              <div key={index} className="flex items-center gap-3 rounded-lg bg-card p-4">
-                <Check className="size-5 shrink-0 text-ring" aria-hidden="true" />
-                <span className="text-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
+          <CheckGrid items={whatYouGet} />
         </div>
       </Section>
 
