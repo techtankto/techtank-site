@@ -31,4 +31,3 @@ const CheckGrid = forwardRef<CheckGridRef, CheckGridProps>((props, ref) => {
 CheckGrid.displayName = "CheckGrid";
 
 export { CheckGrid };
-export type { CheckGridProps, CheckGridRef };

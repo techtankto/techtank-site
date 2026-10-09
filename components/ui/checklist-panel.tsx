@@ -58,4 +58,3 @@ const ChecklistPanel = forwardRef<ChecklistPanelRef, ChecklistPanelProps>((props
 ChecklistPanel.displayName = "ChecklistPanel";
 
 export { ChecklistPanel };
-export type { ChecklistPanelProps, ChecklistPanelRef };

@@ -32,4 +32,3 @@ const FeatureCard = forwardRef<FeatureCardRef, FeatureCardProps>((props, ref) =>
 FeatureCard.displayName = "FeatureCard";
 
 export { FeatureCard };
-export type { FeatureCardProps, FeatureCardRef };

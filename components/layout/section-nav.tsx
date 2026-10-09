@@ -29,4 +29,3 @@ const SectionNav = forwardRef<SectionNavRef, SectionNavProps>((props, ref) => {
 SectionNav.displayName = "SectionNav";
 
 export { SectionNav };
-export type { SectionNavProps, SectionNavRef };
