@@ -1,5 +1,3 @@
-"use client";
-
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Calendar, MapPin, Video } from "lucide-react";

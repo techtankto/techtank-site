@@ -1,6 +1,4 @@
-﻿"use client";
-
-import Image from "next/image";
+﻿import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { Button } from "@/components/ui/button";
