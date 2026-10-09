@@ -1,5 +1,6 @@
 ﻿import Image from "next/image";
 import { getAllTools, type Tool } from "@/constants/tools";
+import { cn } from "@/utils/theme";
 
 const tools = getAllTools();
 
@@ -22,7 +23,7 @@ function ToolLogo({ tool }: { tool: Tool }) {
 /** Card grid for the sponsor page — each tool's wordmark with what it does and how volunteers use it. */
 export function ToolsGrid({ className }: { className?: string }) {
   return (
-    <div className={`grid gap-4 sm:grid-cols-2 lg:grid-cols-4 ${className ?? ""}`}>
+    <div className={cn("grid gap-4 sm:grid-cols-2 lg:grid-cols-4", className)}>
       {tools.map((tool) => (
         <a
           key={tool.id}
@@ -45,7 +46,7 @@ export function ToolsGrid({ className }: { className?: string }) {
 /** Compact logo strip for the homepage. */
 export function ToolsStrip({ className }: { className?: string }) {
   return (
-    <div className={`flex flex-wrap items-center justify-center gap-x-10 gap-y-6 ${className ?? ""}`}>
+    <div className={cn("flex flex-wrap items-center justify-center gap-x-10 gap-y-6", className)}>
       {tools.map((tool) => (
         <a
           key={tool.id}

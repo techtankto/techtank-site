@@ -22,6 +22,10 @@ export const metadata: Metadata = {
   alternates: { canonical: "/events" },
 };
 
+function getLumaSlug(url: string): string {
+  return url.split("/").pop()?.split("?")[0] ?? "";
+}
+
 export default async function EventsPage() {
   const { upcoming: lumaEvents, past: pastLumaEvents } = await getAllLumaEvents();
   const allLumaEvents = [...lumaEvents, ...pastLumaEvents];
@@ -39,20 +43,13 @@ export default async function EventsPage() {
   const staticLumaSlugs = new Set(
     events
       .filter((e) => e.eventUrl?.includes("lu.ma/") || e.eventUrl?.includes("luma.com/"))
-      .map((e) => {
-        const url = e.eventUrl!;
-        const parts = url.split("/");
-        return parts[parts.length - 1].split("?")[0];
-      }),
+      .map((e) => getLumaSlug(e.eventUrl!)),
   );
 
   const mergedEvents = [...events];
   for (const lumaEvent of allLumaEvents) {
     if (!lumaEvent.eventUrl) continue;
-    const parts = lumaEvent.eventUrl.split("/");
-    const slug = parts[parts.length - 1].split("?")[0];
-
-    if (!staticLumaSlugs.has(slug)) {
+    if (!staticLumaSlugs.has(getLumaSlug(lumaEvent.eventUrl))) {
       mergedEvents.push(lumaEvent);
     }
   }
@@ -121,52 +118,20 @@ export default async function EventsPage() {
           </Button>
         </div>
         <div className="flex flex-col items-center">
-          <div
-            className="relative w-full max-w-[680px] border-l border-dashed border-l-black dark:border-l-white"
-            style={{
-              paddingLeft: "24px",
-            }}
-          >
-            <div
-              className="bg-[#f7f8f9] dark:bg-[#212325]"
-              style={{
-                position: "absolute",
-                width: "10px",
-                height: "26px",
-                left: "-5px",
-                top: 0,
-              }}
-            />
-            <div
-              className="bg-gradient-to-b from-transparent to-[#f7f8f9] dark:to-[#212325]"
-              style={{
-                position: "absolute",
-                width: "10px",
-                height: "100%",
-                maxHeight: "300px",
-                left: "-5px",
-                bottom: 0,
-              }}
-            />
+          <div className="relative w-full max-w-[680px] border-l border-dashed border-l-black pl-6 dark:border-l-white">
+            <div className="absolute top-0 -left-1.25 h-6.5 w-2.5 bg-[#f7f8f9] dark:bg-[#212325]" />
+            <div className="absolute bottom-0 -left-1.25 h-full max-h-75 w-2.5 bg-gradient-to-b from-transparent to-[#f7f8f9] dark:to-[#212325]" />
             {lumaEvents.length === 0 ? (
               <p className="text-muted-foreground">No upcoming events scheduled — check back soon.</p>
             ) : (
               Object.entries(upcomingEventsGroupedByDate).map(([date, groupEvents]) => (
                 <div key={date}>
                   <div className="my-4 flex items-center">
-                    <div
-                      className="bg-black dark:bg-white"
-                      style={{
-                        width: "8px",
-                        height: "8px",
-                        borderRadius: "50%",
-                        transform: "translateX(-24px) translateX(-50%)",
-                      }}
-                    />
-                    <div className="text-left font-semibold" style={{}}>
+                    <div className="size-2 -translate-x-7 rounded-full bg-black dark:bg-white" />
+                    <div className="text-left font-semibold">
                       {formatInAppTimeZone(groupEvents[0].start_at, { month: "short", day: "numeric" })}
                     </div>
-                    <div className="ml-2 text-left text-zinc-500">
+                    <div className="ml-2 text-left text-muted-foreground">
                       {formatInAppTimeZone(groupEvents[0].start_at, { weekday: "long" })}
                     </div>
                   </div>
