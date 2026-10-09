@@ -72,6 +72,7 @@ export default async function HomePage() {
                   {heroPosts[0].videoSrc ? (
                     <AutoplayVideo
                       src={heroPosts[0].videoSrc}
+                      poster={heroPosts[0].imageSrc}
                       description={heroPosts[0].alt}
                       preload="auto"
                       className="absolute inset-0"
@@ -95,6 +96,7 @@ export default async function HomePage() {
                   {heroPosts[1].videoSrc ? (
                     <AutoplayVideo
                       src={heroPosts[1].videoSrc}
+                      poster={heroPosts[1].imageSrc}
                       description={heroPosts[1].alt}
                       preload="auto"
                       className="absolute inset-0"
