@@ -76,8 +76,8 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
         });
       }
     };
-    const observer = new IntersectionObserver(([entry]) => {
-      visibility.inView = entry.isIntersecting;
+    const observer = new IntersectionObserver((entries) => {
+      visibility.inView = entries[entries.length - 1].isIntersecting;
       syncPlayback();
     });
     observer.observe(video);
