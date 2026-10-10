@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import { Megaphone, Users, Building2 } from "lucide-react";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { FeatureCard } from "@/components/ui/feature-card";
 import { RoleCard } from "@/components/ui/role-card";
 import { roleCardsData } from "@/constants/role-cards";
 import { ContactCard } from "@/components/ui/contact-card";
 import { BRAND_ICONS } from "@/components/ui/icons";
+import { socialLinks } from "@/constants/social-links";
 
 export const metadata: Metadata = {
   title: "Get Involved",
@@ -14,41 +16,13 @@ export const metadata: Metadata = {
 };
 
 const communityLinks = [
-  {
-    name: "Slack",
-    href: "/links/slack",
-    iconId: "slack",
-  },
-  {
-    name: "Luma",
-    href: "https://luma.com/techtank",
-    iconId: "luma",
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/company/techtank-to",
-    iconId: "linkedin",
-  },
-  {
-    name: "Instagram",
-    href: "https://instagram.com/techtankto",
-    iconId: "instagram",
-  },
-  {
-    name: "GitHub",
-    href: "https://github.com/techtankto",
-    iconId: "github",
-  },
-  {
-    name: "YouTube",
-    href: "https://youtube.com/@TechTankTo",
-    iconId: "youtube",
-  },
-  {
-    name: "Meetup",
-    href: "https://meetup.com/techtank-to",
-    iconId: "meetup",
-  },
+  socialLinks.slack,
+  socialLinks.luma,
+  socialLinks.linkedin,
+  socialLinks.instagram,
+  socialLinks.github,
+  socialLinks.youtube,
+  socialLinks.meetup,
 ];
 
 const whyGetInvolved = [
@@ -98,11 +72,11 @@ export default function GetInvolvedPage() {
             </span>
             <div className="flex flex-wrap gap-4">
               {communityLinks.map((link) => {
-                const Icon = BRAND_ICONS[link.iconId];
+                const Icon = BRAND_ICONS[link.id];
                 return (
                   <a
                     key={link.name}
-                    href={link.href}
+                    href={link.url}
                     target="_blank"
                     rel="noreferrer"
                     className="group glass relative w-26 overflow-hidden rounded-2xl transition-transform hover:scale-[1.03]"
@@ -134,13 +108,7 @@ export default function GetInvolvedPage() {
         <SectionHeader overline="Why get involved" title="What you get out of it" className="mb-12" />
         <div className="grid gap-8 lg:grid-cols-3">
           {whyGetInvolved.map((item) => (
-            <div key={item.title} className="rounded-2xl border border-border bg-card p-6 lg:p-8">
-              <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-ring/10 text-ring">
-                <item.icon className="size-6" />
-              </div>
-              <h3 className="mb-3 font-display text-xl font-semibold text-foreground">{item.title}</h3>
-              <p className="leading-relaxed text-muted-foreground">{item.description}</p>
-            </div>
+            <FeatureCard key={item.title} icon={item.icon} title={item.title} description={item.description} />
           ))}
         </div>
       </Section>

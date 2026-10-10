@@ -1,9 +1,9 @@
-import FishCanvas from "@/components/ui/fish-canvas";
-import PreviousButton from "@/components/ui/previous-button";
+import { FishCanvas } from "@/components/ui/fish-canvas";
+import { PreviousButton } from "@/components/ui/previous-button";
 
 export default function NotFound() {
   return (
-    <div className={`relative min-h-dvh overflow-x-hidden`}>
+    <div className="relative min-h-dvh overflow-x-hidden">
       {/* Canvas */}
       <FishCanvas />
 

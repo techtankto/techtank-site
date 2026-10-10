@@ -5,7 +5,8 @@ import { LayoutGrid, List, Columns2, Calendar, MapPin, Camera, Play } from "luci
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EventCard } from "@/components/ui/event-card";
-import type { Event } from "@/app/events/actions";
+import type { Event } from "@/types/event";
+import { formatEventDate } from "@/utils/date";
 import Image from "next/image";
 
 type CategoryFilter = "all" | "tech-talks" | "build-nights" | "coffee-chats" | "socials" | "sports" | "other";
@@ -44,20 +45,17 @@ export function EventBrowser({ events }: EventBrowserProps) {
   const [displayMode, setDisplayMode] = useState<DisplayMode>("cards");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
-  const filtered = useMemo(() => {
-    let result = events.filter((e) => {
-      if (!matchesCategory(e, category)) return false;
-      return true;
-    });
-
-    result = result.sort((a, b) => {
-      if (a.status !== b.status) return a.status === "upcoming" ? -1 : 1;
-      const diff = new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
-      return a.status === "upcoming" ? diff : -diff;
-    });
-
-    return result;
-  }, [events, category]);
+  const filtered = useMemo(
+    () =>
+      events
+        .filter((e) => matchesCategory(e, category))
+        .sort((a, b) => {
+          if (a.status !== b.status) return a.status === "upcoming" ? -1 : 1;
+          const diff = new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
+          return a.status === "upcoming" ? diff : -diff;
+        }),
+    [events, category],
+  );
 
   // Switching filter resets the count here, on the click, not in an effect.
   const selectCategory = (next: CategoryFilter) => {
@@ -189,13 +187,7 @@ function GridView({ events }: { events: Event[] }) {
       {events.map((event) => {
         const img = event.cover_url;
         const isUpcoming = event.status === "upcoming";
-        const dateObj = new Date(event.start_at);
-        const formattedDate = dateObj.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-          timeZone: "America/Toronto",
-        });
+        const formattedDate = formatEventDate(event.start_at);
         const locationText = event.host ? event.host.name : (event.venue ?? null);
         const locationUrl = event.host?.url ?? null;
 
@@ -296,13 +288,7 @@ function ListView({ events }: { events: Event[] }) {
   return (
     <div className="divide-y divide-border overflow-hidden rounded-xl border border-border">
       {events.map((event) => {
-        const dateObj = new Date(event.start_at);
-        const formattedDate = dateObj.toLocaleDateString("en-US", {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-          timeZone: "America/Toronto",
-        });
+        const formattedDate = formatEventDate(event.start_at);
         const location = event.host ? event.host.name : event.venue;
 
         return (

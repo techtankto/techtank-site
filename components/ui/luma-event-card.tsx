@@ -1,7 +1,8 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import { Calendar, MapPin, Video } from "lucide-react";
-import type { Event } from "@/app/events/actions";
+import type { Event } from "@/types/event";
+import { formatEventTime } from "@/utils/date";
 
 const AVATAR_DIMENSIONS = {
   default: {
@@ -28,11 +29,7 @@ export function LumaEventCard({ event }: Props) {
     event.featured_guests?.filter((g) => g.avatar_url).slice(0, AVATAR_DIMENSIONS.default.guestCount) ?? [];
   const overflowCount = (event.guest_count ?? 0) - renderedGuests.length;
 
-  const dateObj = new Date(event.start_at);
-  const formattedTime = dateObj.toLocaleTimeString("en-US", {
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  const formattedTime = formatEventTime(event.start_at);
   const showTime = !event.start_at.includes("T12:00:00");
 
   const isOnline = Boolean(event.virtual_info?.raw_join_url);
@@ -44,7 +41,7 @@ export function LumaEventCard({ event }: Props) {
   return (
     <a href={event.eventUrl} target="_blank" rel="noopener noreferrer" aria-label={event.title}>
       <div className="luma-event-card group glass relative overflow-hidden rounded-md">
-        <div className="grid grid-cols-[1fr] sm:grid-cols-[1fr_auto] sm:p-6" style={{}}>
+        <div className="grid grid-cols-[1fr] sm:grid-cols-[1fr_auto] sm:p-6">
           <div className="col-[1_/_span_1] row-[2_/_span_1] flex-1 p-6 sm:col-[1_/_span_1] sm:row-[1_/_span_1] sm:p-0">
             <div className="mb-1 flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="size-4 shrink-0" />
@@ -211,7 +208,7 @@ const Avatar = ({ name, content, size }: AvatarProps) => {
           "--size-sm": `${size.sm}px`,
         } as CSSProperties
       }
-      className="avatar flex items-center justify-center rounded-full border-2 border-background bg-slate-100 text-[9px] select-none dark:bg-slate-800"
+      className="avatar flex items-center justify-center rounded-full border-2 border-background bg-muted text-[9px] select-none"
     >
       {content.value}
     </div>

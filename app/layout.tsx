@@ -38,42 +38,40 @@ const organizationJsonLd = JSON.stringify({
     .filter((url) => url.startsWith("https://")),
 }).replace(/</g, "\\u003c");
 
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    metadataBase: new URL(SITE_URL),
-    title: {
-      default: "TechTank TO — Toronto's Tech Community",
-      template: "%s — TechTank TO",
-    },
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "TechTank TO — Toronto's Tech Community",
+    template: "%s — TechTank TO",
+  },
+  description:
+    "Foster a supportive and inclusive environment where people of all skill levels can explore, create, and thrive in technology. Year-round in-person events in Toronto.",
+  twitter: {
+    card: "summary_large_image",
+    title: "TechTank TO — Toronto's Tech Community",
     description:
-      "Foster a supportive and inclusive environment where people of all skill levels can explore, create, and thrive in technology. Year-round in-person events in Toronto.",
-    twitter: {
-      card: "summary_large_image",
-      title: "TechTank TO — Toronto's Tech Community",
-      description:
-        "Foster a supportive and inclusive environment where people of all skill levels can explore, create, and thrive in technology.",
-    },
-    robots: {
-      index: true,
-      follow: true,
-    },
-    appleWebApp: {
-      title: "TechTank TO",
-      statusBarStyle: "default",
-    },
-    openGraph: {
-      url: "/",
-      type: "website",
-      siteName: "TechTank TO",
-      title: "TechTank TO — Toronto's Tech Community",
-      description:
-        "Foster a supportive and inclusive environment where people of all skill levels can explore, create, and thrive in technology.",
-    },
-    other: {
-      "og:logo": `${SITE_URL}/icon.png`,
-    },
-  };
-}
+      "Foster a supportive and inclusive environment where people of all skill levels can explore, create, and thrive in technology.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  appleWebApp: {
+    title: "TechTank TO",
+    statusBarStyle: "default",
+  },
+  openGraph: {
+    url: "/",
+    type: "website",
+    siteName: "TechTank TO",
+    title: "TechTank TO — Toronto's Tech Community",
+    description:
+      "Foster a supportive and inclusive environment where people of all skill levels can explore, create, and thrive in technology.",
+  },
+  other: {
+    "og:logo": `${SITE_URL}/icon.png`,
+  },
+};
 
 export const viewport: Viewport = {
   themeColor: "#242E52",
@@ -81,7 +79,7 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
       <body className="flex min-h-screen flex-col font-sans antialiased" suppressHydrationWarning>
