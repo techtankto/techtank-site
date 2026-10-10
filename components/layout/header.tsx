@@ -13,11 +13,11 @@ import { useAppStore } from "@/stores/app-state";
 const navigation = [
   { name: "About", href: "/about" },
   { name: "Get Involved", href: "/get-involved" },
-  { name: "Pick a Task", href: "/tasks" },
+  { name: "Pick a Task", href: "/tasks", disabled: process.env.NEXT_PUBLIC_FEATURE_PICK_A_TASK !== "true" },
   { name: "Events", href: "/events" },
   { name: "Resources", href: "/resources/media-kit" },
   { name: "Code of Conduct", href: "/legal/code-of-conduct" },
-];
+] satisfies { name: string; href: string; disabled?: boolean }[];
 
 export function Header() {
   const { mobileMenuOpen, setMobileMenuOpen, toggleMobileMenu, setQrDialogOpen } = useAppStore();
@@ -55,15 +55,17 @@ export function Header() {
 
         {/* Desktop Navigation */}
         <div className="hidden lg:ml-6 lg:flex lg:items-center lg:gap-8">
-          {navigation.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium text-foreground transition-colors hover:underline"
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navigation
+            .filter((item) => !item.disabled)
+            .map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-foreground transition-colors hover:underline"
+              >
+                {item.name}
+              </Link>
+            ))}
         </div>
 
         <div className="flex-1"></div>
@@ -103,16 +105,18 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-border bg-background lg:hidden">
           <div className="space-y-4 p-4">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="block text-base font-medium text-foreground transition-colors hover:text-ring"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+            {navigation
+              .filter((item) => !item.disabled)
+              .map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="block text-base font-medium text-foreground transition-colors hover:text-ring"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {item.name}
+                </Link>
+              ))}
             <div className="space-y-2 border-t border-border pt-4">
               <Button variant="primary" size="sm" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
                 <Link href="/get-involved">Get involved</Link>
