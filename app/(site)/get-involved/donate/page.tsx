@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   title: "Donate",
   description:
     "Support TechTank TO by card or Interac e-transfer. We're a registered Ontario nonprofit, volunteer-run and community-funded.",
+  alternates: { canonical: "/donate" },
 };
 
 export default function DonatePage() {

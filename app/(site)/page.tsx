@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Calendar, ExternalLink, Users } from "lucide-react";
@@ -14,6 +15,10 @@ import { SocialFeed } from "@/components/ui/social-feed";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
 import { getAllLumaEvents } from "./events/actions";
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 function captionToAlt(caption: string): string {
   const firstLine = caption.split("\n")[0] ?? "";

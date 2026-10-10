@@ -23,10 +23,13 @@ export function Header() {
   const { mobileMenuOpen, setMobileMenuOpen, toggleMobileMenu, setQrDialogOpen } = useAppStore();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 h-18 w-full shrink-0 border-b border-border bg-background/80 backdrop-blur-xl">
       {/* Named to tell it apart from the section sub-nav below. DOM text (translation
           tools skip aria-label) in a span (a heading would precede the h1). */}
-      <nav aria-labelledby="primary-nav-name" className="flex items-center justify-start gap-8 px-6 py-4 lg:px-8">
+      <nav
+        aria-labelledby="primary-nav-name"
+        className="mx-auto flex h-full max-w-7xl items-center justify-start gap-8 px-6 lg:px-8"
+      >
         <span id="primary-nav-name" className="sr-only">
           Main
         </span>
@@ -35,23 +38,23 @@ export function Header() {
           <Image
             src="/images/logos/light.svg"
             alt="TechTank TO"
-            width={192}
-            height={56}
-            className="h-10 w-auto dark:hidden"
+            width={123}
+            height={27}
+            className="h-7.5 w-auto dark:hidden"
             priority
           />
           <Image
             src="/images/logos/dark.svg"
             alt="TechTank TO"
-            width={192}
-            height={56}
-            className="hidden h-10 w-auto dark:block"
+            width={691}
+            height={157}
+            className="hidden h-7.5 w-auto dark:block"
             priority
           />
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex lg:items-center lg:gap-8">
+        <div className="hidden lg:ml-6 lg:flex lg:items-center lg:gap-8">
           {navigation.map((item) => (
             <Link
               key={item.name}
@@ -98,7 +101,7 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="border-t border-border lg:hidden">
+        <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-border bg-background lg:hidden">
           <div className="space-y-4 p-4">
             {navigation.map((item) => (
               <Link

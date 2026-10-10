@@ -14,6 +14,7 @@ import { CONTACT_EMAIL } from "@/constants/contact";
 export const metadata: Metadata = {
   title: "Media Kit",
   description: "TechTank TO media kit — logos, brand guidelines, and fast facts for press, sponsors, and partners.",
+  alternates: { canonical: "/resources/media-kit" },
 };
 
 const fastFacts = [
@@ -163,20 +164,18 @@ export default function PressKitPage() {
             <Image
               src="/images/logos/light.svg"
               alt="TechTank TO Logo (light)"
-              width={240}
-              height={80}
-              className="h-16 w-auto"
-              style={{ width: "auto" }}
+              width={123}
+              height={27}
+              className="h-auto w-full max-w-60"
             />
           </div>
           <div className="glass-dark flex items-center justify-center rounded-xl p-8">
             <Image
               src="/images/logos/dark.svg"
               alt="TechTank TO Logo (dark)"
-              width={240}
-              height={80}
-              className="h-16 w-auto"
-              style={{ width: "auto" }}
+              width={691}
+              height={157}
+              className="h-auto w-full max-w-60"
             />
           </div>
         </div>

@@ -3,6 +3,7 @@
 import type { Sponsor } from "@/constants/sponsors";
 
 import { z } from "zod";
+import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
 
 export interface Event {
   id: string;
@@ -69,13 +70,17 @@ LUMA_EVENT_API_PAST.search = new URLSearchParams({
 
 const SIX_HOURS_IN_SECONDS = 6 * 60 * 60;
 
+const ImageUrlSchema = z
+  .url({ protocol: /^https$/ })
+  .refine((url) => REMOTE_IMAGE_HOSTS.includes(new URL(url).hostname));
+
 const EventSchema = z.object({
   api_id: z.string(),
   hosts: z
     .object({
       first_name: z.string().nullish(),
       last_name: z.string().nullish(),
-      avatar_url: z.string().nullish(),
+      avatar_url: ImageUrlSchema.nullish().catch(null),
     })
     .array()
     .nullish(),
@@ -83,7 +88,7 @@ const EventSchema = z.object({
   featured_guests: z
     .object({
       name: z.string().nullish(),
-      avatar_url: z.string().nullish(),
+      avatar_url: ImageUrlSchema.nullish().catch(null),
     })
     .array()
     .nullish(),
@@ -94,7 +99,7 @@ const EventSchema = z.object({
     end_at: z.string(),
     timezone: z.string(),
     url: z.string(),
-    cover_url: z.string().optional(),
+    cover_url: ImageUrlSchema.optional().catch(undefined),
     virtual_info: z
       .object({
         raw_join_url: z.string().nullish(),
@@ -167,39 +172,32 @@ function lumaCalendarResponseToEvents(parsed: LumaEventResponse[]): Event[] {
   }));
 }
 
-async function getLumaEvents(): Promise<Event[]> {
+async function fetchLumaEvents(url: URL, schema: z.ZodType<LumaEventResponse[]>): Promise<Event[]> {
   if (!LUMA_CALENDAR_ID) return [];
-  const res = await fetch(LUMA_EVENT_API, {
-    next: {
-      // @ts-expect-error this is next cache policy
-      cache: "force-cache",
-      revalidate: SIX_HOURS_IN_SECONDS,
-    },
+  const res = await fetch(url, {
+    cache: "force-cache",
+    next: { revalidate: SIX_HOURS_IN_SECONDS },
   });
-  const json = await res.json();
-  const parsed = LumaEventApiResponseSchema.parse(json);
-  return lumaCalendarResponseToEvents(parsed.featured_items);
-}
-
-async function getPastLumaEvents(): Promise<Event[]> {
-  if (!LUMA_CALENDAR_ID) return [];
-  const res = await fetch(LUMA_EVENT_API_PAST, {
-    next: {
-      // @ts-expect-error this is next cache policy
-      cache: "force-cache",
-      revalidate: SIX_HOURS_IN_SECONDS,
-    },
-  });
-  const json = await res.json();
-  const parsed = LumaPastEventApiResponseSchema.parse(json);
-  return lumaCalendarResponseToEvents(parsed.entries);
+  if (!res.ok) {
+    throw new Error(`Luma request to ${url.pathname} failed with HTTP ${res.status}`);
+  }
+  return lumaCalendarResponseToEvents(schema.parse(await res.json()));
 }
 
 export async function getAllLumaEvents(): Promise<{
   upcoming: Event[];
   past: Event[];
 }> {
-  const [upcoming, past] = await Promise.all([getLumaEvents(), getPastLumaEvents()]);
+  const [upcoming, past] = await Promise.all([
+    fetchLumaEvents(
+      LUMA_EVENT_API,
+      LumaEventApiResponseSchema.transform((data) => data.featured_items),
+    ),
+    fetchLumaEvents(
+      LUMA_EVENT_API_PAST,
+      LumaPastEventApiResponseSchema.transform((data) => data.entries),
+    ),
+  ]);
 
   return { upcoming, past };
 }

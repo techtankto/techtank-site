@@ -1,5 +1,34 @@
 ﻿import Image from "next/image";
-import { cn } from "@/utils/theme";
+import { cn, cva, type VariantProps } from "@/utils/theme";
+
+const styles = {
+  root: cva("shrink-0 rounded-full", {
+    variants: {
+      size: {
+        sm: "size-10",
+        md: "size-14 ring-2",
+        lg: "shadow-soft size-24 ring-4",
+        xl: "shadow-soft size-40 ring-4",
+      },
+      hasImage: {
+        true: "relative overflow-hidden",
+        false: "flex items-center justify-center",
+      },
+    },
+    defaultVariants: { size: "md", hasImage: false },
+  }),
+  initials: cva("font-display font-bold", {
+    variants: {
+      size: {
+        sm: "text-xs",
+        md: "text-base",
+        lg: "text-2xl",
+        xl: "text-3xl",
+      },
+    },
+    defaultVariants: { size: "md" },
+  }),
+};
 
 const AVATAR_PALETTES = [
   { bg: "bg-teal/15 dark:bg-teal/20", text: "text-teal dark:text-seafoam", ring: "ring-teal/20" },
@@ -24,14 +53,15 @@ function initials(name: string) {
     .toUpperCase();
 }
 
-const sizeClasses = {
-  sm: { box: "h-10 w-10", text: "text-xs", ring: "" },
-  md: { box: "h-14 w-14", text: "text-base", ring: "ring-2" },
-  lg: { box: "h-24 w-24", text: "text-2xl", ring: "ring-4 shadow-soft" },
-  xl: { box: "h-40 w-40", text: "text-3xl", ring: "ring-4 shadow-soft" },
-} as const;
+type TeamAvatarSize = NonNullable<VariantProps<typeof styles.root>["size"]>;
 
-type TeamAvatarSize = keyof typeof sizeClasses;
+/** Rendered width of each size, for `next/image` to pick the right source. */
+const IMAGE_SIZES = {
+  sm: "40px",
+  md: "56px",
+  lg: "96px",
+  xl: "160px",
+} as const satisfies Record<TeamAvatarSize, string>;
 
 interface TeamAvatarProps {
   name: string;
@@ -42,42 +72,20 @@ interface TeamAvatarProps {
 
 export function TeamAvatar({ name, avatar, size = "md", className }: TeamAvatarProps) {
   const p = paletteFor(name);
-  const s = sizeClasses[size];
+  // The sm avatar carries no ring, so it takes no ring colour either.
+  const ring = size === "sm" ? undefined : p.ring;
 
   if (avatar) {
     return (
-      <div
-        className={cn(
-          "relative shrink-0 overflow-hidden rounded-full",
-          s.box,
-          s.ring && `ring ${p.ring}`,
-          s.ring,
-          className,
-        )}
-      >
-        <Image
-          src={avatar}
-          alt={name}
-          fill
-          sizes={size === "xl" ? "160px" : size === "lg" ? "96px" : size === "md" ? "56px" : "40px"}
-          className="object-cover"
-        />
+      <div className={cn(styles.root({ size, hasImage: true }), ring, className)}>
+        <Image src={avatar} alt={name} fill sizes={IMAGE_SIZES[size]} className="object-cover" />
       </div>
     );
   }
 
   return (
-    <div
-      className={cn(
-        "flex shrink-0 items-center justify-center rounded-full",
-        s.box,
-        s.ring && `ring ${p.ring}`,
-        s.ring,
-        p.bg,
-        className,
-      )}
-    >
-      <span className={cn("font-display font-bold", s.text, p.text)}>{initials(name)}</span>
+    <div className={cn(styles.root({ size, hasImage: false }), ring, p.bg, className)}>
+      <span className={cn(styles.initials({ size }), p.text)}>{initials(name)}</span>
     </div>
   );
 }

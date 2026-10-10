@@ -7,6 +7,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { PostHogProvider } from "@/components/analytics/posthog-provider";
 import { PostHogPageview } from "@/components/analytics/posthog-pageview";
+import { CONTACT_EMAIL } from "@/constants/contact";
+import { SITE_URL } from "@/constants/site";
+import { getAllSocialLinks } from "@/constants/social-links";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -20,9 +23,22 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+// Machine-readable identity for search engines. `<` is escaped so no string can close the script tag.
+const organizationJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "TechTank TO",
+  url: SITE_URL,
+  logo: `${SITE_URL}/images/logos/icon.png`,
+  email: CONTACT_EMAIL,
+  sameAs: getAllSocialLinks()
+    .map((link) => link.url)
+    .filter((url) => url.startsWith("https://")),
+}).replace(/</g, "\\u003c");
+
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL("https://techtankto.com"),
+    metadataBase: new URL(SITE_URL),
     title: {
       default: "TechTank TO — Toronto's Tech Community",
       template: "%s — TechTank TO",
@@ -52,13 +68,13 @@ export async function generateMetadata(): Promise<Metadata> {
         "Foster a supportive and inclusive environment where people of all skill levels can explore, create, and thrive in technology.",
     },
     other: {
-      "og:logo": "https://techtankto.com/icon.png",
+      "og:logo": `${SITE_URL}/icon.png`,
     },
   };
 }
 
 export const viewport: Viewport = {
-  themeColor: "#1B4B5A",
+  themeColor: "#242E52",
   width: "device-width",
   initialScale: 1,
 };
@@ -67,6 +83,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
       <body className="font-sans antialiased" suppressHydrationWarning>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationJsonLd }} />
         <PostHogProvider>
           <ThemeProvider
             attribute="class"

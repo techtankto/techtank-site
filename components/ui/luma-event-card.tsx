@@ -155,13 +155,17 @@ export function LumaEventCard({ event }: Props) {
               </div>
             )}
           </div>
-          <div
-            className={`col-[1_/_span_1] row-[1_/_span_1] aspect-square h-full rounded-t-sm sm:col-[2_/_span_1] sm:row-[1_/_span_1] sm:rounded-sm`}
-            style={{
-              background: event.cover_url ? `url("${event.cover_url}")` : "none",
-              backgroundSize: "cover",
-            }}
-          />
+          <div className="relative col-[1_/_span_1] row-[1_/_span_1] aspect-square h-full overflow-hidden rounded-t-sm sm:col-[2_/_span_1] sm:row-[1_/_span_1] sm:rounded-sm">
+            {event.cover_url && (
+              <Image
+                src={event.cover_url}
+                alt=""
+                fill
+                sizes="(min-width: 640px) 12rem, 100vw"
+                className="object-cover object-left-top"
+              />
+            )}
+          </div>
         </div>
       </div>
     </a>

@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   title: "Events",
   description:
     "All TechTank TO events — upcoming meetups and past recaps. Year-round in-person events in Toronto since 2023.",
+  alternates: { canonical: "/events" },
 };
 
 export default async function EventsPage() {

@@ -55,7 +55,7 @@ export async function createOGImage({ title, imageAlt = "TechTank TO" }: CreateO
         src={logoSrc}
         alt={imageAlt}
         style={{
-          width: hasTitle ? "820px" : "1200px",
+          width: "820px",
           objectFit: "contain",
         }}
       />

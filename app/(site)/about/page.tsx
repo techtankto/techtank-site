@@ -28,6 +28,7 @@ import { BRAND_ICONS } from "@/components/ui/icons";
 export const metadata: Metadata = {
   title: "About",
   description: "Learn about TechTank's mission, values, story, and the programs we run in Toronto's tech community.",
+  alternates: { canonical: "/about" },
 };
 
 const values = [

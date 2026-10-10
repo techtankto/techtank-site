@@ -5,60 +5,61 @@
 /* ─── Base Tokens ──────────────────────────────────────────────────────────── */
 
 @theme {
-  /* Brand palette — fixed across themes */
-  --color-teal: #2a6b7c;
-  --color-teal-dark: #1b4b5a;
-  --color-seafoam: #a8d5d8;
-  --color-mint: #5b9a8b;
-  --color-amber: #ffbc55;
-  --color-amber-dark: #efa020;
-  --color-peach: #f5d4c1;
-  --color-coral: #e87c4e;
-  --color-blush: #eabfbf;
-  --color-sand: #f7ede2;
+  /* Brandbook bases; all other colors derive from these three. */
+  --color-navy: #242e52;
+  --color-yellow: #ffb84d;
+  --color-white: #ffffff;
 
-  /* Semantic tokens — light defaults (overridden per theme below) */
-  --color-background: #f9f6f2;
-  --color-foreground: #1b4b5a;
+  /* Preserve navy's lightness and hue while increasing chroma. */
+  --color-blue: oklch(from var(--color-navy) l calc(c * 2) h);
 
-  --color-muted: #ebf3f4;
-  --color-muted-foreground: #4a6670;
+  /* Compatibility aliases for existing palette utilities. */
+  --color-teal: var(--color-navy);
+  --color-teal-dark: var(--color-navy);
+  --color-seafoam: color-mix(in srgb, var(--color-navy) 10%, var(--color-white));
+  --color-mint: var(--color-success);
+  --color-amber: var(--color-yellow);
+  --color-amber-dark: var(--color-overline);
+  --color-peach: color-mix(in srgb, var(--color-yellow) 12%, var(--color-white));
+  --color-coral: var(--color-destructive);
+  --color-blush: color-mix(in srgb, var(--color-navy) 8%, var(--color-white));
+  --color-sand: color-mix(in srgb, var(--color-yellow) 5%, var(--color-white));
 
-  /* Warm accent text for overlines/hover links — meets AA on light surfaces,
-     unlike raw amber-dark used as text on some backgrounds. */
-  --color-overline: #8a5200;
+  /* Semantic tokens: light defaults before theme hydration. */
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-navy);
 
-  --color-border: rgba(27, 75, 90, 0.12);
-  --color-input: rgba(27, 75, 90, 0.18);
-  --color-ring: #2a6b7c;
+  --color-muted: color-mix(in srgb, var(--color-blue) 15%, var(--color-white));
+  --color-muted-foreground: color-mix(in srgb, var(--color-navy) 80%, var(--color-white));
+  --color-overline: color-mix(in srgb, var(--color-navy) 70%, var(--color-yellow));
 
-  --color-primary: #1b4b5a;
-  --color-primary-foreground: #ffffff;
+  --color-border: color-mix(in srgb, var(--color-navy) 16%, transparent);
+  --color-input: color-mix(in srgb, var(--color-navy) 65%, var(--color-white));
+  --color-ring: var(--color-navy);
 
-  --color-secondary: #a8d5d8;
-  --color-secondary-foreground: #1b4b5a;
+  --color-primary: var(--color-navy);
+  --color-primary-foreground: var(--color-white);
 
-  --color-accent: #d4ecee;
-  --color-accent-foreground: #1b4b5a;
+  --color-secondary: var(--color-yellow);
+  --color-secondary-foreground: var(--color-navy);
 
-  /* Semantic destructive/success are darkened from the brand coral
-     (--color-coral) and mint (--color-mint) so they clear WCAG AA as
-     both text and as a background behind their foreground. The
-     decorative brand hues above are unchanged. */
-  --color-destructive: #b8491a;
-  --color-destructive-foreground: #ffffff;
+  --color-accent: color-mix(in srgb, var(--color-yellow) 20%, var(--color-white));
+  --color-accent-foreground: var(--color-navy);
 
-  --color-warning: #ffbc55;
-  --color-warning-foreground: #1b4b5a;
+  --color-destructive: color-mix(in srgb, var(--color-navy) 65%, var(--color-yellow));
+  --color-destructive-foreground: var(--color-white);
 
-  --color-success: #42776a;
-  --color-success-foreground: #ffffff;
+  --color-warning: var(--color-yellow);
+  --color-warning-foreground: var(--color-navy);
 
-  --color-card: rgba(255, 255, 255, 0.7);
-  --color-card-foreground: #1b4b5a;
+  --color-success: color-mix(in srgb, var(--color-navy) 85%, var(--color-yellow));
+  --color-success-foreground: var(--color-white);
 
-  --color-popover: #ffffff;
-  --color-popover-foreground: #1b4b5a;
+  --color-card: color-mix(in srgb, var(--color-white) 80%, transparent);
+  --color-card-foreground: var(--color-navy);
+
+  --color-popover: var(--color-white);
+  --color-popover-foreground: var(--color-navy);
 
   /* Typography */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -74,51 +75,97 @@
 
 /* ─── Light Tokens & Gradients ─────────────────────────────────────────────── */
 
-/* Gradient defaults (light) — :root ensures var() resolves during SSR and before theme hydration */
+/* Define gradients in each scope so nested theme specimens resolve local tokens. */
 :root {
-  --gradient-brand: linear-gradient(135deg, #a8d5d8 0%, #c9e4e5 22%, #f7ede2 45%, #f4dfa8 82%, #f2d870 100%);
-  --gradient-brand-vertical: linear-gradient(180deg, #a8d5d8 0%, #f7ede2 40%, #f2dca8 100%);
-  --gradient-hero: linear-gradient(160deg, #b5dfe0 0%, #d4e8e5 20%, #f0e6dc 45%, #f5d4c1 80%, #f5c9b0 100%);
-  --gradient-hero-soft: linear-gradient(135deg, #bee0e2 0%, #f0e9e0 40%, #f5d4c1 100%);
+  --gradient-brand: linear-gradient(
+    135deg,
+    var(--color-muted) 0%,
+    var(--color-background) 45%,
+    var(--color-accent) 100%
+  );
+  --gradient-brand-vertical: linear-gradient(
+    180deg,
+    var(--color-muted) 0%,
+    var(--color-background) 40%,
+    var(--color-accent) 100%
+  );
+  --gradient-hero: linear-gradient(
+    160deg,
+    var(--color-muted) 0%,
+    var(--color-background) 45%,
+    var(--color-accent) 100%
+  );
+  --gradient-hero-soft: linear-gradient(
+    135deg,
+    var(--color-background) 0%,
+    var(--color-muted) 40%,
+    var(--color-accent) 100%
+  );
 }
 
 .light {
-  --color-background: #f9f6f2;
-  --color-foreground: #1b4b5a;
+  --color-mint: var(--color-success);
+  --color-amber-dark: var(--color-overline);
 
-  --color-muted: #ebf3f4;
-  --color-muted-foreground: #4a6670;
+  --color-background: var(--color-white);
+  --color-foreground: var(--color-navy);
 
-  /* Warm accent text for overlines/hover links — meets AA on light surfaces,
-     unlike raw amber-dark used as text on some backgrounds. */
-  --color-overline: #8a5200;
+  --color-muted: color-mix(in srgb, var(--color-blue) 15%, var(--color-white));
+  --color-muted-foreground: color-mix(in srgb, var(--color-navy) 80%, var(--color-white));
+  --color-overline: color-mix(in srgb, var(--color-navy) 70%, var(--color-yellow));
 
-  --color-border: rgba(27, 75, 90, 0.12);
-  --color-input: rgba(27, 75, 90, 0.18);
-  --color-ring: #2a6b7c;
+  --color-border: color-mix(in srgb, var(--color-navy) 16%, transparent);
+  --color-input: color-mix(in srgb, var(--color-navy) 65%, var(--color-white));
+  --color-ring: var(--color-navy);
 
-  --color-primary: #1b4b5a;
-  --color-primary-foreground: #ffffff;
+  --color-primary: var(--color-navy);
+  --color-primary-foreground: var(--color-white);
 
-  --color-secondary: #a8d5d8;
-  --color-secondary-foreground: #1b4b5a;
+  --color-secondary: var(--color-yellow);
+  --color-secondary-foreground: var(--color-navy);
 
-  --color-accent: #d4ecee;
-  --color-accent-foreground: #1b4b5a;
+  --color-accent: color-mix(in srgb, var(--color-yellow) 20%, var(--color-white));
+  --color-accent-foreground: var(--color-navy);
 
-  /* success/destructive are the same in light as the @theme base, so
-     they aren't repeated here — only tokens that differ are. */
+  --color-destructive: color-mix(in srgb, var(--color-navy) 65%, var(--color-yellow));
+  --color-destructive-foreground: var(--color-white);
 
-  --color-card: rgba(255, 255, 255, 0.7);
-  --color-card-foreground: #1b4b5a;
+  --color-warning: var(--color-yellow);
+  --color-warning-foreground: var(--color-navy);
 
-  --color-popover: #ffffff;
-  --color-popover-foreground: #1b4b5a;
+  --color-success: color-mix(in srgb, var(--color-navy) 85%, var(--color-yellow));
+  --color-success-foreground: var(--color-white);
 
-  --gradient-brand: linear-gradient(135deg, #a8d5d8 0%, #c9e4e5 22%, #f7ede2 45%, #f4dfa8 82%, #f2d870 100%);
-  --gradient-brand-vertical: linear-gradient(180deg, #a8d5d8 0%, #f7ede2 40%, #f2dca8 100%);
-  --gradient-hero: linear-gradient(160deg, #b5dfe0 0%, #d4e8e5 20%, #f0e6dc 45%, #f5d4c1 80%, #f5c9b0 100%);
-  --gradient-hero-soft: linear-gradient(135deg, #bee0e2 0%, #f0e9e0 40%, #f5d4c1 100%);
+  --color-card: color-mix(in srgb, var(--color-white) 80%, transparent);
+  --color-card-foreground: var(--color-navy);
+
+  --color-popover: var(--color-white);
+  --color-popover-foreground: var(--color-navy);
+
+  --gradient-brand: linear-gradient(
+    135deg,
+    var(--color-muted) 0%,
+    var(--color-background) 45%,
+    var(--color-accent) 100%
+  );
+  --gradient-brand-vertical: linear-gradient(
+    180deg,
+    var(--color-muted) 0%,
+    var(--color-background) 40%,
+    var(--color-accent) 100%
+  );
+  --gradient-hero: linear-gradient(
+    160deg,
+    var(--color-muted) 0%,
+    var(--color-background) 45%,
+    var(--color-accent) 100%
+  );
+  --gradient-hero-soft: linear-gradient(
+    135deg,
+    var(--color-background) 0%,
+    var(--color-muted) 40%,
+    var(--color-accent) 100%
+  );
 }
 
 .gradient-brand {
@@ -135,52 +182,79 @@
 }
 
 .gradient-overlay-brand {
-  background: linear-gradient(to top, rgba(27, 75, 90, 0.92) 0%, rgba(232, 124, 78, 0.55) 42%, transparent 60%);
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-navy) 92%, transparent) 0%,
+    color-mix(in srgb, var(--color-navy) 55%, transparent) 42%,
+    transparent 60%
+  );
 }
 
 /* ─── Dark Tokens & Gradients ──────────────────────────────────────────────── */
 
 .dark {
-  --color-background: #0d2b35;
-  --color-foreground: #e8f4f5;
+  --color-mint: var(--color-success);
+  --color-amber-dark: var(--color-overline);
 
-  --color-muted: #1a3d4a;
-  --color-muted-foreground: #8bbec6;
+  --color-background: var(--color-navy);
+  --color-foreground: var(--color-white);
 
-  /* Warm accent text for overlines/hover links — meets AA on dark surfaces. */
-  --color-overline: #ffbc55;
+  --color-muted: color-mix(in srgb, var(--color-blue) 92%, var(--color-white));
+  --color-muted-foreground: color-mix(in srgb, var(--color-white) 75%, var(--color-navy));
+  --color-overline: var(--color-yellow);
 
-  --color-border: rgba(168, 213, 216, 0.15);
-  --color-input: rgba(168, 213, 216, 0.2);
-  --color-ring: #a8d5d8;
+  --color-border: color-mix(in srgb, var(--color-white) 18%, transparent);
+  --color-input: color-mix(in srgb, var(--color-white) 55%, var(--color-navy));
+  --color-ring: var(--color-yellow);
 
-  --color-primary: #a8d5d8;
-  --color-primary-foreground: #0d2b35;
+  --color-primary: var(--color-yellow);
+  --color-primary-foreground: var(--color-navy);
 
-  --color-secondary: #1b4b5a;
-  --color-secondary-foreground: #a8d5d8;
+  --color-secondary: color-mix(in srgb, var(--color-navy) 82%, var(--color-white));
+  --color-secondary-foreground: var(--color-white);
 
-  --color-accent: #1e4a58;
-  --color-accent-foreground: #a8d5d8;
+  --color-accent: color-mix(in srgb, var(--color-navy) 85%, var(--color-yellow));
+  --color-accent-foreground: var(--color-white);
 
-  /* On a dark page, `text-success`/`text-destructive` have to be light
-     enough to read, so the base green/coral are lifted and the foreground
-     flips dark so it stays legible on the solid `bg-*` variants. */
-  --color-success: #7fd0b0;
-  --color-success-foreground: #0d2b20;
-  --color-destructive: #f59d78;
-  --color-destructive-foreground: #221004;
+  --color-destructive: color-mix(in srgb, var(--color-navy) 65%, var(--color-yellow));
+  --color-destructive-foreground: var(--color-white);
 
-  --color-card: rgba(27, 75, 90, 0.5);
-  --color-card-foreground: #e8f4f5;
+  --color-warning: var(--color-yellow);
+  --color-warning-foreground: var(--color-navy);
 
-  --color-popover: #1a3d4a;
-  --color-popover-foreground: #e8f4f5;
+  --color-success: color-mix(in srgb, var(--color-white) 80%, var(--color-navy));
+  --color-success-foreground: var(--color-navy);
 
-  --gradient-brand: linear-gradient(135deg, #1a3d4a 0%, #1b4b5a 25%, #3a2e20 50%, #352e18 100%);
-  --gradient-brand-vertical: linear-gradient(180deg, #1a3d4a 0%, #2a3830 38%, #352e18 100%);
-  --gradient-hero: linear-gradient(160deg, #0b2e38 0%, #1a3d4a 22%, #2e3028 48%, #4a2e1a 82%, #3a1e0e 100%);
-  --gradient-hero-soft: linear-gradient(135deg, #1a3d4a 0%, #2a3028 38%, #3a2818 100%);
+  --color-card: color-mix(in srgb, var(--color-navy) 90%, var(--color-white));
+  --color-card-foreground: var(--color-white);
+
+  --color-popover: var(--color-muted);
+  --color-popover-foreground: var(--color-white);
+
+  --gradient-brand: linear-gradient(
+    135deg,
+    var(--color-muted) 0%,
+    var(--color-background) 45%,
+    var(--color-accent) 100%
+  );
+  --gradient-brand-vertical: linear-gradient(
+    180deg,
+    var(--color-muted) 0%,
+    var(--color-background) 40%,
+    var(--color-accent) 100%
+  );
+  --gradient-hero: linear-gradient(
+    160deg,
+    var(--color-muted) 0%,
+    var(--color-background) 45%,
+    var(--color-accent) 100%
+  );
+  --gradient-hero-soft: linear-gradient(
+    135deg,
+    var(--color-background) 0%,
+    var(--color-muted) 40%,
+    var(--color-accent) 100%
+  );
 }
 
 /* ─── Helper Classes ───────────────────────────────────────────────────────── */
@@ -217,7 +291,7 @@
     outline-offset: 2px;
   }
   footer a:focus-visible {
-    outline: 2px solid var(--color-seafoam);
+    outline: 2px solid var(--color-yellow);
   }
 }
 
@@ -253,52 +327,52 @@
 
 /* Glassmorphism */
 .glass {
-  background: rgba(255, 255, 255, 0.55);
+  background: color-mix(in srgb, var(--color-white) 55%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--color-border);
 }
 
 .dark .glass {
-  background: rgba(27, 75, 90, 0.45);
+  background: color-mix(in srgb, var(--color-navy) 45%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(168, 213, 216, 0.12);
+  border: 1px solid color-mix(in srgb, var(--color-white) 12%, transparent);
 }
 
 .glass-subtle {
-  background: rgba(255, 255, 255, 0.35);
+  background: color-mix(in srgb, var(--color-white) 35%, transparent);
   backdrop-filter: blur(16px) saturate(150%);
   -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
+  border: 1px solid var(--color-border);
 }
 
 .dark .glass-subtle {
-  background: rgba(27, 75, 90, 0.3);
+  background: color-mix(in srgb, var(--color-navy) 30%, transparent);
   backdrop-filter: blur(16px) saturate(150%);
   -webkit-backdrop-filter: blur(16px) saturate(150%);
-  border: 1px solid rgba(168, 213, 216, 0.1);
+  border: 1px solid color-mix(in srgb, var(--color-white) 10%, transparent);
 }
 
 .glass-dark {
-  background: rgba(27, 75, 90, 0.8);
+  background: color-mix(in srgb, var(--color-navy) 80%, transparent);
   backdrop-filter: blur(20px) saturate(180%);
   -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border: 1px solid rgba(168, 213, 216, 0.25);
+  border: 1px solid color-mix(in srgb, var(--color-white) 25%, transparent);
   color: var(--color-white);
 }
 
 /* Shadows */
 .shadow-soft {
   box-shadow:
-    0 2px 8px rgba(27, 75, 90, 0.06),
-    0 8px 24px rgba(27, 75, 90, 0.08);
+    0 2px 8px color-mix(in srgb, var(--color-navy) 6%, transparent),
+    0 8px 24px color-mix(in srgb, var(--color-navy) 8%, transparent);
 }
 
 .shadow-soft-lg {
   box-shadow:
-    0 4px 12px rgba(27, 75, 90, 0.08),
-    0 16px 48px rgba(27, 75, 90, 0.12);
+    0 4px 12px color-mix(in srgb, var(--color-navy) 8%, transparent),
+    0 16px 48px color-mix(in srgb, var(--color-navy) 12%, transparent);
 }
 
 /* Photo frames */
@@ -306,15 +380,15 @@
   border-radius: var(--radius-xl);
   overflow: hidden;
   box-shadow:
-    0 4px 12px rgba(27, 75, 90, 0.1),
-    0 12px 32px rgba(27, 75, 90, 0.15);
+    0 4px 12px color-mix(in srgb, var(--color-navy) 10%, transparent),
+    0 12px 32px color-mix(in srgb, var(--color-navy) 15%, transparent);
 }
 
 .photo-frame-circle {
   border-radius: var(--radius-full);
   overflow: hidden;
   border: 4px solid var(--color-secondary);
-  box-shadow: 0 8px 24px rgba(27, 75, 90, 0.15);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--color-navy) 15%, transparent);
 }
 
 /* Tag pills */

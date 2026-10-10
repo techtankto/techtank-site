@@ -63,7 +63,13 @@ export function Footer() {
           {/* Brand column */}
           <div className="col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center">
-              <Image src="/images/logos/dark.svg" alt="TechTank TO" width={128} height={56} className="h-10 w-auto" />
+              <Image
+                src="/images/logos/dark.svg"
+                alt="TechTank TO"
+                width={691}
+                height={157}
+                className="h-auto w-full max-w-40"
+              />
             </Link>
             <p className="mt-4 text-sm leading-relaxed text-primary-foreground dark:text-foreground">
               Toronto&apos;s inclusive tech community. Year-round events since 2023.
@@ -123,7 +129,7 @@ export function Footer() {
               <p className="text-sm text-primary-foreground/80 dark:text-foreground/80">
                 Registered Nonprofit &mdash; Ontario Corporation No.{" "}
                 <a
-                  href="https://www.appmybizaccount.gov.on.ca/onbis/corporations/viewInstance/view.pub?id=280aa9d4fbca6577ccb365bb8f57e85a6ffa0ef043506e27dfa9fa1183d3d47a"
+                  href="https://opencorporates.com/companies/ca_on/1001581728"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="underline decoration-primary-foreground/40 underline-offset-2 hover:decoration-primary-foreground dark:decoration-foreground/40 dark:hover:decoration-foreground"
