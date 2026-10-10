@@ -1,6 +1,4 @@
-﻿"use client";
-
-import Image from "next/image";
+﻿import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { Button } from "@/components/ui/button";
@@ -44,7 +42,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
               src={video}
               poster={cover}
               description="Video from this Instagram post"
-              preload="auto"
+              preload="none"
               className="absolute inset-0"
               videoClassName="transition-transform duration-500 group-hover:scale-[1.03]"
             />

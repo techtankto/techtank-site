@@ -48,6 +48,8 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
 
   // hooks
   const videoRef = useRef<HTMLVideoElement>(null);
+  const userIntentRef = useRef<"play" | "pause" | null>(null);
+  const inViewRef = useRef(false);
   const [paused, setPaused] = useState(true);
 
   // Playback is driven entirely by play()/pause() calls, never by a static
@@ -62,8 +64,10 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     video.addEventListener("pause", handlePause);
 
     const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const syncWithMotionPreference = () => {
-      if (query.matches) {
+    const syncPlayback = () => {
+      const shouldPlay =
+        inViewRef.current && (userIntentRef.current ? userIntentRef.current === "play" : !query.matches);
+      if (!shouldPlay) {
         video.pause();
       } else {
         void video.play().catch(() => {
@@ -72,13 +76,18 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
         });
       }
     };
-    syncWithMotionPreference();
-    query.addEventListener("change", syncWithMotionPreference);
+    const observer = new IntersectionObserver((entries) => {
+      inViewRef.current = entries[entries.length - 1].isIntersecting;
+      syncPlayback();
+    });
+    observer.observe(video);
+    query.addEventListener("change", syncPlayback);
 
     return () => {
       video.removeEventListener("play", handlePlay);
       video.removeEventListener("pause", handlePause);
-      query.removeEventListener("change", syncWithMotionPreference);
+      observer.disconnect();
+      query.removeEventListener("change", syncPlayback);
     };
   }, []);
 
@@ -87,8 +96,10 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
+      userIntentRef.current = "play";
       void video.play().catch(() => {});
     } else {
+      userIntentRef.current = "pause";
       video.pause();
     }
   };
