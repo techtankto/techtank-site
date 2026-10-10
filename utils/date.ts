@@ -1,14 +1,11 @@
 const APP_TIME_ZONE = "America/Toronto";
 
-const HAS_UTC_OFFSET = /(Z|[+-]\d{2}:?\d{2})$/i;
-const DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
+const UTC_OFFSET_SUFFIX = /(?:Z|[+-]\d{2}:?\d{2})$/i;
 
 export function formatInAppTimeZone(iso: string, options: Intl.DateTimeFormatOptions, locale = "en-US"): string {
-  if (HAS_UTC_OFFSET.test(iso)) {
-    return new Date(iso).toLocaleString(locale, { ...options, timeZone: APP_TIME_ZONE });
-  }
-  const wallTime = DATE_ONLY.test(iso) ? `${iso}T00:00:00Z` : `${iso}Z`;
-  return new Date(wallTime).toLocaleString(locale, { ...options, timeZone: "UTC" });
+  const hasOffset = UTC_OFFSET_SUFFIX.test(iso);
+  const date = new Date(hasOffset || !iso.includes("T") ? iso : `${iso}Z`);
+  return new Intl.DateTimeFormat(locale, { ...options, timeZone: hasOffset ? APP_TIME_ZONE : "UTC" }).format(date);
 }
 
 export function formatEventDate(iso: string): string {

@@ -9,6 +9,21 @@ describe("formatEventTime", () => {
   it("keeps a naive timestamp as Toronto wall time", () => {
     expect(formatEventTime("2026-07-08T18:00:00")).toBe("6:00 PM");
   });
+
+  it.each([
+    ["2026-10-09T19:45:00-05:00", "8:45 PM"],
+    ["2026-10-09T19:45:00-03:30", "7:15 PM"],
+    ["2026-10-09T19:45:00-00:01", "3:46 PM"],
+    ["2026-10-09T19:45:00+01:00", "2:45 PM"],
+    ["2026-10-09T19:45:00.123-05:00", "8:45 PM"],
+    ["2026-10-09T19:45:00+0100", "2:45 PM"],
+  ])("converts %s from its offset to Toronto time", (iso, expected) => {
+    expect(formatEventTime(iso)).toBe(expected);
+  });
+
+  it("keeps a naive timestamp with milliseconds as Toronto wall time", () => {
+    expect(formatEventTime("2026-07-08T18:00:00.000")).toBe("6:00 PM");
+  });
 });
 
 describe("formatEventDate", () => {
