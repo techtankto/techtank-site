@@ -16,6 +16,7 @@ interface Fish {
 
 const FISH_COUNT = 120;
 const REVEAL_RADIUS = 110;
+const SCALE_LINES = [0, 1, 2];
 
 function makeFish(i: number, W: number, H: number): Fish {
   const cols = Math.ceil(Math.sqrt(FISH_COUNT * (W / H)));
@@ -76,7 +77,7 @@ function drawFish(ctx: CanvasRenderingContext2D, f: Fish, t: number) {
 
   // Scales / lines
   ctx.beginPath();
-  for (const j of [0, 1, 2]) {
+  for (const j of SCALE_LINES) {
     const lx = s * 0.2 - j * s * 0.22;
     ctx.moveTo(lx, -s * 0.3);
     ctx.quadraticCurveTo(lx - s * 0.05, 0, lx, s * 0.3);
