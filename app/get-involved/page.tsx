@@ -15,9 +15,15 @@ export const metadata: Metadata = {
   alternates: { canonical: "/get-involved" },
 };
 
-const communityLinks = ["slack", "luma", "linkedin", "instagram", "github", "youtube", "meetup"].map(
-  (id) => socialLinks[id],
-);
+const communityLinks = [
+  socialLinks.slack,
+  socialLinks.luma,
+  socialLinks.linkedin,
+  socialLinks.instagram,
+  socialLinks.github,
+  socialLinks.youtube,
+  socialLinks.meetup,
+];
 
 const whyGetInvolved = [
   {
