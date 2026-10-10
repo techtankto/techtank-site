@@ -460,6 +460,46 @@
   }
 }
 
+/* ─── Dialog (Radix data-state) ───────────────────────────────────────────────────── */
+/* The panel is centered by a flex wrapper, so these can own `transform`
+   freely without fighting a centering translate. */
+@keyframes dialog-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes dialog-overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes dialog-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes dialog-content-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
 /* ─── Marquee Scroll Mask ─────────────────────────────────────────────────────────── */
 
 @property --scroll-mask-l-from {

@@ -1,8 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { THEMES } from "@/constants/theme";
 import { Analytics } from "@vercel/analytics/next";
@@ -84,7 +82,7 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable} bg-background`}>
-      <body className="flex min-h-screen flex-col font-sans antialiased" suppressHydrationWarning>
+      <body className="font-sans antialiased" suppressHydrationWarning>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: organizationJsonLd }} />
         <PostHogProvider>
           <ThemeProvider
@@ -95,9 +93,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             themes={[THEMES.LIGHT, THEMES.DARK]}
           >
             <PostHogPageview />
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            {children}
             <Analytics />
             <SpeedInsights />
           </ThemeProvider>

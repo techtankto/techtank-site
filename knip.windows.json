@@ -2,7 +2,8 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "tags": ["-lintignore"],
   "ignore": [
-    "app/events/actions.tsx",
+    "app/(site)/events/actions.tsx",
+    "db/**",
     "components/**/*.{ts,tsx}",
     "constants/**/*.ts",
     "hooks/**/*.ts",
