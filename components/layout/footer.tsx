@@ -1,10 +1,13 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import Image from "next/image";
 import { Mail } from "lucide-react";
 import { BRAND_ICONS } from "@/components/ui/icons";
 import { CONTACT_EMAIL } from "@/constants/contact";
 
-const footerLinks = {
+type FooterLink = { name: string; href: string; external: boolean; disabled?: boolean };
+type FooterSection = { title: string; links: FooterLink[] };
+
+const footerLinks: Record<string, FooterSection> = {
   community: {
     title: "Community",
     links: [
@@ -33,7 +36,12 @@ const footerLinks = {
       { name: "Sponsor", href: "/get-involved/sponsor", external: false },
       { name: "Organizer Team", href: "/get-involved/organizer", external: false },
       { name: "Donate", href: "/donate", external: false },
-      { name: "Pick a Task", href: "/tasks", external: false },
+      {
+        name: "Pick a Task",
+        href: "/tasks",
+        external: false,
+        disabled: process.env.NEXT_PUBLIC_FEATURE_PICK_A_TASK !== "true",
+      },
       { name: "Events", href: "/events", external: false },
     ],
   },
@@ -83,37 +91,39 @@ export function Footer() {
                 {section.title}
               </h3>
               <ul className="mt-4 space-y-3">
-                {section.links.map((link) => {
-                  const Icon = BRAND_ICONS[link.name.toLowerCase()];
+                {section.links
+                  .filter((link) => !link.disabled)
+                  .map((link) => {
+                    const Icon = BRAND_ICONS[link.name.toLowerCase()];
 
-                  return (
-                    <li key={link.name}>
-                      {link.external ? (
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
-                        >
-                          {Icon && (
-                            <Icon className="size-4 text-primary-foreground group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
-                          )}
-                          {link.name}
-                        </a>
-                      ) : (
-                        <Link
-                          href={link.href}
-                          className="group flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
-                        >
-                          {Icon && (
-                            <Icon className="size-4 text-primary-foreground group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
-                          )}
-                          {link.name}
-                        </Link>
-                      )}
-                    </li>
-                  );
-                })}
+                    return (
+                      <li key={link.name}>
+                        {link.external ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
+                          >
+                            {Icon && (
+                              <Icon className="size-4 text-primary-foreground group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
+                            )}
+                            {link.name}
+                          </a>
+                        ) : (
+                          <Link
+                            href={link.href}
+                            className="group flex items-center gap-2 text-sm text-primary-foreground hover:text-primary-foreground hover:underline dark:text-foreground dark:hover:text-foreground"
+                          >
+                            {Icon && (
+                              <Icon className="size-4 text-primary-foreground group-hover:text-primary-foreground hover:underline dark:text-foreground dark:group-hover:text-foreground" />
+                            )}
+                            {link.name}
+                          </Link>
+                        )}
+                      </li>
+                    );
+                  })}
               </ul>
             </div>
           ))}
