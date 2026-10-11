@@ -99,7 +99,7 @@ export default function GetInvolvedPage() {
             <span className="mb-4 inline-block text-xs font-semibold tracking-widest text-ring uppercase">
               Join the community
             </span>
-            <div className="flex flex-wrap gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {communityLinks.map((link) => {
                 const Icon = BRAND_ICONS[link.iconId];
                 return (
@@ -108,7 +108,7 @@ export default function GetInvolvedPage() {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="group glass relative w-26 overflow-hidden rounded-2xl transition-transform hover:scale-[1.03]"
+                    className="group glass relative w-full overflow-hidden rounded-2xl transition-transform hover:scale-[1.03]"
                   >
                     <div className="flex flex-col items-center justify-center gap-1 p-5">
                       {Icon && <Icon className="size-10 text-foreground" />}
