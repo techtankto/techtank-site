@@ -88,7 +88,7 @@ function drawFish(ctx: CanvasRenderingContext2D, f: Fish, t: number) {
   ctx.restore();
 }
 
-export default function FishCanvas() {
+export function FishCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouseRef = useRef({ x: -999, y: -999 });
   const fishRef = useRef<Fish[]>([]);
@@ -102,25 +102,23 @@ export default function FishCanvas() {
     if (!ctx) return;
 
     const dpr = window.devicePixelRatio || 1;
-    let W = 0;
-    let H = 0;
-    let lastTime = 0;
+    const frame = { width: 0, height: 0, lastTime: 0 };
 
     function resize() {
-      W = canvas!.clientWidth;
-      H = canvas!.clientHeight;
-      canvas!.width = W * dpr;
-      canvas!.height = H * dpr;
+      frame.width = canvas!.clientWidth;
+      frame.height = canvas!.clientHeight;
+      canvas!.width = frame.width * dpr;
+      canvas!.height = frame.height * dpr;
       ctx!.scale(dpr, dpr);
-      fishRef.current = Array.from({ length: FISH_COUNT }, (_, i) => makeFish(i, W, H));
+      fishRef.current = Array.from({ length: FISH_COUNT }, (_, i) => makeFish(i, frame.width, frame.height));
     }
 
     function loop(ts: number) {
       const t = ts / 1000;
-      const dt = Math.min(t - lastTime, 0.05);
-      lastTime = t;
+      const dt = Math.min(t - frame.lastTime, 0.05);
+      frame.lastTime = t;
 
-      ctx!.clearRect(0, 0, W, H);
+      ctx!.clearRect(0, 0, frame.width, frame.height);
 
       for (const f of fishRef.current) {
         const dx = f.x - mouseRef.current.x;

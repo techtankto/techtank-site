@@ -1,6 +1,4 @@
-"use client";
-
-import { Subnav } from "@/components/layout/subnav";
+import { SectionNav } from "@/components/layout/section-nav";
 
 const subMenu = [
   { name: "Overview", href: "/get-involved" },
@@ -15,15 +13,7 @@ export default function GetInvolvedLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen">
       {/* Sticky Sub-Nav */}
-      <nav
-        aria-labelledby="get-involved-nav-name"
-        className="sticky top-18 z-40 border-b border-border bg-background/80 backdrop-blur-xl"
-      >
-        <span id="get-involved-nav-name" className="sr-only">
-          Get involved pages
-        </span>
-        <Subnav items={subMenu} />
-      </nav>
+      <SectionNav label="Get involved pages" items={subMenu} />
 
       {/* Page Content */}
       {children}

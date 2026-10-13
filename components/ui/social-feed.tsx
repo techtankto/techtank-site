@@ -3,7 +3,7 @@ import { ExternalLink } from "lucide-react";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { Button } from "@/components/ui/button";
 import { BRAND_ICONS, InstagramIcon } from "@/components/ui/icons";
-import { getAllSocialLinks } from "@/constants/social-links";
+import { getAllSocialLinks, socialLinks } from "@/constants/social-links";
 import {
   getCoverImage,
   getCoverVideo,
@@ -24,14 +24,10 @@ function formatDate(date: string | undefined, fallbackRaw: number | undefined): 
   return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 
-const instagramUrl = getAllSocialLinks().find((l) => l.id === "instagram")?.url;
-
 function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
   const cover = getCoverImage(post);
   const video = getCoverVideo(post);
-  const postUrl = post.shortcode
-    ? `https://instagram.com/p/${post.shortcode}`
-    : (instagramUrl ?? "https://instagram.com/techtankto");
+  const postUrl = post.shortcode ? `https://instagram.com/p/${post.shortcode}` : socialLinks.instagram.url;
 
   return (
     <article className="group glass relative flex flex-col overflow-hidden rounded-2xl transition-all">
@@ -109,11 +105,7 @@ export function SocialFeed() {
             const Icon = BRAND_ICONS[link.id];
             return (
               <Button key={link.id} variant={link.type === "primary" ? "primary" : "outline"} size="sm" asChild>
-                <a
-                  href={link.id === "instagram" ? (instagramUrl ?? link.url) : link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href={link.url} target="_blank" rel="noopener noreferrer">
                   {Icon && <Icon className="mr-2 size-4" />}
                   {link.id === "slack" ? "Join Slack" : link.name}
                   <ExternalLink className="ml-2 size-4" aria-hidden="true" />

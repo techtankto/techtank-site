@@ -10,6 +10,7 @@ import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { ToolsStrip } from "@/components/ui/tools-grid";
 import { RoleCard } from "@/components/ui/role-card";
 import { roleCardsData } from "@/constants/role-cards";
+import { socialLinks } from "@/constants/social-links";
 import { EventCard } from "@/components/ui/event-card";
 import { SocialFeed } from "@/components/ui/social-feed";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
@@ -154,14 +155,14 @@ export default async function HomePage() {
         {/* CTAs */}
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Button variant="primary" size="md" asChild>
-            <a href="https://luma.com/techtank" target="_blank" rel="noopener noreferrer">
+            <a href={socialLinks.luma.url} target="_blank" rel="noopener noreferrer">
               <LumaIcon className="mr-2 size-4" />
               Luma
               <ExternalLink className="ml-2 size-4" aria-hidden="true" />
             </a>
           </Button>
           <Button variant="outline" size="md" asChild>
-            <a href="https://meetup.com/techtank-to" target="_blank" rel="noopener noreferrer">
+            <a href={socialLinks.meetup.url} target="_blank" rel="noopener noreferrer">
               <MeetupIcon className="mr-2 size-4" />
               Meetup
               <ExternalLink className="ml-2 size-4" aria-hidden="true" />

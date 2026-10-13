@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { cva } from "@/utils/theme";
 
 const styles = {
@@ -14,16 +14,10 @@ interface CopyButtonProps {
 }
 
 export function CopyButton({ text }: CopyButtonProps) {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
+  const { copied, copy } = useCopyToClipboard();
 
   return (
-    <Button variant="ghost" size="sm" onClick={handleCopy}>
+    <Button variant="ghost" size="sm" onClick={() => copy(text)}>
       {copied ? (
         <Check className={styles.icon()} aria-hidden="true" />
       ) : (
