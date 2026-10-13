@@ -91,7 +91,7 @@ export default function CodeOfConductPage() {
                 <li>Ask before recording or photographing anyone</li>
                 <li>Respect delays in responses</li>
                 <li>
-                  Be who you say you are: register for in-person events under your legal name, and be honest about your
+                  Be who you say you are: register and show up under the name you go by, and be honest about your
                   background and your employer
                 </li>
               </ul>
@@ -176,9 +176,11 @@ export default function CodeOfConductPage() {
                     read and chat without them.
                   </li>
                   <li>
-                    <span className="font-medium text-foreground">At in-person events:</span> register under your legal
-                    name and check in with an organizer at the door. Venues may check ID for building access, and we
-                    need an accurate record of who was in the room.
+                    <span className="font-medium text-foreground">At in-person events:</span> register under the name
+                    you go by and check in with that name or your Luma ticket. Some venues require the name on your ID
+                    for building access. When one does, the event page will say so up front, and registration will ask
+                    for it in a separate private field. You don&apos;t need to explain why it differs from the name you
+                    go by.
                   </li>
                   <li>
                     <span className="font-medium text-foreground">When arranging to meet people:</span> if you ask who
@@ -187,14 +189,17 @@ export default function CodeOfConductPage() {
                   </li>
                 </ul>
                 <p>
-                  Your legal name is only for registration: it is seen by organizers and, where building access requires
-                  it, the venue. Everywhere else, including Slack and at the event itself, use the name you go by. If
-                  you have a privacy or safety reason to keep a low profile, tell an organizer privately and we will
-                  work it out with you.
+                  We only collect the name on your ID when a venue requires it. Organizers share it with the
+                  venue&apos;s front desk and no one else, never read it aloud, and delete it after the event.
+                  Everywhere else, including Slack, check-in, and your name tag, use the name you go by. If a
+                  venue&apos;s ID check doesn&apos;t work for you, message an organizer privately and we&apos;ll find
+                  another way in, or tell you before you make the trip.
                 </p>
                 <p>
-                  Organizers may ask any member to confirm who they are. An account that won&apos;t may be limited or
-                  removed from community spaces.
+                  If we receive a report of impersonation, a scam, or someone misrepresenting themselves, organizers may
+                  privately ask that member to confirm who they are, for example with a LinkedIn profile, a work email,
+                  or a member who can vouch for them. We won&apos;t ask for ID, and we won&apos;t do this at the door.
+                  An account that won&apos;t confirm may be limited or removed.
                 </p>
               </div>
             </div>
