@@ -134,6 +134,13 @@ Outside of tech and community work, he can usually be found at a coffee shop, pl
         role: "Video Content Lead",
         avatar: "/images/team/rohan-villoth.webp",
       },
+      {
+        name: "Abu Saeed",
+        pronouns: "he/him",
+        role: "Event Promotion Lead",
+        avatar: "/images/team/abu-saeed.webp",
+        bio: "Software engineer working in the broadcasting industry, nerding out about all things audio-visual.",
+      },
     ],
   },
   {
@@ -197,7 +204,6 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
       { name: "Justin Bento", pronouns: "he/him", role: "General", avatar: "/images/team/justin-bento.webp" },
       { name: "Lune Moreau", pronouns: "she/they", role: "General", avatar: "/images/team/lune-moreau.webp" },
       { name: "Ayushi Guha", pronouns: "she/her", role: "General" },
-      { name: "Abu Saeed", pronouns: "he/him", role: "General", avatar: "/images/team/abu-saeed.webp" },
       { name: "Carmen Lam", pronouns: "she/her", role: "General", avatar: "/images/team/carmen-lam.webp" },
     ],
   },
