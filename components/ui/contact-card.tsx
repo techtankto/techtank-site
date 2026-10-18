@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import { useState } from "react";
 import { Mail, Copy, Check, MessageSquare } from "lucide-react";
 import { CONTACT_EMAIL } from "@/constants/contact";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { trackEvent } from "@/utils/analytics";
 import { cva } from "@/utils/theme";
 
@@ -34,15 +34,9 @@ interface ContactCardProps {
 export function ContactCard({
   context = "For hosting, sponsorship, speaking, and community inquiries.",
 }: ContactCardProps) {
-  const [copied, setCopied] = useState(false);
+  const { copied, copy } = useCopyToClipboard();
   const email = CONTACT_EMAIL;
   const slackUrl = "/links/slack";
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   return (
     <div className={styles.root()}>
@@ -61,7 +55,7 @@ export function ContactCard({
           >
             {email}
           </a>
-          <button type="button" onClick={handleCopy} className={styles.copyButton()}>
+          <button type="button" onClick={() => copy(email)} className={styles.copyButton()}>
             <span className="sr-only">{copied ? "Copied" : "Copy email"}</span>
             {copied ? (
               <Check className={styles.icon({ size: "sm" })} aria-hidden="true" />

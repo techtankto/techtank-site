@@ -1,5 +1,5 @@
-import FishCanvas from "@/components/ui/fish-canvas";
-import PreviousButton from "@/components/ui/previous-button";
+import { FishCanvas } from "@/components/ui/fish-canvas";
+import { PreviousButton } from "@/components/ui/previous-button";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 

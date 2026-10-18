@@ -4,6 +4,8 @@ import Link from "next/link";
 import { Check, Heart, Users, Megaphone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
+import { FeatureCard } from "@/components/ui/feature-card";
+import { CheckGrid } from "@/components/ui/check-grid";
 import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { ContactCard } from "@/components/ui/contact-card";
 import { ToolsGrid } from "@/components/ui/tools-grid";
@@ -106,13 +108,7 @@ export default function SponsorPage() {
         <SectionHeader overline="Why sponsor" title="What you get out of it" className="mb-12" />
         <div className="grid gap-8 lg:grid-cols-3">
           {whySponsor.map((item) => (
-            <div key={item.title} className="rounded-2xl border border-border bg-card p-6 lg:p-8">
-              <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-ring/10 text-ring">
-                <item.icon className="size-6" />
-              </div>
-              <h3 className="mb-3 font-display text-xl font-semibold text-foreground">{item.title}</h3>
-              <p className="leading-relaxed text-muted-foreground">{item.description}</p>
-            </div>
+            <FeatureCard key={item.title} icon={item.icon} title={item.title} description={item.description} />
           ))}
         </div>
       </Section>
@@ -195,14 +191,7 @@ export default function SponsorPage() {
       <Section background="brand-soft">
         <div className="mx-auto max-w-3xl">
           <SectionHeader overline="All sponsors get" title="Base sponsor package" align="center" className="mb-12" />
-          <div className="grid gap-4 sm:grid-cols-2">
-            {basePackage.map((item, index) => (
-              <div key={index} className="flex items-center gap-3 rounded-lg bg-card p-4">
-                <Check className="size-5 shrink-0 text-ring" aria-hidden="true" />
-                <span className="text-foreground">{item}</span>
-              </div>
-            ))}
-          </div>
+          <CheckGrid items={basePackage} />
         </div>
       </Section>
 

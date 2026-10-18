@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LumaIcon, MeetupIcon } from "@/components/ui/icons";
@@ -9,11 +10,16 @@ import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 import { events } from "@/constants/events";
-import type { Event } from "@/app/(site)/events/actions";
+import { socialLinks } from "@/constants/social-links";
+import type { Event } from "@/types/event";
 
 import { getAllLumaEvents } from "./actions";
 import { LumaEventCard } from "@/components/ui/luma-event-card";
-import { useEffect, useState } from "react";
+import { formatInAppTimeZone, toAppDateKey } from "@/utils/date";
+
+function getLumaSlug(url: string): string {
+  return url.split("/").pop()?.split("?")[0] ?? "";
+}
 
 export function EventPageContent() {
   const [lumaEvents, setLumaEvents] = useState<Event[]>([]);
@@ -31,7 +37,7 @@ export function EventPageContent() {
   const upcomingEventsGroupedByDate = (() => {
     const dict: Record<string, Event[]> = {};
     for (const event of lumaEvents) {
-      const dateStr = event.start_at.slice(0, 10);
+      const dateStr = toAppDateKey(event.start_at);
       dict[dateStr] ??= [];
       dict[dateStr].push(event);
     }
@@ -41,20 +47,13 @@ export function EventPageContent() {
   const staticLumaSlugs = new Set(
     events
       .filter((e) => e.eventUrl?.includes("lu.ma/") || e.eventUrl?.includes("luma.com/"))
-      .map((e) => {
-        const url = e.eventUrl!;
-        const parts = url.split("/");
-        return parts[parts.length - 1].split("?")[0];
-      }),
+      .map((e) => getLumaSlug(e.eventUrl!)),
   );
 
   const mergedEvents = [...events];
   for (const lumaEvent of allLumaEvents) {
     if (!lumaEvent.eventUrl) continue;
-    const parts = lumaEvent.eventUrl.split("/");
-    const slug = parts[parts.length - 1].split("?")[0];
-
-    if (!staticLumaSlugs.has(slug)) {
+    if (!staticLumaSlugs.has(getLumaSlug(lumaEvent.eventUrl))) {
       mergedEvents.push(lumaEvent);
     }
   }
@@ -97,7 +96,7 @@ export function EventPageContent() {
         <div className="mb-8 flex flex-wrap justify-center gap-4">
           <Button variant="primary" asChild>
             <TrackedLink
-              href="https://lu.ma/techtank"
+              href={socialLinks.luma.url}
               target="_blank"
               rel="noopener noreferrer"
               event="events_cta_click"
@@ -110,7 +109,7 @@ export function EventPageContent() {
           </Button>
           <Button variant="outline" asChild>
             <TrackedLink
-              href="https://meetup.com/techtank-to"
+              href={socialLinks.meetup.url}
               target="_blank"
               rel="noopener noreferrer"
               event="events_cta_click"
@@ -123,55 +122,21 @@ export function EventPageContent() {
           </Button>
         </div>
         <div className="flex flex-col items-center">
-          <div
-            className="relative w-full max-w-[680px] border-l border-dashed border-l-black dark:border-l-white"
-            style={{
-              paddingLeft: "24px",
-            }}
-          >
-            <div
-              className="bg-[#f7f8f9] dark:bg-[#212325]"
-              style={{
-                position: "absolute",
-                width: "10px",
-                height: "26px",
-                left: "-5px",
-                top: 0,
-              }}
-            />
-            <div
-              className="bg-gradient-to-b from-transparent to-[#f7f8f9] dark:to-[#212325]"
-              style={{
-                position: "absolute",
-                width: "10px",
-                height: "100%",
-                maxHeight: "300px",
-                left: "-5px",
-                bottom: 0,
-              }}
-            />
+          <div className="relative w-full max-w-[680px] border-l border-dashed border-l-black pl-6 dark:border-l-white">
+            <div className="absolute top-0 -left-1.25 h-6.5 w-2.5 bg-[#f7f8f9] dark:bg-[#212325]" />
+            <div className="absolute bottom-0 -left-1.25 h-full max-h-75 w-2.5 bg-gradient-to-b from-transparent to-[#f7f8f9] dark:to-[#212325]" />
             {lumaEvents.length === 0 ? (
               <p className="text-muted-foreground">No upcoming events scheduled — check back soon.</p>
             ) : (
               Object.entries(upcomingEventsGroupedByDate).map(([date, groupEvents]) => (
                 <div key={date}>
                   <div className="my-4 flex items-center">
-                    <div
-                      className="bg-black dark:bg-white"
-                      style={{
-                        width: "8px",
-                        height: "8px",
-                        borderRadius: "50%",
-                        transform: "translateX(-24px) translateX(-50%)",
-                      }}
-                    />
-                    <div className="text-left font-semibold" style={{}}>
-                      {Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" }).format(
-                        new Date(groupEvents[0].start_at),
-                      )}
+                    <div className="size-2 -translate-x-7 rounded-full bg-black dark:bg-white" />
+                    <div className="text-left font-semibold">
+                      {formatInAppTimeZone(groupEvents[0].start_at, { month: "short", day: "numeric" })}
                     </div>
-                    <div className="ml-2 text-left text-zinc-500">
-                      {Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date(groupEvents[0].start_at))}
+                    <div className="ml-2 text-left text-muted-foreground">
+                      {formatInAppTimeZone(groupEvents[0].start_at, { weekday: "long" })}
                     </div>
                   </div>
                   {groupEvents.map((event) => (

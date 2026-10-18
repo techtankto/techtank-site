@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { Event } from "@/app/(site)/events/actions";
+import type { Event } from "@/types/event";
 import { getAllLumaEvents } from "./events/actions";
 import { EventCard } from "@/components/ui/event-card";
 
