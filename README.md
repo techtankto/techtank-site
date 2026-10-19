@@ -240,6 +240,7 @@ community they believe in. Thank you to everyone who shipped it 💙
 - [Miller Gonzalez](https://github.com/Millertaker)
 - [Taehyeon Kim](https://github.com/1234tgk)
 - [Jyle Vergara](https://github.com/jylevergara)
+- [Nana Ogasawara](https://github.com/cureseven)
 
 And a heartfelt thank you to everyone who built and stewarded earlier versions
 of techtankto.com. This redesign stands on the foundation, inspiration, and
