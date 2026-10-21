@@ -22,6 +22,7 @@ import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { CONTACT_EMAIL } from "@/constants/contact";
 import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
+import { aboutPostKey } from "@/constants/instagram-pins";
 import { socialLinks } from "@/constants/social-links";
 import { BRAND_ICONS } from "@/components/ui/icons";
 
@@ -126,7 +127,7 @@ const pastPrograms = [
 ];
 
 export default function AboutPage() {
-  const featuredPost = getInstagramPostsByIds(["2025-07-07-DLz4I7KOww6"])[0];
+  const featuredPost = getInstagramPostsByIds([aboutPostKey])[0];
   const featuredVideo = featuredPost ? getCoverVideo(featuredPost) : undefined;
   const featuredImage = featuredPost ? getCoverImage(featuredPost) : undefined;
 

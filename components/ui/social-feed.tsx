@@ -7,6 +7,7 @@ import { getAllSocialLinks, socialLinks } from "@/constants/social-links";
 import {
   getCoverImage,
   getCoverVideo,
+  FEED_POST_COUNT,
   getFeaturedInstagramPosts,
   type InstagramPostWithId,
 } from "@/constants/instagram-posts";
@@ -88,7 +89,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
 }
 
 export function SocialFeed() {
-  const posts = getFeaturedInstagramPosts(4);
+  const posts = getFeaturedInstagramPosts(FEED_POST_COUNT);
 
   return (
     <div className="space-y-8">

@@ -11,6 +11,7 @@ import { ContactCard } from "@/components/ui/contact-card";
 import { ToolsGrid } from "@/components/ui/tools-grid";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
+import { sponsorPostKey } from "@/constants/instagram-pins";
 import { CONTACT_EMAIL } from "@/constants/contact";
 
 export const metadata: Metadata = {
@@ -74,7 +75,7 @@ const basePackage = [
 ];
 
 export default function SponsorPage() {
-  const featuredPost = getInstagramPostsByIds(["2026-04-10-DW9vcgiPHx"])[0];
+  const featuredPost = getInstagramPostsByIds([sponsorPostKey])[0];
   const featuredVideo = featuredPost ? getCoverVideo(featuredPost) : undefined;
   const featuredImage = featuredPost ? getCoverImage(featuredPost) : undefined;
 

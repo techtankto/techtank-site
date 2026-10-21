@@ -6,6 +6,8 @@ describe("formatRunReport", () => {
     const out = formatRunReport({
       added: ["2024-05-14-A", "2024-05-15-B"],
       skippedExisting: ["2024-05-13-C"],
+      downloaded: [],
+      pruned: [],
       failed: [],
     });
     expect(out).toContain("Added 2 new post(s): 2024-05-14-A, 2024-05-15-B");
@@ -17,18 +19,32 @@ describe("formatRunReport", () => {
     const out = formatRunReport({
       added: [],
       skippedExisting: [],
+      downloaded: [],
+      pruned: [],
       failed: [
         { id: "17890", reason: "media 404" },
         { id: "17891", reason: "ffmpeg exit 1" },
       ],
     });
-    expect(out).toContain("2 post(s) skipped due to errors");
+    expect(out).toContain("2 post(s) failed and retry next run");
     expect(out).toContain("17890: media 404");
     expect(out).toContain("17891: ffmpeg exit 1");
   });
 
   test("reports nothing-new explicitly", () => {
-    const out = formatRunReport({ added: [], skippedExisting: ["a"], failed: [] });
+    const out = formatRunReport({ added: [], skippedExisting: ["a"], downloaded: [], pruned: [], failed: [] });
     expect(out).toContain("No new posts");
+  });
+
+  test("lists downloaded and pruned media", () => {
+    const out = formatRunReport({
+      added: [],
+      skippedExisting: [],
+      downloaded: ["2025-07-07-A"],
+      pruned: ["2024-05-14-B", "2024-05-15-C"],
+      failed: [],
+    });
+    expect(out).toContain("Downloaded media for 1 retained post(s): 2025-07-07-A");
+    expect(out).toContain("Pruned media for 2 post(s) the site no longer renders: 2024-05-14-B, 2024-05-15-C");
   });
 });

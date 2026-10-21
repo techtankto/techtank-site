@@ -14,6 +14,7 @@ import { socialLinks } from "@/constants/social-links";
 import { SocialFeed } from "@/components/ui/social-feed";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
+import { heroPostKeys } from "@/constants/instagram-pins";
 import { HomeEventsSection } from "./home-events-section";
 
 export const metadata: Metadata = {
@@ -27,10 +28,7 @@ function captionToAlt(caption: string): string {
 }
 
 export default async function HomePage() {
-  const heroPosts = getInstagramPostsByIds([
-    "2026-06-09-DZWPNciI8eO", // Docebo Brainstation (Jun 2026)
-    "2026-04-10-DW9vcgiPHx", // Code diversity (Apr 2026)
-  ]).map((post) => ({
+  const heroPosts = getInstagramPostsByIds([...heroPostKeys]).map((post) => ({
     id: post.id,
     imageSrc: getCoverImage(post),
     videoSrc: getCoverVideo(post),
