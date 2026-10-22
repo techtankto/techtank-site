@@ -35,6 +35,10 @@ const instagramPosts: Record<string, InstagramPost> = Object.fromEntries(
 
 // --- Queries ---
 
+// Posts the home feed shows. The scraper keeps media for this many of the newest
+// posts, so every post the feed can fall back to has media on disk.
+export const FEED_POST_COUNT = 4;
+
 // All posts, newest first. The base query the others build on.
 function getInstagramPosts(): InstagramPostWithId[] {
   return Object.entries(instagramPosts)

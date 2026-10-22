@@ -6,6 +6,8 @@
 interface RunSummary {
   added: string[];
   skippedExisting: string[];
+  downloaded: string[];
+  pruned: string[];
   failed: FailedPost[];
 }
 
@@ -24,8 +26,18 @@ export function formatRunReport(summary: RunSummary): string {
     lines.push(`Skipped ${summary.skippedExisting.length} existing post(s).`);
   }
 
+  if (summary.downloaded.length > 0) {
+    lines.push(`Downloaded media for ${summary.downloaded.length} retained post(s): ${summary.downloaded.join(", ")}`);
+  }
+
+  if (summary.pruned.length > 0) {
+    lines.push(
+      `Pruned media for ${summary.pruned.length} post(s) the site no longer renders: ${summary.pruned.join(", ")}`,
+    );
+  }
+
   if (summary.failed.length > 0) {
-    lines.push(`\n${summary.failed.length} post(s) skipped due to errors:`);
+    lines.push(`\n${summary.failed.length} post(s) failed and retry next run:`);
     for (const { id, reason } of summary.failed) {
       lines.push(`  - ${id}: ${reason}`);
     }

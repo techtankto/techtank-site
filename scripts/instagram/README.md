@@ -2,25 +2,38 @@
 
 Fetches recent posts from the [@techtankto](https://www.instagram.com/techtankto/)
 Instagram account and merges genuinely new ones into the site's data, so the feed
-stays current without hand-transcribing each post.
+stays current without hand-transcribing each post. It keeps metadata for every
+post but commits media only for the posts the site renders.
 
 ## How it works
 
 ```
 Graph API (1 page) → Zod validate → transform to InstagramPost
-  → download + ffmpeg-compress media → upsert by key (never delete)
-  → never-shrink guard → write instagram-posts.generated.ts
+  → upsert metadata by key (never delete) → never-shrink guard
+  → compute retained set → download media for retained posts missing it
+  → prune media for the rest → write instagram-posts.generated.ts
 ```
 
 - **Split ownership.** The scraper only ever writes
-  `constants/instagram-posts.generated.ts`. Human curation (featured posts) lives
-  in `constants/instagram-featured.ts` and is never touched. `instagram-posts.ts`
-  merges the two.
+  `constants/instagram-posts.generated.ts` and `public/media/instagram/`. Human
+  curation lives in `constants/instagram-featured.ts` (the feed's featured posts)
+  and `constants/instagram-pins.ts` (posts hardcoded into pages), and is never
+  touched. `instagram-posts.ts` merges them.
+- **Media only for what renders.** The retained set is the featured keys, the
+  pinned keys, and the newest `FEED_POST_COUNT` posts (enough to cover every post
+  the feed falls back to). Every other post keeps its metadata with an empty
+  `media` list, so `instagram-posts.generated.ts` stays the full catalogue to pick
+  from, and its media directory is deleted.
+- **Pinning any post works.** Add its key to `instagram-featured.ts` or
+  `instagram-pins.ts` and run the scraper; it downloads the media. A post older
+  than the first page is found by walking `paging.next`, capped at 20 pages.
 - **Incremental + safe.** Posts are deduped by their record key
-  (`YYYY-MM-DD-<shortcode>`); existing entries are never overwritten or deleted,
-  and a run that would shrink the file aborts without writing.
-- **Skip-and-flag.** A post whose media 404s or fails to compress is skipped (not
-  partially written) and surfaced in the run summary; it retries next run.
+  (`YYYY-MM-DD-<shortcode>`); metadata is never overwritten or deleted, and a run
+  that would shrink the file aborts without writing.
+- **Skip-and-flag.** A post whose media 404s or fails to compress keeps empty
+  media (no partial files) and is surfaced in the run summary; it retries next run.
+- **Checked in CI.** `retention.test.ts` fails when the committed media drifts from
+  the retained set, e.g. a key pinned by hand without a scrape run.
 
 ## Files
 
@@ -33,10 +46,11 @@ shell modules isolate the network, filesystem, and ffmpeg behind injected deps.
 | `keys.ts`             | Derive the `YYYY-MM-DD-<shortcode>` record key                 | pure  |
 | `transform.ts`        | API node → `InstagramPost` + download list (expands carousels) | pure  |
 | `merge.ts`            | Upsert by key + never-shrink guard                             | pure  |
+| `retention.ts`        | Compute the retained set and what to download or prune         | pure  |
 | `emit.ts`             | Render the generated `.ts` data file                           | pure  |
 | `report.ts`           | Format the run summary                                         | pure  |
-| `graph-api.ts`        | Fetch one page of media                                        | shell |
-| `media.ts`            | Download + ffmpeg-encode media, sandboxed to `public/`         | shell |
+| `graph-api.ts`        | Fetch a page of media                                          | shell |
+| `media.ts`            | Download, encode, and remove media, sandboxed to `public/`     | shell |
 | `scrape-instagram.ts` | Orchestrate the run; CLI entry point                           | shell |
 
 ## Prerequisites
@@ -64,7 +78,7 @@ pnpm scrape:instagram --dry-run
 pnpm scrape:instagram
 ```
 
-Review the resulting diff (new entries + downloaded media under
+Review the resulting diff (new entries, downloaded and pruned media under
 `public/media/instagram/<key>/`) and commit it.
 
 ## Tests

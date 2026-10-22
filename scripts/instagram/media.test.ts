@@ -7,6 +7,7 @@ import {
   isFfmpegAvailable,
   processDownload,
   processPostDownloads,
+  removeMediaDirs,
 } from "./media";
 import type { Download } from "./transform";
 
@@ -222,5 +223,20 @@ describe("processPostDownloads", () => {
     ];
     await expect(processPostDownloads(evil, "/public", d)).rejects.toThrow(/outside public/i);
     expect(d.removeDir).not.toHaveBeenCalled();
+  });
+});
+
+describe("removeMediaDirs", () => {
+  test("removes each distinct dir once", async () => {
+    const removeDir = vi.fn().mockResolvedValue(undefined);
+    await removeMediaDirs(["/media/instagram/k/a.webp", "/media/instagram/k/v.mp4"], "/public", removeDir);
+    expect(removeDir).toHaveBeenCalledTimes(1);
+    expect(normalizePath(removeDir.mock.calls[0][0])).toBe("/public/media/instagram/k");
+  });
+
+  test("never removes a dir outside the public root", async () => {
+    const removeDir = vi.fn().mockResolvedValue(undefined);
+    await removeMediaDirs(["/../../etc/evil.webp"], "/public", removeDir);
+    expect(removeDir).not.toHaveBeenCalled();
   });
 });
