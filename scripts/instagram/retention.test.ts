@@ -1,6 +1,12 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { computeRetainedKeys, planRetention } from "./retention";
 import type { InstagramPost } from "../../constants/instagram-posts";
+import { FEED_POST_COUNT } from "../../constants/instagram-posts";
+import { generatedPosts } from "../../constants/instagram-posts.generated";
+import { featuredKeys } from "../../constants/instagram-featured";
+import { pinnedKeys } from "../../constants/instagram-pins";
 
 const post = (createdAtRaw: number, withMedia = true): InstagramPost => ({
   caption: "",
@@ -28,5 +34,24 @@ describe("planRetention", () => {
   test("fetches retained posts without media and prunes unretained posts with media", () => {
     const posts = { kept: post(1), missing: post(2, false), stale: post(3), bare: post(4, false) };
     expect(planRetention(posts, new Set(["kept", "missing"]))).toEqual({ fetch: ["missing"], prune: ["stale"] });
+  });
+});
+
+// Guards the committed data: a pin or featured key added by hand without a
+// scrape run fails here, naming the post that still needs its media.
+describe("committed Instagram data", () => {
+  const posts: Record<string, InstagramPost> = generatedPosts;
+  const retained = computeRetainedKeys(posts, new Set([...featuredKeys, ...pinnedKeys]), FEED_POST_COUNT);
+
+  test("carries media for exactly the retained posts (run `pnpm scrape:instagram` if not)", () => {
+    expect(planRetention(posts, retained)).toEqual({ fetch: [], prune: [] });
+  });
+
+  test("every referenced media file exists under public/", () => {
+    const publicDir = join(import.meta.dirname, "..", "..", "public");
+    const missing = Object.values(posts)
+      .flatMap((p) => p.media.map((m) => m.path))
+      .filter((path) => !existsSync(join(publicDir, path)));
+    expect(missing).toEqual([]);
   });
 });
