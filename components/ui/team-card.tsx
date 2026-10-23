@@ -1,10 +1,11 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { TeamAvatar } from "@/components/ui/team-avatar";
 import { TeamProfileDialog } from "@/components/ui/team-profile-dialog";
 import { TeamProfileHint } from "@/components/ui/team-profile-hint";
+import { TeamSocialLinks } from "@/components/ui/team-social-links";
 import { cn } from "@/utils/theme";
 import type { TeamMember } from "@/constants/team";
 
@@ -12,14 +13,14 @@ const teamCardVariants = cva("group relative w-full text-left", {
   variants: {
     variant: {
       board:
-        "poster-card gradient-brand shadow-soft-lg hover:shadow-soft-lg flex cursor-pointer flex-col gap-6 overflow-hidden p-8 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
-      core: "core-card shadow-soft hover:shadow-soft-lg flex cursor-pointer gap-4 rounded-2xl border border-border bg-card p-5 transition-shadow focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+        "poster-card gradient-brand shadow-soft-lg hover:shadow-soft-lg flex flex-col gap-6 overflow-hidden p-8 transition-shadow",
+      core: "core-card shadow-soft hover:shadow-soft-lg flex gap-4 rounded-2xl border border-border bg-card p-5 transition-shadow",
       compact:
         "flex items-center gap-3 rounded-xl border border-border bg-card px-4 py-3 transition-colors hover:border-ring/30 hover:bg-accent/30",
     },
-    /** Applied to `compact` cards that open a profile dialog; `board` and `core` carry these styles already. */
+    /** Applied to cards that open a profile dialog. */
     interactive: {
-      true: "cursor-pointer focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none",
+      true: "cursor-pointer has-[[data-card-action]:focus-visible]:ring-2 has-[[data-card-action]:focus-visible]:ring-ring has-[[data-card-action]:focus-visible]:ring-offset-2",
       false: "",
     },
   },
@@ -36,7 +37,7 @@ export interface TeamCardProps extends VariantProps<typeof teamCardVariants> {
   className?: string;
 }
 
-function BoardBody({ name, pronouns, role, bio }: TeamMember) {
+function BoardBody({ name, pronouns, role, bio, linkedin, github }: TeamMember) {
   return (
     <div>
       <p className="font-display text-2xl leading-tight font-bold text-foreground">{name}</p>
@@ -47,12 +48,13 @@ function BoardBody({ name, pronouns, role, bio }: TeamMember) {
       ) : (
         <p className="mt-4 line-clamp-2 text-sm text-muted-foreground italic">Bio coming soon</p>
       )}
+      <TeamSocialLinks linkedin={linkedin} github={github} className="mt-4" />
       <TeamProfileHint />
     </div>
   );
 }
 
-function CoreBody({ name, pronouns, role, bio }: TeamMember) {
+function CoreBody({ name, pronouns, role, bio, linkedin, github }: TeamMember) {
   return (
     <div className="min-w-0 flex-1">
       <p className="font-display text-lg leading-tight font-semibold text-foreground">{name}</p>
@@ -63,20 +65,24 @@ function CoreBody({ name, pronouns, role, bio }: TeamMember) {
       ) : (
         <p className="mt-4 line-clamp-2 text-sm text-muted-foreground italic">Bio coming soon</p>
       )}
+      <TeamSocialLinks linkedin={linkedin} github={github} className="mt-4" />
       <TeamProfileHint />
     </div>
   );
 }
 
-function CompactBody({ name, pronouns, role }: TeamMember) {
+function CompactBody({ name, pronouns, role, linkedin, github }: TeamMember) {
   return (
-    <div className="min-w-0">
-      <p className="truncate text-sm font-semibold text-foreground">{name}</p>
-      <p className="text-xs text-muted-foreground">
-        {pronouns}
-        {role ? ` · ${role}` : ""}
-      </p>
-    </div>
+    <>
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-semibold text-foreground">{name}</p>
+        <p className="text-xs text-muted-foreground">
+          {pronouns}
+          {role ? ` · ${role}` : ""}
+        </p>
+      </div>
+      <TeamSocialLinks linkedin={linkedin} github={github} iconOnly className="shrink-0" />
+    </>
   );
 }
 
@@ -87,39 +93,35 @@ export function TeamCard({ member, variant = "core", className }: TeamCardProps)
   const isCompact = variant === "compact";
   const interactive = !isCompact || Boolean(bio);
 
-  const body = (
-    <>
-      {variant === "board" && (
-        <>
-          <div className="light pointer-events-none absolute -top-8 -right-8 size-40 rounded-full bg-background/10 dark:bg-background/5" />
-          <div className="light pointer-events-none absolute -bottom-12 -left-6 size-32 rounded-full bg-background/10 dark:bg-background/5" />
-        </>
-      )}
-      <TeamAvatar name={name} avatar={avatar} size={avatarSize} />
-      {variant === "board" ? (
-        <BoardBody {...member} />
-      ) : isCompact ? (
-        <CompactBody {...member} />
-      ) : (
-        <CoreBody {...member} />
-      )}
-    </>
-  );
-
-  if (!interactive) {
-    return <div className={cn(teamCardVariants({ variant }), className)}>{body}</div>;
-  }
-
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={cn(teamCardVariants({ variant, interactive: isCompact }), className)}
-      >
-        {body}
-      </button>
-      <TeamProfileDialog member={member} open={open} onClose={() => setOpen(false)} />
+      <div className={cn(teamCardVariants({ variant, interactive }), className)}>
+        {variant === "board" && (
+          <>
+            <div className="light pointer-events-none absolute -top-8 -right-8 size-40 rounded-full bg-background/10 dark:bg-background/5" />
+            <div className="light pointer-events-none absolute -bottom-12 -left-6 size-32 rounded-full bg-background/10 dark:bg-background/5" />
+          </>
+        )}
+        <TeamAvatar name={name} avatar={avatar} size={avatarSize} />
+        {variant === "board" ? (
+          <BoardBody {...member} />
+        ) : isCompact ? (
+          <CompactBody {...member} />
+        ) : (
+          <CoreBody {...member} />
+        )}
+        {interactive && (
+          <button
+            type="button"
+            data-card-action
+            onClick={() => setOpen(true)}
+            className="absolute inset-0 size-full cursor-pointer rounded-[inherit] focus-visible:outline-none"
+          >
+            <span className="sr-only">{`View ${name}'s profile`}</span>
+          </button>
+        )}
+      </div>
+      {interactive && <TeamProfileDialog member={member} open={open} onClose={() => setOpen(false)} />}
     </>
   );
 }
