@@ -1,9 +1,11 @@
-﻿export interface TeamMember {
+export interface TeamMember {
   name: string;
   pronouns: string;
   role?: string;
   bio?: string;
   avatar?: string;
+  linkedin?: string;
+  github?: string;
 }
 
 export interface TeamGroup {
@@ -69,6 +71,8 @@ When she’s not here, she’s doing stand-up comedy, crocheting, fencing, or di
         pronouns: "he/him",
         role: "Board Member & Digital Lead",
         avatar: "/images/team/tony-ko.webp",
+        linkedin: "https://www.linkedin.com/in/tkodev",
+        github: "https://github.com/tkodev",
         bio: `Tony leads TechTank’s web team while serving as an organizer. By day, he’s a Staff Software Engineer working where engineering, design, and product thinking meet. He’s shipped products for Aeroplan, Loblaws, and a few others you’d recognize.
 
 He showed up early, camera in hand, doing whatever the community needed: events, copy, posters. What kept him was the people: their energy, the way quick conversations turned into real ones. To Tony, the most valuable thing TechTank offers isn’t a talk or a networking opportunity, it’s what happens between.
@@ -166,7 +170,13 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
   {
     title: "Digital Team",
     members: [
-      { name: "Tony Ko", pronouns: "he/him", avatar: "/images/team/tony-ko.webp" },
+      {
+        name: "Tony Ko",
+        pronouns: "he/him",
+        avatar: "/images/team/tony-ko.webp",
+        linkedin: "https://www.linkedin.com/in/tkodev",
+        github: "https://github.com/tkodev",
+      },
       { name: "Danny Kim", pronouns: "he/him", avatar: "/images/team/danny-kim.webp" },
       { name: "Rohan Villoth", pronouns: "he/him", avatar: "/images/team/rohan-villoth.webp" },
       { name: "Danyal Imran", pronouns: "he/him", avatar: "/images/team/danyal-imran.webp" },
