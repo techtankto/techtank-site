@@ -2,18 +2,24 @@
 import { fileURLToPath } from "node:url";
 import { join } from "node:path";
 import { generatedPosts } from "../../constants/instagram-posts.generated";
-import type { InstagramPost } from "../../constants/instagram-posts";
+import { FEED_POST_COUNT, type InstagramPost } from "../../constants/instagram-posts";
+import { featuredKeys } from "../../constants/instagram-featured";
+import { pinnedKeys } from "../../constants/instagram-pins";
 import type { GraphConfig } from "./graph-api";
-import { fetchRecentMedia } from "./graph-api";
-import type { MediaNode } from "./schema";
+import { fetchMediaPage, fetchRecentMedia } from "./graph-api";
+import type { MediaNode, MediaResponse } from "./schema";
 import { transformNode, type TransformResult } from "./transform";
 import { assertNoShrink, upsertByKey } from "./merge";
+import { computeRetainedKeys, planRetention } from "./retention";
 import { renderGeneratedFile } from "./emit";
 import { formatRunReport, type FailedPost } from "./report";
-import { isFfmpegAvailable, processPostDownloads } from "./media";
+import { isFfmpegAvailable, processPostDownloads, removeMediaDirs } from "./media";
 
 const DEFAULT_VERSION = "v21.0";
 const DEFAULT_LIMIT = 25;
+// Caps the history walk for a pinned older post: 20 pages of 25 covers about
+// 500 posts, several times the account's history today.
+const MAX_HISTORY_PAGES = 20;
 
 const toMessage = (error: unknown): string => (error instanceof Error ? error.message : String(error));
 
@@ -38,33 +44,43 @@ export function loadConfig(env: Record<string, string | undefined>): GraphConfig
   };
 }
 
-interface Selection {
-  fresh: TransformResult[];
-  skippedExisting: string[];
+interface Transformed {
+  results: TransformResult[];
   failed: FailedPost[];
 }
 
 // A single bad node collects into `failed` rather than throwing, so one
 // malformed post can't abort the whole run.
-export function selectNewPosts(existingKeys: Set<string>, nodes: MediaNode[]): Selection {
-  const fresh: TransformResult[] = [];
-  const skippedExisting: string[] = [];
+export function transformNodes(nodes: MediaNode[]): Transformed {
+  const results: TransformResult[] = [];
   const failed: FailedPost[] = [];
-
   for (const node of nodes) {
     try {
-      const result = transformNode(node);
-      if (existingKeys.has(result.key)) {
-        skippedExisting.push(result.key);
-      } else {
-        fresh.push(result);
-      }
+      results.push(transformNode(node));
     } catch (error) {
-      failed.push({ id: node.id, reason: (error as Error).message });
+      failed.push({ id: node.id, reason: toMessage(error) });
     }
   }
+  return { results, failed };
+}
 
-  return { fresh, skippedExisting, failed };
+// Walks older pages until every wanted key has a source or history runs out.
+// Only reached when a retained post has no media, e.g. a newly pinned older
+// post, so routine runs stay at one request.
+async function findInHistory(
+  first: MediaResponse,
+  wanted: string[],
+  sources: Map<string, TransformResult>,
+  fetchImpl: typeof fetch,
+): Promise<void> {
+  let page = first;
+  for (let pages = 1; pages < MAX_HISTORY_PAGES && page.paging?.next; pages++) {
+    if (wanted.every((key) => sources.has(key))) return;
+    page = await fetchMediaPage(page.paging.next, fetchImpl);
+    for (const result of transformNodes(page.data).results) {
+      if (!sources.has(result.key)) sources.set(result.key, result);
+    }
+  }
 }
 
 interface RunOptions {
@@ -74,50 +90,84 @@ interface RunOptions {
   // The current dataset, passed in (not imported) so run() is reproducible and
   // the full merge -> emit -> write path is integration-testable.
   existing: Record<string, InstagramPost>;
+  fetchImpl?: typeof fetch;
 }
 
-export async function run({ dryRun, publicDir, generatedPath, existing }: RunOptions): Promise<string> {
+export async function run({
+  dryRun,
+  publicDir,
+  generatedPath,
+  existing,
+  fetchImpl = fetch,
+}: RunOptions): Promise<string> {
   if (!dryRun && !isFfmpegAvailable()) {
     throw new Error("ffmpeg not found in PATH. Install it (macOS: `brew install ffmpeg`).");
   }
 
   const config = loadConfig(process.env);
-  const response = await fetchRecentMedia(config);
-  const existingKeys = new Set(Object.keys(existing));
-  const selection = selectNewPosts(existingKeys, response.data);
+  const response = await fetchRecentMedia(config, fetchImpl);
+  const { results, failed } = transformNodes(response.data);
+  const sources = new Map(results.map((result) => [result.key, result]));
 
-  // Download + compress each fresh post's media; a media failure skips that
-  // post and removes its partially-written files. Media within a post run
-  // concurrently; posts stay sequential for ordered failure reporting.
-  const toAdd = [];
-  for (const result of selection.fresh) {
+  // Every new post's metadata is kept; its media starts empty and is filled
+  // below only if the post is retained.
+  const fresh = results.filter((result) => !(result.key in existing));
+  const skippedExisting = results.filter((result) => result.key in existing).map((result) => result.key);
+  const before = Object.keys(existing).length;
+  const { merged, added } = upsertByKey(
+    existing,
+    fresh.map(({ key, post }) => ({ key, post: { ...post, media: [] } })),
+  );
+  assertNoShrink(before, Object.keys(merged).length);
+
+  const curatedKeys = new Set([...featuredKeys, ...pinnedKeys]);
+  const retained = computeRetainedKeys(merged, curatedKeys, FEED_POST_COUNT);
+  const plan = planRetention(merged, retained);
+  if (plan.fetch.some((key) => !sources.has(key))) {
+    await findInHistory(response, plan.fetch, sources, fetchImpl);
+  }
+
+  // Download + compress each retained post's media; a media failure leaves that
+  // post's media empty (so the next run retries) and removes its
+  // partially-written files. Posts stay sequential for ordered failure reporting.
+  const downloaded: string[] = [];
+  for (const key of plan.fetch) {
+    const source = sources.get(key);
+    if (!source) {
+      failed.push({ id: key, reason: "not found in the account's media history" });
+      continue;
+    }
     try {
       if (!dryRun) {
-        await processPostDownloads(result.downloads, publicDir);
+        await processPostDownloads(source.downloads, publicDir);
       }
-      toAdd.push({ key: result.key, post: result.post });
+      merged[key] = { ...merged[key], media: source.post.media };
+      downloaded.push(key);
     } catch (error) {
-      selection.failed.push({ id: result.key, reason: toMessage(error) });
+      failed.push({ id: key, reason: toMessage(error) });
     }
   }
 
-  const before = Object.keys(existing).length;
-  const { merged, added } = upsertByKey(existing, toAdd);
-  assertNoShrink(before, Object.keys(merged).length);
+  for (const key of plan.prune) {
+    if (!dryRun) {
+      await removeMediaDirs(
+        merged[key].media.map((media) => media.path),
+        publicDir,
+      );
+    }
+    merged[key] = { ...merged[key], media: [] };
+  }
 
   // Atomic write: render to a temp file then rename, so a crash mid-write can
   // never leave a truncated, unparseable data file that breaks the build.
-  if (!dryRun && added.length > 0) {
+  const changed = added.length + downloaded.length + plan.prune.length > 0;
+  if (!dryRun && changed) {
     const tmp = `${generatedPath}.tmp`;
     await writeFile(tmp, renderGeneratedFile(merged));
     await rename(tmp, generatedPath);
   }
 
-  return formatRunReport({
-    added,
-    skippedExisting: selection.skippedExisting,
-    failed: selection.failed,
-  });
+  return formatRunReport({ added, skippedExisting, downloaded, pruned: plan.prune, failed });
 }
 
 async function main(): Promise<void> {

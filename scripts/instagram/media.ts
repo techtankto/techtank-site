@@ -149,13 +149,26 @@ export async function processPostDownloads(
       throw failure.reason;
     }
   } catch (error) {
-    // Same root guard as processDownload: never rm outside publicDir, even if
-    // a sibling download in the batch carried a traversal path.
-    const root = resolve(publicDir) + sep;
-    const dirs = new Set(
-      downloads.map((d) => dirname(resolve(join(publicDir, d.destPath)))).filter((dir) => dir.startsWith(root)),
+    await removeMediaDirs(
+      downloads.map((d) => d.destPath),
+      publicDir,
+      deps.removeDir,
     );
-    await Promise.all([...dirs].map((dir) => deps.removeDir(dir)));
     throw error;
   }
+}
+
+// Remove the directories holding the given site-absolute media paths. Same root
+// guard as processDownload: never rm outside publicDir, even if one of the
+// paths carried a traversal segment.
+export async function removeMediaDirs(
+  paths: string[],
+  publicDir: string,
+  removeDir: ProcessDeps["removeDir"] = defaultProcessDeps.removeDir,
+): Promise<void> {
+  const root = resolve(publicDir) + sep;
+  const dirs = new Set(
+    paths.map((path) => dirname(resolve(join(publicDir, path)))).filter((dir) => dir.startsWith(root)),
+  );
+  await Promise.all([...dirs].map((dir) => removeDir(dir)));
 }
