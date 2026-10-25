@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LumaIcon, MeetupIcon } from "@/components/ui/icons";
@@ -21,17 +18,8 @@ function getLumaSlug(url: string): string {
   return url.split("/").pop()?.split("?")[0] ?? "";
 }
 
-export function EventPageContent() {
-  const [lumaEvents, setLumaEvents] = useState<Event[]>([]);
-  const [pastLumaEvents, setPastLumaEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    getAllLumaEvents().then((results) => {
-      setLumaEvents(results.upcoming);
-      setPastLumaEvents(results.past);
-    });
-  }, []);
-
+export async function EventPageContent() {
+  const { past: pastLumaEvents, upcoming: lumaEvents } = await getAllLumaEvents();
   const allLumaEvents = [...lumaEvents, ...pastLumaEvents];
 
   const upcomingEventsGroupedByDate = (() => {

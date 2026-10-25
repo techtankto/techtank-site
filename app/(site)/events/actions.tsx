@@ -4,6 +4,7 @@ import type { Event } from "@/types/event";
 
 import { z } from "zod";
 import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
+import { connection } from "next/server";
 
 const LUMA_CALENDAR_ID = process.env.LUMA_CALENDAR_ID;
 
@@ -129,6 +130,7 @@ function lumaCalendarResponseToEvents(parsed: LumaEventResponse[]): Event[] {
 
 async function fetchLumaEvents(url: URL, schema: z.ZodType<LumaEventResponse[]>): Promise<Event[]> {
   if (!LUMA_CALENDAR_ID) return [];
+  await connection(); // Never fetch luma events during the build.
   const res = await fetch(url, {
     cache: "force-cache",
     next: { revalidate: SIX_HOURS_IN_SECONDS },

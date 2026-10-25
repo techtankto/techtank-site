@@ -1,20 +1,8 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import type { Event } from "@/types/event";
 import { getAllLumaEvents } from "./events/actions";
 import { EventCard } from "@/components/ui/event-card";
 
-export function HomeEventsSection() {
-  const [lumaEvents, setLumaEvents] = useState<Event[]>([]);
-  const [pastLumaEvents, setPastLumaEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    getAllLumaEvents().then((results) => {
-      setLumaEvents(results.upcoming);
-      setPastLumaEvents(results.past);
-    });
-  }, []);
+export async function HomeEventsSection() {
+  const { past: pastLumaEvents, upcoming: lumaEvents } = await getAllLumaEvents();
 
   return (
     <>
