@@ -28,6 +28,8 @@ Danny focuses on organizing tech talks and panel discussions. Although he doesn�
 He’s careful about picking topics that are relatable to the audience. The best talks, in his view, are about problems people have actually run into, or ideas that are just genuinely interesting. Self-promotion or corporate pitches dressed up as talks, not so much.
 As an introverted self-taught developer, Danny understands how it can feel discouraging to show up to a tech event for the first time. What keeps him invested is watching people grow, whether they’re just starting out or further along in their careers. He believes seeing and hearing how someone else thinks is where a lot of insight lives, and he doesn’t want anyone to miss out on that.
 By day, Danny is a software engineer on the frontend team at Ideogram, an AI image generation company, where he gets to work across the stack and ship features end to end. Outside of TechTank and his day job, software is still what he spends his time on.`,
+        linkedin: "https://www.linkedin.com/in/0916dhkim/",
+        github: "https://github.com/0916dhkim",
       },
       {
         name: "Niki Fereidooni",
