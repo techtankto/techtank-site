@@ -185,7 +185,13 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
       { name: "John Malapit", pronouns: "he/him", avatar: "/images/team/john-malapit.webp" },
       { name: "Jacky Tea", pronouns: "he/him", avatar: "/images/team/jacky-tea.webp" },
       { name: "Marco Campos", pronouns: "he/him", avatar: "/images/team/marco-campos.webp" },
-      { name: "Nana Ogasawara", pronouns: "she/her", avatar: "/images/team/nana-ogasawara.webp" },
+      {
+        name: "Nana Ogasawara",
+        pronouns: "she/her",
+        avatar: "/images/team/nana-ogasawara.webp",
+        linkedin: "https://www.linkedin.com/in/cureseven",
+        github: "https://github.com/cureseven",
+      },
     ],
   },
   {
