@@ -9,7 +9,7 @@ on:
   pull_request:
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'pull_request' && github.ref || github.sha }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
@@ -25,8 +25,8 @@ jobs:
       - uses: actions/cache@v6
         with:
           path: ${{ runner.temp }}/oxlint-tailwindcss
-          key: oxlint-tailwindcss-${{ hashFiles('app/globals.css', 'pnpm-lock.yaml') }}
-          restore-keys: oxlint-tailwindcss-
+          key: oxlint-tailwindcss-${{ hashFiles('app/globals.css', 'pnpm-lock.yaml') }}-${{ github.run_id }}
+          restore-keys: oxlint-tailwindcss-${{ hashFiles('app/globals.css', 'pnpm-lock.yaml') }}-
       - run: pnpm install --frozen-lockfile
       - run: pnpm validate
         env:
