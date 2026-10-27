@@ -8,20 +8,7 @@ export const size = {
 };
 
 const logoPath = join(process.cwd(), "public/images/logos/light.png");
-
-async function loadGoogleFont(font: string, text: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}&text=${encodeURIComponent(text)}`;
-
-  const css = await fetch(url).then((res) => res.text());
-
-  const resource = css.match(/src: url\((.+)\) format\('(opentype|truetype)'\)/);
-
-  if (!resource) {
-    throw new Error("Failed to load font");
-  }
-
-  return fetch(resource[1]).then((res) => res.arrayBuffer());
-}
+const fontPath = join(process.cwd(), "assets/fonts/inter-bold.ttf");
 
 type CreateOGImageParams = {
   title?: string;
@@ -34,7 +21,7 @@ export async function createOGImage({ title, imageAlt = "TechTank TO" }: CreateO
   const logo = await readFile(logoPath);
   const logoSrc = `data:image/png;base64,${logo.toString("base64")}`;
 
-  const font = hasTitle && title ? await loadGoogleFont("Inter:wght@700", title) : null;
+  const font = hasTitle ? await readFile(fontPath) : null;
 
   return new ImageResponse(
     <div
