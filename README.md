@@ -184,6 +184,7 @@ are route groups: they scope a shared layout without adding a URL segment.
 ├── .agents/skills/                 # Vendored house-standard skills (copied, portable)
 ├── .claude/skills/                 # Same skills (symlinked to .agents/skills/)
 ├── public/                         # Static assets (images, downloads, social media dumps)
+├── assets/fonts/                   # Build-only files, not served (OG image title font)
 ├── next.config.ts
 └── tsconfig.json
 ```

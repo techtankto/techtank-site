@@ -8,7 +8,7 @@ export const size = {
 };
 
 const logoPath = join(process.cwd(), "public/images/logos/light.png");
-const fontPath = join(process.cwd(), "public/fonts/inter-bold.ttf");
+const fontPath = join(process.cwd(), "assets/fonts/inter-bold.ttf");
 
 type CreateOGImageParams = {
   title?: string;
