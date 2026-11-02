@@ -8,6 +8,8 @@ import { socialLinks } from "@/constants/social-links";
 type FooterLink = { name: string; href: string; external: boolean; disabled?: boolean };
 type FooterSection = { title: string; links: FooterLink[] };
 
+const CURRENT_YEAR = Math.max(new Date().getFullYear(), 2026);
+
 const footerLinks: Record<string, FooterSection> = {
   community: {
     title: "Community",
@@ -136,7 +138,7 @@ export function Footer() {
           <div className="flex flex-col items-center gap-4 lg:flex-row lg:justify-between">
             <div className="flex flex-col items-center gap-1 text-center lg:items-start lg:text-left">
               <p className="text-sm text-primary-foreground dark:text-foreground">
-                Copyright &copy; {Math.max(new Date().getFullYear(), 2026)} TechTank TO Inc. All rights reserved.
+                Copyright &copy; {CURRENT_YEAR} TechTank TO Inc. All rights reserved.
               </p>
               <p className="text-sm text-primary-foreground/80 dark:text-foreground/80">
                 Registered Nonprofit &mdash; Ontario Corporation No.{" "}
