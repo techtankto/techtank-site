@@ -21,7 +21,12 @@ import { Section, SectionHeader } from "@/components/ui/section";
 import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import { CONTACT_EMAIL } from "@/constants/contact";
-import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
+import {
+  getCoverImage,
+  getCoverVideo,
+  getCoverVideoDescription,
+  getInstagramPostsByIds,
+} from "@/constants/instagram-posts";
 import { aboutPostKey } from "@/constants/instagram-pins";
 import { socialLinks } from "@/constants/social-links";
 import { BRAND_ICONS } from "@/components/ui/icons";
@@ -129,6 +134,7 @@ const pastPrograms = [
 export default function AboutPage() {
   const featuredPost = getInstagramPostsByIds([aboutPostKey])[0];
   const featuredVideo = featuredPost ? getCoverVideo(featuredPost) : undefined;
+  const featuredVideoDescription = featuredPost ? getCoverVideoDescription(featuredPost) : "";
   const featuredImage = featuredPost ? getCoverImage(featuredPost) : undefined;
 
   return (
@@ -230,7 +236,7 @@ export default function AboutPage() {
               {featuredVideo ? (
                 <AutoplayVideo
                   src={featuredVideo}
-                  description="Montage of TechTank community members gathering, learning, and socializing at events"
+                  description={featuredVideoDescription}
                   className="absolute inset-0 size-full"
                 />
               ) : featuredImage ? (

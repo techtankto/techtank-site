@@ -13,7 +13,12 @@ import { roleCardsData } from "@/constants/role-cards";
 import { socialLinks } from "@/constants/social-links";
 import { SocialFeed } from "@/components/ui/social-feed";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
-import { getCoverImage, getCoverVideo, getInstagramPostsByIds } from "@/constants/instagram-posts";
+import {
+  getCoverImage,
+  getCoverVideo,
+  getCoverVideoDescription,
+  getInstagramPostsByIds,
+} from "@/constants/instagram-posts";
 import { heroPostKeys } from "@/constants/instagram-pins";
 import { HomeEventsSection } from "./home-events-section";
 
@@ -32,6 +37,7 @@ export default async function HomePage() {
     id: post.id,
     imageSrc: getCoverImage(post),
     videoSrc: getCoverVideo(post),
+    videoDescription: getCoverVideoDescription(post),
     alt: captionToAlt(post.caption),
   }));
 
@@ -69,7 +75,7 @@ export default async function HomePage() {
                     <AutoplayVideo
                       src={heroPosts[0].videoSrc}
                       poster={heroPosts[0].imageSrc}
-                      description={heroPosts[0].alt}
+                      description={heroPosts[0].videoDescription}
                       preload="auto"
                       className="absolute inset-0"
                       videoClassName="object-top"
@@ -93,7 +99,7 @@ export default async function HomePage() {
                     <AutoplayVideo
                       src={heroPosts[1].videoSrc}
                       poster={heroPosts[1].imageSrc}
-                      description={heroPosts[1].alt}
+                      description={heroPosts[1].videoDescription}
                       preload="auto"
                       className="absolute inset-0"
                       videoClassName="object-top"

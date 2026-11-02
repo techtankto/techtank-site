@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, test } from "vitest";
 import { computeRetainedKeys, planRetention } from "./retention";
 import type { InstagramPost } from "../../constants/instagram-posts";
-import { FEED_POST_COUNT } from "../../constants/instagram-posts";
+import { FEED_POST_COUNT, getCoverVideo, videoDescriptions } from "../../constants/instagram-posts";
 import { generatedPosts } from "../../constants/instagram-posts.generated";
 import { featuredKeys } from "../../constants/instagram-featured";
 import { pinnedKeys } from "../../constants/instagram-pins";
@@ -52,6 +52,15 @@ describe("committed Instagram data", () => {
     const missing = Object.values(posts)
       .flatMap((p) => p.media.map((m) => m.path))
       .filter((path) => !existsSync(join(publicDir, path)));
+    expect(missing).toEqual([]);
+  });
+
+  test("every curated post with a video carries an authored video description", () => {
+    const curated = new Set([...featuredKeys, ...pinnedKeys]);
+    const missing = [...curated].filter((key) => {
+      const post = posts[key];
+      return post && getCoverVideo(post) && !videoDescriptions[key as keyof typeof videoDescriptions];
+    });
     expect(missing).toEqual([]);
   });
 });
