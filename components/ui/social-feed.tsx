@@ -7,6 +7,7 @@ import { getAllSocialLinks, socialLinks } from "@/constants/social-links";
 import {
   getCoverImage,
   getCoverVideo,
+  getCoverVideoDescription,
   FEED_POST_COUNT,
   getFeaturedInstagramPosts,
   type InstagramPostWithId,
@@ -38,7 +39,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
             <AutoplayVideo
               src={video}
               poster={cover}
-              description="Video from this Instagram post"
+              description={getCoverVideoDescription(post)}
               preload="none"
               className="absolute inset-0"
               videoClassName="transition-transform duration-500 group-hover:scale-[1.03]"

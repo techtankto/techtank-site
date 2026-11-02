@@ -19,8 +19,6 @@ type AutoplayVideoProps = Omit<HTMLAttributes<AutoplayVideoRef>, "children"> & {
   description: string;
   /** Poster image shown before playback starts. */
   poster?: string;
-  /** WebVTT captions track, rendered only once a transcript exists for this clip. */
-  captionsSrc?: string;
   /** Passed straight through to the `<video>` element's `preload`. */
   preload?: "auto" | "metadata" | "none";
   /** Visual treatment for the `<video>` element itself, separate from the root's layout `className`. */
@@ -37,7 +35,6 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     src,
     description,
     poster,
-    captionsSrc,
     preload,
     videoClassName,
     pauseLabel = "Pause video",
@@ -116,7 +113,6 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     >
       <source src={src.replace(/\.mp4$/, ".webm")} type="video/webm" />
       <source src={src} type="video/mp4" />
-      {captionsSrc && <track kind="captions" srcLang="en" src={captionsSrc} default />}
     </video>
   );
 
@@ -128,7 +124,7 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
       <Button
         type="button"
         className={cn(styles.control())}
-        aria-label={paused ? resumeLabel : pauseLabel}
+        label={paused ? resumeLabel : pauseLabel}
         size="icon"
         variant="primary"
         onClick={handleToggle}
@@ -145,3 +141,4 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
 AutoplayVideo.displayName = "AutoplayVideo";
 
 export { AutoplayVideo };
+export type { AutoplayVideoProps, AutoplayVideoRef };
