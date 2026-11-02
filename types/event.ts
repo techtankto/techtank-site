@@ -11,7 +11,7 @@ export interface Event {
   status: "upcoming" | "past";
   /** Event URL — prefers Luma when available, falls back to Meetup */
   eventUrl?: string;
-  cover_url?: string;
+  cover_url?: string | null | undefined;
   albumUrl?: string;
   youtubeUrl?: string;
   host?: Sponsor;
@@ -26,14 +26,11 @@ export interface Event {
   featured_guests?:
     | {
         name?: string | null;
-        avatar_url?: string | null;
       }[]
     | null;
-  virtual_info?: {
-    raw_join_url?: string | null;
-  } | null;
+  meeting_url?: string | null | undefined;
   geo_address_info?: {
-    sublocality?: string | null;
+    address?: string | null;
   } | null;
   sponsors?: Sponsor[];
   speakers?: {

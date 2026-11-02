@@ -6,77 +6,67 @@ import { z } from "zod";
 import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
 
 const LUMA_CALENDAR_ID = process.env.LUMA_CALENDAR_ID;
+const LUMA_API_KEY = process.env.LUMA_API_KEY;
 
-if (!LUMA_CALENDAR_ID) {
-  console.warn("LUMA_CALENDAR_ID is not set in environment variables. Luma events will not be fetched.");
-}
+const LUMA_API_BASE_URL = "https://public-api.luma.com";
+const EVENT_LIST_ENDPOINT = "/v1/calendars/events/list";
+const GUEST_LIST_ENDPOINT = "/v1/events/guests/list";
 
-const LUMA_EVENT_API = new URL("https://api2.luma.com/calendar/get");
-LUMA_EVENT_API.search = new URLSearchParams({
-  api_id: LUMA_CALENDAR_ID || "",
-}).toString();
-
-const LUMA_EVENT_API_PAST = new URL("https://api2.luma.com/calendar/get-items");
-LUMA_EVENT_API_PAST.search = new URLSearchParams({
-  calendar_api_id: LUMA_CALENDAR_ID || "",
-  pagination_limit: "20",
-  period: "past",
-}).toString();
-
-const SIX_HOURS_IN_SECONDS = 6 * 60 * 60;
+const CACHE_DURATION_IN_SECONDS = 60; // 1 minute
 
 const ImageUrlSchema = z
   .url({ protocol: /^https$/ })
   .refine((url) => REMOTE_IMAGE_HOSTS.includes(new URL(url).hostname));
 
 const EventSchema = z.object({
-  api_id: z.string(),
-  hosts: z
+  id: z.string(),
+  name: z.string(),
+  start_at: z.string(),
+  duration_interval: z.string(),
+  end_at: z.string(),
+  timezone: z.string(),
+  geo_address_json: z
     .object({
-      first_name: z.string().nullish(),
-      last_name: z.string().nullish(),
-      avatar_url: ImageUrlSchema.nullish().catch(null),
+      address: z.string().nullish(),
+      city: z.string().nullish(),
+      region: z.string().nullish(),
+      country: z.string().nullish(),
+      city_state: z.string().nullish(),
+      full_address: z.string().nullish(),
+      google_maps_place_id: z.string().nullish(),
+      apple_maps_place_id: z.string().nullish(),
+      description: z.string().nullish(),
     })
-    .array()
     .nullish(),
-  guest_count: z.number(),
-  featured_guests: z
+  coordinate: z
     .object({
-      name: z.string().nullish(),
-      avatar_url: ImageUrlSchema.nullish().catch(null),
+      longitude: z.number(),
+      latitude: z.number(),
     })
-    .array()
     .nullish(),
-  event: z.object({
-    api_id: z.string(),
-    name: z.string(),
-    start_at: z.string(),
-    end_at: z.string(),
-    timezone: z.string(),
-    url: z.string(),
-    cover_url: ImageUrlSchema.optional().catch(undefined),
-    virtual_info: z
-      .object({
-        raw_join_url: z.string().nullish(),
-      })
-      .nullish(),
-    geo_address_info: z
-      .object({
-        sublocality: z.string().nullish(),
-      })
-      .nullish(),
-  }),
+  meeting_url: z.string().nullish(),
+  cover_url: ImageUrlSchema.nullish(),
+  url: z.url(),
+  max_capacity: z.number().nullish(),
+  spots_remaining: z.number().nullish(),
 });
 
-const LumaEventApiResponseSchema = z.object({
-  featured_items: EventSchema.array(),
+const GuestSchema = z.object({
+  id: z.string(),
+  user_name: z.string(),
 });
 
-const LumaPastEventApiResponseSchema = z.object({
+const EventListPageSchema = z.object({
   entries: EventSchema.array(),
+  has_more: z.boolean(),
+  next_cursor: z.string().nullish(),
 });
 
-type LumaEventResponse = z.infer<typeof EventSchema>;
+const GuestListPageSchema = z.object({
+  entries: GuestSchema.array(),
+  has_more: z.boolean(),
+  next_cursor: z.string().nullish(),
+});
 
 /**
  * Luma has no tag field, so scraped events arrive untyped and fall into the
@@ -98,61 +88,99 @@ const TITLE_TAG_RULES: { pattern: RegExp; tags: string[] }[] = [
  * ("Touch Grass", "Mayday Mayday"). Keyed by Luma slug. Prefer promoting an
  * event to `constants/events.ts` when it needs more than a tag.
  */
-const SLUG_TAGS: Record<string, string[]> = {
-  d114actf: ["Social"], // Touch Grass: Stretch in the Park x Creative Blocks
+const TAG_OVERRIDE_BY_URL: Record<string, string[]> = {
+  "https://luma.com/d114actf": ["Social"], // Touch Grass: Stretch in the Park x Creative Blocks
 };
 
-function inferTags(title: string, slug: string): string[] {
+function inferTags(title: string, url: string): string[] {
   const tags = [
-    ...(SLUG_TAGS[slug] ?? []),
+    ...(TAG_OVERRIDE_BY_URL[url] ?? []),
     ...TITLE_TAG_RULES.filter(({ pattern }) => pattern.test(title)).flatMap(({ tags }) => tags),
   ];
   return [...new Set(tags)];
 }
 
-function lumaCalendarResponseToEvents(parsed: LumaEventResponse[]): Event[] {
-  return parsed.map(({ event, hosts, featured_guests, guest_count }) => ({
-    id: event.api_id,
-    title: event.name,
-    start_at: event.start_at,
-    tags: inferTags(event.name, event.url),
-    status: Date.now() > new Date(event.start_at).valueOf() ? "past" : "upcoming",
-    eventUrl: `https://luma.com/${event.url}`,
-    cover_url: event.cover_url,
-    hosts: hosts,
-    guest_count,
-    featured_guests,
-    virtual_info: event.virtual_info,
-    geo_address_info: event.geo_address_info,
-  }));
+function transformToEvent(rawEvent: z.infer<typeof EventSchema>, rawGuests: z.infer<typeof GuestSchema>[]): Event {
+  return {
+    id: rawEvent.id,
+    title: rawEvent.name,
+    start_at: rawEvent.start_at,
+    tags: inferTags(rawEvent.name, rawEvent.url),
+    status: Date.now() > new Date(rawEvent.start_at).valueOf() ? "past" : "upcoming",
+    eventUrl: rawEvent.url,
+    cover_url: rawEvent.cover_url,
+    guest_count: (rawEvent.max_capacity ?? 0) - (rawEvent.spots_remaining ?? 0),
+    featured_guests: rawGuests.map((rawGuest) => ({ name: rawGuest.user_name })),
+    meeting_url: rawEvent.meeting_url,
+    geo_address_info: rawEvent.geo_address_json,
+  };
 }
 
-async function fetchLumaEvents(url: URL, schema: z.ZodType<LumaEventResponse[]>): Promise<Event[]> {
-  if (!LUMA_CALENDAR_ID) return [];
+async function fetchGuests(eventId: string) {
+  if (!LUMA_CALENDAR_ID || !LUMA_API_KEY) return [];
+  const search = new URLSearchParams();
+  search.append("event_id", eventId);
+  search.append("approval_status", "approved");
+  search.append("pagination_limit", "10");
+  const url = new URL(`${LUMA_API_BASE_URL}${GUEST_LIST_ENDPOINT}?${search}`);
   const res = await fetch(url, {
     cache: "force-cache",
-    next: { revalidate: SIX_HOURS_IN_SECONDS },
+    next: {
+      revalidate: CACHE_DURATION_IN_SECONDS,
+    },
+    headers: {
+      "x-luma-api-key": LUMA_API_KEY,
+    },
   });
   if (!res.ok) {
     throw new Error(`Luma request to ${url.pathname} failed with HTTP ${res.status}`);
   }
-  return lumaCalendarResponseToEvents(schema.parse(await res.json()));
+  const json = await res.json();
+  const guestListPage = GuestListPageSchema.parse(json);
+  return guestListPage.entries;
+}
+
+async function fetchLumaEvents(status: "upcoming" | "past"): Promise<Event[]> {
+  if (!LUMA_CALENDAR_ID || !LUMA_API_KEY) return [];
+  const search = new URLSearchParams();
+  search.append("pagination_limit", "10");
+  switch (status) {
+    case "upcoming":
+      search.append("after", new Date().toISOString());
+      break;
+    case "past":
+      search.append("before", new Date().toISOString());
+      break;
+  }
+  const url = new URL(`${LUMA_API_BASE_URL}${EVENT_LIST_ENDPOINT}?${search}`);
+  const res = await fetch(url, {
+    cache: "force-cache",
+    next: {
+      revalidate: CACHE_DURATION_IN_SECONDS,
+    },
+    headers: {
+      "x-luma-api-key": LUMA_API_KEY,
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Luma request to ${url.pathname} failed with HTTP ${res.status}`);
+  }
+  const json = await res.json();
+  const eventListPage = EventListPageSchema.parse(json);
+  const rawEvents = eventListPage.entries;
+  return Promise.all(
+    rawEvents.map(async (rawEvent) => {
+      const rawGuests = await fetchGuests(rawEvent.id);
+      return transformToEvent(rawEvent, rawGuests);
+    }),
+  );
 }
 
 export async function getAllLumaEvents(): Promise<{
   upcoming: Event[];
   past: Event[];
 }> {
-  const [upcoming, past] = await Promise.all([
-    fetchLumaEvents(
-      LUMA_EVENT_API,
-      LumaEventApiResponseSchema.transform((data) => data.featured_items),
-    ),
-    fetchLumaEvents(
-      LUMA_EVENT_API_PAST,
-      LumaPastEventApiResponseSchema.transform((data) => data.entries),
-    ),
-  ]);
+  const [upcoming, past] = await Promise.all([fetchLumaEvents("upcoming"), fetchLumaEvents("past")]);
 
   return { upcoming, past };
 }
