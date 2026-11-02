@@ -6,14 +6,10 @@ import { formatEventTime } from "@/utils/date";
 
 const AVATAR_DIMENSIONS = {
   default: {
-    hostCount: 1,
-    hostSize: 32,
     guestCount: 5,
     guestSize: 24,
   },
   sm: {
-    hostCount: 4,
-    hostSize: 16,
     guestCount: 5,
     guestSize: 20,
   },
@@ -24,16 +20,14 @@ interface Props {
 }
 
 export function LumaEventCard({ event }: Props) {
-  const hostNames = event.hosts?.map((host) => `${host.first_name ?? ""} ${host.last_name ?? ""}`) ?? [];
-  const renderedGuests =
-    event.featured_guests?.filter((g) => g.avatar_url).slice(0, AVATAR_DIMENSIONS.default.guestCount) ?? [];
+  const renderedGuests = event.featured_guests?.slice(0, AVATAR_DIMENSIONS.default.guestCount) ?? [];
   const overflowCount = (event.guest_count ?? 0) - renderedGuests.length;
 
   const formattedTime = formatEventTime(event.start_at);
   const showTime = !event.start_at.includes("T12:00:00");
 
-  const isOnline = Boolean(event.virtual_info?.raw_join_url);
-  const locationLabel = isOnline ? "Online" : (event.geo_address_info?.sublocality ?? null);
+  const isOnline = Boolean(event.meeting_url);
+  const locationLabel = isOnline ? "Online" : (event.geo_address_info?.address ?? null);
   const LocationIcon = isOnline ? Video : MapPin;
 
   const locationText = event.host ? event.host.name : (event.venue ?? null);
@@ -48,43 +42,9 @@ export function LumaEventCard({ event }: Props) {
               {showTime && <span className="text-muted-foreground/60">{formattedTime}</span>}
             </div>
 
-            <h3 className="mb-2 text-left text-xl">{event.title}</h3>
-
-            <div className="mb-1 flex items-center gap-x-1">
-              <div
-                className="avatar-row flex"
-                style={
-                  {
-                    "--size-default": `${AVATAR_DIMENSIONS.default.hostSize}px`,
-                    "--size-sm": `${AVATAR_DIMENSIONS.sm.hostSize}px`,
-                  } as CSSProperties
-                }
-              >
-                {event.hosts?.map(
-                  (host, i) =>
-                    host.avatar_url && (
-                      <Avatar
-                        key={i}
-                        size={{
-                          default: AVATAR_DIMENSIONS.default.hostSize,
-                          sm: AVATAR_DIMENSIONS.sm.hostSize,
-                        }}
-                        name={`${host.first_name ?? ""} ${host.last_name ?? ""}`}
-                        content={{
-                          type: "url",
-                          url: host.avatar_url,
-                        }}
-                      />
-                    ),
-                )}
-              </div>
-              <span className="text-sm text-muted-foreground sm:hidden">
-                {buildHostNameSummary(hostNames, AVATAR_DIMENSIONS.default.hostCount)}
-              </span>
-              <span className="hidden text-sm text-muted-foreground sm:inline">
-                {buildHostNameSummary(hostNames, AVATAR_DIMENSIONS.sm.hostCount)}
-              </span>
-            </div>
+            <h3 className="mb-2 max-w-[390px] overflow-hidden text-left text-xl text-ellipsis whitespace-nowrap sm:max-w-[500px]">
+              {event.title}
+            </h3>
 
             <div className="mb-1 flex items-center gap-x-1">
               <div
@@ -105,8 +65,8 @@ export function LumaEventCard({ event }: Props) {
                     }}
                     name={guest.name ?? ""}
                     content={{
-                      type: "url",
-                      url: guest.avatar_url!,
+                      type: "string",
+                      value: guest.name?.at(0) ?? "X",
                     }}
                   />
                 ))}
@@ -213,11 +173,4 @@ const Avatar = ({ name, content, size }: AvatarProps) => {
       {content.value}
     </div>
   );
-};
-
-const buildHostNameSummary = (hosts: string[], visibleCount: number): string => {
-  if (hosts.length === 0) {
-    return "";
-  }
-  return `By ${hosts.slice(0, visibleCount).join(", ")}${hosts.length > visibleCount ? ` & ${hosts.length - visibleCount} others` : ""}`;
 };
