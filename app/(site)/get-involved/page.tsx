@@ -74,7 +74,7 @@ export default function GetInvolvedPage() {
             <span className="mb-4 inline-block text-xs font-semibold tracking-widest text-ring uppercase">
               Join the community
             </span>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
               {communityLinks.map((link) => {
                 const Icon = BRAND_ICONS[link.id];
                 return (
