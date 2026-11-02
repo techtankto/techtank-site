@@ -26,6 +26,7 @@ const communityLinks = [
   socialLinks.github,
   socialLinks.youtube,
   socialLinks.meetup,
+  socialLinks.tightknit,
 ];
 
 const whyGetInvolved = [

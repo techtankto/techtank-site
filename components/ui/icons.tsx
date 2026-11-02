@@ -61,6 +61,30 @@ function YouTubeIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
+export function TightknitIcon({ className }: SVGProps<SVGSVGElement>) {
+  // The Tightknit symbol is a complex vector served from public/. A CSS mask lets it
+  // inherit currentColor (background-color shines through the SVG stencil) so it
+  // behaves identically to the inline SVG icons above.
+  return (
+    <span
+      aria-hidden="true"
+      className={className}
+      style={{
+        display: "inline-block",
+        backgroundColor: "currentColor",
+        maskImage: "url('/images/platforms/tightknit-symbol.svg')",
+        maskSize: "contain",
+        maskRepeat: "no-repeat",
+        maskPosition: "center",
+        WebkitMaskImage: "url('/images/platforms/tightknit-symbol.svg')",
+        WebkitMaskSize: "contain",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskPosition: "center",
+      }}
+    />
+  );
+}
+
 export const BRAND_ICONS: Record<string, React.FC<SVGProps<SVGSVGElement>>> = {
   luma: LumaIcon,
   meetup: MeetupIcon,
@@ -69,4 +93,5 @@ export const BRAND_ICONS: Record<string, React.FC<SVGProps<SVGSVGElement>>> = {
   instagram: InstagramIcon,
   github: GitHubIcon,
   youtube: YouTubeIcon,
+  tightknit: TightknitIcon,
 };

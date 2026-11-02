@@ -1,4 +1,4 @@
-﻿export interface SocialLink {
+export interface SocialLink {
   id: string;
   name: string;
   url: string;
@@ -55,6 +55,13 @@ export const socialLinks: Record<string, SocialLink> = {
     url: "https://github.com/techtankto",
     type: "secondary",
     category: "contribute",
+  },
+  tightknit: {
+    id: "tightknit",
+    name: "Tightknit",
+    url: "https://techtankto.tightknit.community",
+    type: "primary",
+    category: "social",
   },
 };
 
