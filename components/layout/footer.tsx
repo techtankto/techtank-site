@@ -19,6 +19,7 @@ const footerLinks: Record<string, FooterSection> = {
       { name: socialLinks.instagram.name, href: socialLinks.instagram.url, external: true },
       { name: socialLinks.github.name, href: socialLinks.github.url, external: true },
       { name: socialLinks.youtube.name, href: socialLinks.youtube.url, external: true },
+      { name: socialLinks.tightknit.name, href: socialLinks.tightknit.url, external: true },
     ],
   },
   about: {

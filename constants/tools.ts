@@ -27,7 +27,7 @@ const tools: Record<string, Tool> = {
     name: "Tightknit",
     url: "https://tightknit.ai",
     description: "Slack-native community platform powering our member hub and event experience.",
-    logo: "/images/tools/tightknit.webp",
+    logo: "/images/tools/tightknit.svg",
     width: 600,
     height: 120,
   },
