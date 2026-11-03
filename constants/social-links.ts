@@ -60,7 +60,7 @@ export const socialLinks: Record<string, SocialLink> = {
     id: "tightknit",
     name: "Tightknit",
     url: "https://techtankto.tightknit.community",
-    type: "primary",
+    type: "secondary",
     category: "social",
   },
 };

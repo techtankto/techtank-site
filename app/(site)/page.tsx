@@ -223,7 +223,7 @@ export default async function HomePage() {
             href="/events"
             className="group glass relative overflow-hidden rounded-xl p-5 transition-all hover:scale-[1.01] lg:p-6"
           >
-            <Calendar className="absolute top-4 right-4 size-14 text-foreground/15" aria-hidden="true" />
+            <Calendar className="absolute top-4 right-4 size-14 text-foreground opacity-15" aria-hidden="true" />
             <div className="relative">
               <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
                 Show up
@@ -243,7 +243,7 @@ export default async function HomePage() {
             href="/get-involved"
             className="group glass relative overflow-hidden rounded-xl p-5 transition-all hover:scale-[1.01] lg:p-6"
           >
-            <Users className="absolute top-4 right-4 size-14 text-foreground/15" aria-hidden="true" />
+            <Users className="absolute top-4 right-4 size-14 text-foreground opacity-15" aria-hidden="true" />
             <div className="relative">
               <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
                 Contribute
