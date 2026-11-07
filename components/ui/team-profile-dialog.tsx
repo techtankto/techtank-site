@@ -3,7 +3,7 @@
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { TeamAvatar } from "@/components/ui/team-avatar";
 import { TeamSocialLinks } from "@/components/ui/team-social-links";
-import type { TeamMember } from "@/constants/team";
+import type { TeamGroupMember } from "@/constants/team";
 import { cva } from "@/utils/theme";
 
 const styles = {
@@ -20,7 +20,7 @@ const styles = {
 };
 
 interface TeamProfileDialogProps {
-  member: TeamMember;
+  member: TeamGroupMember;
   open: boolean;
   onClose: () => void;
 }

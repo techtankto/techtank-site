@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { TeamCard } from "@/components/ui/team-card";
-import { teamGroups } from "@/constants/team";
+import { getGroupMembers, teamGroups } from "@/constants/team";
 
 export const metadata: Metadata = {
   title: "Team",
@@ -47,8 +47,8 @@ export default function TeamPage() {
         />
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {board.members.map((m) => (
-            <TeamCard key={m.name} variant="board" member={m} />
+          {getGroupMembers(board).map((m) => (
+            <TeamCard key={m.id} variant="board" member={m} />
           ))}
         </div>
       </Section>
@@ -62,8 +62,8 @@ export default function TeamPage() {
           className="mb-10"
         />
         <div className="grid gap-4 sm:grid-cols-2">
-          {coreTeam.members.map((m) => (
-            <TeamCard key={m.name} variant="core" member={m} />
+          {getGroupMembers(coreTeam).map((m) => (
+            <TeamCard key={m.id} variant="core" member={m} />
           ))}
         </div>
       </Section>
@@ -74,8 +74,8 @@ export default function TeamPage() {
           <div>
             <SectionHeader overline="Digital team" title="Developers" className="mb-8" />
             <div className="grid gap-3">
-              {digitalTeam.members.map((m) => (
-                <TeamCard key={m.name} variant="compact" member={m} />
+              {getGroupMembers(digitalTeam).map((m) => (
+                <TeamCard key={m.id} variant="compact" member={m} />
               ))}
             </div>
           </div>
@@ -83,16 +83,16 @@ export default function TeamPage() {
             <div>
               <SectionHeader overline="Social media" title="Content & community" className="mb-8" />
               <div className="grid gap-3">
-                {socialMedia.members.map((m) => (
-                  <TeamCard key={m.name} variant="compact" member={m} />
+                {getGroupMembers(socialMedia).map((m) => (
+                  <TeamCard key={m.id} variant="compact" member={m} />
                 ))}
               </div>
             </div>
             <div>
               <SectionHeader overline="Design team" title="Designers" className="mb-8" />
               <div className="grid gap-3">
-                {designTeam.members.map((m) => (
-                  <TeamCard key={m.name} variant="compact" member={m} />
+                {getGroupMembers(designTeam).map((m) => (
+                  <TeamCard key={m.id} variant="compact" member={m} />
                 ))}
               </div>
             </div>
@@ -109,8 +109,8 @@ export default function TeamPage() {
           className="mb-10"
         />
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {volunteers.members.map((m) => (
-            <TeamCard key={m.name + (m.role ?? "")} variant="compact" member={m} />
+          {getGroupMembers(volunteers).map((m) => (
+            <TeamCard key={m.id} variant="compact" member={m} />
           ))}
         </div>
       </Section>
