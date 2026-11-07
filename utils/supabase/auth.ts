@@ -7,13 +7,22 @@ export async function signInWithEmail(options: { email: string; password: string
   if (process.env.NODE_ENV !== "development" || !!SLACK_TEAM_ID) {
     throw new Error("Email login is for local dev server only when slack is not configured.");
   }
-  const { error } = await createClient().auth.signInWithPassword({
+  const client = createClient();
+  const { error } = await client.auth.signInWithPassword({
     email: options.email,
     password: options.password,
   });
 
   if (error) {
     throw error;
+  }
+
+  // A Slack sign-in claims the `admins` row in the OAuth callback route.
+  // A password sign-in never passes through it, so claim here instead,
+  // or an allowlisted organizer lands on "Not authorized" forever.
+  const { error: claimError } = await client.rpc("claim_admin_membership");
+  if (claimError) {
+    console.error("claim_admin_membership failed", claimError);
   }
 
   window.location.href = options.destination.toString();

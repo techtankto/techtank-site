@@ -43,7 +43,12 @@ export function EmailLogin() {
   };
 
   return (
-    <LoginLayout title="Sign in with Email" topIcon={<MailIcon className="size-5" />} error={error}>
+    <LoginLayout
+      title="Sign in with Email"
+      description="This dev server has no Slack app configured, so organizers sign in with a password instead. Seeded account: organizer@localhost / localdev."
+      topIcon={<MailIcon className="size-5" />}
+      error={error}
+    >
       <Input
         className="mt-2"
         name="email"

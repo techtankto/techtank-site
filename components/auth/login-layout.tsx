@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 type LoginLayoutProps = {
   error: string | null;
   title: ReactNode;
+  description: ReactNode;
   topIcon: ReactNode;
   children: ReactNode;
 };
@@ -24,9 +25,7 @@ export function LoginLayout(props: LoginLayoutProps) {
         </span>
 
         <h1 className="font-display text-xl font-semibold text-foreground">{props.title}</h1>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-          The back office is for TechTank organizers. Sign in with the Slack account you use in our workspace.
-        </p>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{props.description}</p>
 
         {props.error && (
           <p role="alert" className="mt-4 text-sm text-destructive">

@@ -41,7 +41,12 @@ export function SlackLogin() {
   };
 
   return (
-    <LoginLayout title="Sign in with Slack" topIcon={<SlackIcon className="size-5" />} error={error}>
+    <LoginLayout
+      title="Sign in with Slack"
+      description="The back office is for TechTank organizers. Sign in with the Slack account you use in our workspace."
+      topIcon={<SlackIcon className="size-5" />}
+      error={error}
+    >
       <Button onClick={onSubmit} disabled={loading} className="mt-6 w-full">
         <SlackIcon className="mr-2 size-4" />
         {loading ? "Opening Slack…" : "Continue with Slack"}
