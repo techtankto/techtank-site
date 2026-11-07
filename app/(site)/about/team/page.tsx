@@ -27,7 +27,7 @@ export default function TeamPage() {
               The people behind TechTank
             </h1>
             <p className="mb-8 text-xl leading-relaxed text-muted-foreground">
-              TechTank TO is powered entirely by volunteers — organizers, designers, developers, and community builders
+              TechTank TO is powered entirely by volunteers - organizers, designers, developers, and community builders
               who give their time to make Toronto&apos;s tech community more inclusive and welcoming.
             </p>
             <Button variant="outline" size="lg" asChild>
