@@ -28,7 +28,7 @@ Danny focuses on organizing tech talks and panel discussions. Although he doesn�
 He’s careful about picking topics that are relatable to the audience. The best talks, in his view, are about problems people have actually run into, or ideas that are just genuinely interesting. Self-promotion or corporate pitches dressed up as talks, not so much.
 As an introverted self-taught developer, Danny understands how it can feel discouraging to show up to a tech event for the first time. What keeps him invested is watching people grow, whether they’re just starting out or further along in their careers. He believes seeing and hearing how someone else thinks is where a lot of insight lives, and he doesn’t want anyone to miss out on that.
 By day, Danny is a software engineer on the frontend team at Ideogram, an AI image generation company, where he gets to work across the stack and ship features end to end. Outside of TechTank and his day job, software is still what he spends his time on.`,
-        linkedin: "https://www.linkedin.com/in/0916dhkim/",
+        linkedin: "https://linkedin.com/in/0916dhkim",
         github: "https://github.com/0916dhkim",
       },
       {
@@ -36,6 +36,7 @@ By day, Danny is a software engineer on the frontend team at Ideogram, an AI ima
         pronouns: "she/her",
         role: "Co-Chair & Organizer",
         avatar: "/images/team/niki-fereidooni.webp",
+        github: "https://github.com/nfereidooni",
         bio: `Niki has been running tech community events since October 2024. She currently leads Code Diversity and Tech Talks at TechTank.
 By day she’s a software engineer, though she got there the long way. After nearly a decade in the print packaging industry in project management and operations, she transitioned into tech in 2020. She’s a generalist at heart, someone who loves building things as much as she loves the people building alongside her.
 She got involved with TechTank almost by accident. When the Code Diversity series was at risk of ending, she stepped in as a community leader. Today she’s a board member and handles strategy, volunteer management, sponsor relationships, and general planning for the organization. She’s the first to admit it’s a lot, and the first to say it’s worth it.
@@ -49,6 +50,7 @@ Outside of TechTank, you’ll find her hiking the Bruce Trail, trying new restau
         pronouns: "she/her",
         role: "Treasurer & Organizer",
         avatar: "/images/team/sophia-kim.webp",
+        github: "https://github.com/sophiakim1",
         bio: `Sophia leads TechTank’s social events programming.
 Sophia is a Software Engineer and AI Trainer with a background in full-stack development and data annotation. She has worked across startups and AI teams, building web apps and helping train large language models.
 She found TechTank through a LinkedIn message from the founder and decided to check out a meetup. At the time, the community was still small, around 40 people, many coming out of bootcamps and trying to find their footing in tech. What started as simple conversations at events quickly turned into real friendships and a sense of belonging that kept her coming back.
@@ -73,7 +75,7 @@ When she’s not here, she’s doing stand-up comedy, crocheting, fencing, or di
         pronouns: "he/him",
         role: "Board Member & Digital Lead",
         avatar: "/images/team/tony-ko.webp",
-        linkedin: "https://www.linkedin.com/in/tkodev",
+        linkedin: "https://linkedin.com/in/tkodev",
         github: "https://github.com/tkodev",
         bio: `Tony leads TechTank’s web team while serving as an organizer. By day, he’s a Staff Software Engineer working where engineering, design, and product thinking meet. He’s shipped products for Aeroplan, Loblaws, and a few others you’d recognize.
 
@@ -94,6 +96,7 @@ Outside of TechTank, he’s drawn to experiences worth remembering. Good food, m
         pronouns: "she/her",
         role: "Organizer",
         avatar: "/images/team/thannia-blanchet.webp",
+        github: "https://github.com/thanniaB",
         bio: `Thannia co-runs CodeDiversity alongside Niki and has spoken at multiple TechTank events.
 She’s been a Front-End Software Engineer since 2014 and moved to Toronto in 2023, where shortly after she met TechTank by a matter of destiny, she was the only one available to show them the office to host an event. In TechTank, she has found community and friends, and decided to use it to continue her mission of promoting diversity, equality, inclusion, and lifting everyone up.
 Outside of tech, Thannia enjoys different things: drawing, acting, muay thai, and roller derby: a sport you should totally check out.
@@ -104,12 +107,14 @@ Outside of tech, Thannia enjoys different things: drawing, acting, muay thai, an
         pronouns: "he/him",
         role: "Organizer",
         avatar: "/images/team/john-malapit.webp",
+        github: "https://github.com/johnmal-dev",
       },
       {
         name: "Robert So",
         pronouns: "he/him",
         role: "Organizer",
         avatar: "/images/team/robert-so.webp",
+        github: "https://github.com/robester0403",
         bio: `Rob helps organize informational events for developers and tech professionals. By day, he is an engineer working on Elastic's security integration platform, operating closely with the latest in AI.
 He likes to keep his ear to the ground, staying current with the local tech scene so he can share valuable insights with his peers. For Rob, the community's true value lies in giving professionals a dedicated platform to speak openly, allowing everyday networking to evolve into candid discussions about their real-life experiences.
 That dedication to authentic, on-the-ground connection drives his work as an organizer. He ensures that every event provides a genuine space for the tech community to learn, share, and navigate the industry together.`,
@@ -129,6 +134,7 @@ When she’s not here, she’s somewhere in the world or somewhere in Toronto ch
         pronouns: "he/him",
         role: "Organizer",
         avatar: "/images/team/rodrigo-curbelo.webp",
+        github: "https://github.com/rodrigocurbelo",
         bio: `Rodrigo is a Senior Product Engineer, UI/UX designer, and community organizer who has spent most of his career in early-stage startups. He’s led engineering teams, founded a company, and tends to gravitate toward the intersection of engineering, product, and design, especially the messy early stages where the problem is still being figured out.
 At TechTank, he helps organize events, partnerships, and some of the systems behind the community. He’s particularly interested in creating formats that get people doing more than exchanging LinkedIn profiles: working together, sharing what they know, building things, and forming actual relationships with other people in tech.
 That interest in how people work together also led him to start Creative Blocks Club, a Toronto community built around making remote work less isolating. They host regular coworking sessions, workshops, outdoor events, and collaborations with other communities around the city.
@@ -139,12 +145,14 @@ Outside of tech and community work, he can usually be found at a coffee shop, pl
         pronouns: "he/him",
         role: "Video Content Lead",
         avatar: "/images/team/rohan-villoth.webp",
+        github: "https://github.com/RohanVilloth",
       },
       {
         name: "Abu Saeed",
         pronouns: "he/him",
         role: "Event Promotion Lead",
         avatar: "/images/team/abu-saeed.webp",
+        github: "https://github.com/yumstar",
         bio: "Software engineer working in the broadcasting industry, nerding out about all things audio-visual.",
       },
     ],
@@ -176,22 +184,63 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
         name: "Tony Ko",
         pronouns: "he/him",
         avatar: "/images/team/tony-ko.webp",
-        linkedin: "https://www.linkedin.com/in/tkodev",
+        linkedin: "https://linkedin.com/in/tkodev",
         github: "https://github.com/tkodev",
       },
-      { name: "Danny Kim", pronouns: "he/him", avatar: "/images/team/danny-kim.webp" },
-      { name: "Rohan Villoth", pronouns: "he/him", avatar: "/images/team/rohan-villoth.webp" },
-      { name: "Danyal Imran", pronouns: "he/him", avatar: "/images/team/danyal-imran.webp" },
-      { name: "Justin Bento", pronouns: "he/him", avatar: "/images/team/justin-bento.webp" },
-      { name: "Jyle Vergara", pronouns: "she/her", avatar: "/images/team/jyle-vergara.webp" },
-      { name: "John Malapit", pronouns: "he/him", avatar: "/images/team/john-malapit.webp" },
-      { name: "Jacky Tea", pronouns: "he/him", avatar: "/images/team/jacky-tea.webp" },
-      { name: "Marco Campos", pronouns: "he/him", avatar: "/images/team/marco-campos.webp" },
+      {
+        name: "Danny Kim",
+        pronouns: "he/him",
+        avatar: "/images/team/danny-kim.webp",
+        linkedin: "https://linkedin.com/in/0916dhkim",
+        github: "https://github.com/0916dhkim",
+      },
+      {
+        name: "Rohan Villoth",
+        pronouns: "he/him",
+        avatar: "/images/team/rohan-villoth.webp",
+        github: "https://github.com/RohanVilloth",
+      },
+      {
+        name: "Danyal Imran",
+        pronouns: "he/him",
+        avatar: "/images/team/danyal-imran.webp",
+        github: "https://github.com/imRanDan",
+      },
+      {
+        name: "Justin Bento",
+        pronouns: "he/him",
+        avatar: "/images/team/justin-bento.webp",
+        github: "https://github.com/Justin-Bento",
+      },
+      {
+        name: "Jyle Vergara",
+        pronouns: "she/her",
+        avatar: "/images/team/jyle-vergara.webp",
+        github: "https://github.com/jylevergara",
+      },
+      {
+        name: "John Malapit",
+        pronouns: "he/him",
+        avatar: "/images/team/john-malapit.webp",
+        github: "https://github.com/johnmal-dev",
+      },
+      {
+        name: "Jacky Tea",
+        pronouns: "he/him",
+        avatar: "/images/team/jacky-tea.webp",
+        github: "https://github.com/jackytea",
+      },
+      {
+        name: "Marco Campos",
+        pronouns: "he/him",
+        avatar: "/images/team/marco-campos.webp",
+        github: "https://github.com/madcampos",
+      },
       {
         name: "Nana Ogasawara",
         pronouns: "she/her",
         avatar: "/images/team/nana-ogasawara.webp",
-        linkedin: "https://www.linkedin.com/in/cureseven",
+        linkedin: "https://linkedin.com/in/cureseven",
         github: "https://github.com/cureseven",
       },
     ],
@@ -199,10 +248,25 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
   {
     title: "Social Media",
     members: [
-      { name: "Amanda Collantes", pronouns: "she/her", avatar: "/images/team/amanda-collantes.webp" },
-      { name: "Sophia Kim", pronouns: "she/her", avatar: "/images/team/sophia-kim.webp" },
+      {
+        name: "Amanda Collantes",
+        pronouns: "she/her",
+        avatar: "/images/team/amanda-collantes.webp",
+        github: "https://github.com/agdmc",
+      },
+      {
+        name: "Sophia Kim",
+        pronouns: "she/her",
+        avatar: "/images/team/sophia-kim.webp",
+        github: "https://github.com/sophiakim1",
+      },
       { name: "Natasha Kasunic", pronouns: "she/her", avatar: "/images/team/natasha-kasunic.webp" },
-      { name: "Niki Fereidooni", pronouns: "she/her", avatar: "/images/team/niki-fereidooni.webp" },
+      {
+        name: "Niki Fereidooni",
+        pronouns: "she/her",
+        avatar: "/images/team/niki-fereidooni.webp",
+        github: "https://github.com/nfereidooni",
+      },
       { name: "Beatrice Yu", pronouns: "she/her", avatar: "/images/team/beatrice-yu.webp" },
     ],
   },
@@ -211,19 +275,44 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
     members: [
       { name: "Charu Idnani", pronouns: "she/her", role: "CodeDiversity", avatar: "/images/team/charu-idnani.webp" },
       { name: "Garv Gupta", pronouns: "she/her", role: "General", avatar: "/images/team/garv-gupta.webp" },
-      { name: "Nhi Nguyen", pronouns: "she/her", role: "General", avatar: "/images/team/nhi-nguyen.webp" },
+      {
+        name: "Nhi Nguyen",
+        pronouns: "she/her",
+        role: "General",
+        avatar: "/images/team/nhi-nguyen.webp",
+        github: "https://github.com/mynhinguyentruong",
+      },
       { name: "Rana Soyak", pronouns: "she/her", role: "General", avatar: "/images/team/rana-soyak.webp" },
       {
         name: "John Malapit",
         pronouns: "he/him",
         role: "General, Sashimis (Sports)",
         avatar: "/images/team/john-malapit.webp",
+        github: "https://github.com/johnmal-dev",
       },
-      { name: "Danyal Imran", pronouns: "he/him", role: "General", avatar: "/images/team/danyal-imran.webp" },
-      { name: "Justin Bento", pronouns: "he/him", role: "General", avatar: "/images/team/justin-bento.webp" },
+      {
+        name: "Danyal Imran",
+        pronouns: "he/him",
+        role: "General",
+        avatar: "/images/team/danyal-imran.webp",
+        github: "https://github.com/imRanDan",
+      },
+      {
+        name: "Justin Bento",
+        pronouns: "he/him",
+        role: "General",
+        avatar: "/images/team/justin-bento.webp",
+        github: "https://github.com/Justin-Bento",
+      },
       { name: "Lune Moreau", pronouns: "she/they", role: "General", avatar: "/images/team/lune-moreau.webp" },
       { name: "Ayushi Guha", pronouns: "she/her", role: "General" },
-      { name: "Carmen Lam", pronouns: "she/her", role: "General", avatar: "/images/team/carmen-lam.webp" },
+      {
+        name: "Carmen Lam",
+        pronouns: "she/her",
+        role: "General",
+        avatar: "/images/team/carmen-lam.webp",
+        github: "https://github.com/Carmen-jx",
+      },
     ],
   },
 ];
