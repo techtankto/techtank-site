@@ -51,8 +51,7 @@ By day she's a software engineer, though she got there the long way. After nearl
 She got involved with TechTank almost by accident. When the Code Diversity series was at risk of ending, she stepped in as a community leader. Today she's a board member and handles strategy, volunteer management, sponsor relationships, and general planning for the organization. She's the first to admit it's a lot, and the first to say it's worth it.
 TechTank found Niki at a moment when she felt genuinely alone in the tech industry. No friends in the space, low confidence, unsure where she was headed. Finding a community that clicked changed that and she wants to give back to a community that has given so much to her.
 She also serves as a board member for Life After Burns, a nonprofit and community supporting burn survivors through connection, healing, and growth. She also co-founded Girls with Big Ideas, an event series designed to help women and gender-diverse founders meet potential co-founders, currently on hiatus.
-Outside of TechTank, you'll find her hiking the Bruce Trail, trying new restaurants, travelling when she can, and picking up new skills with more enthusiasm than expertise (pottery and sewing are the current outlets). She believes deeply that how you treat people is more important than what you know.
-`,
+Outside of TechTank, you'll find her hiking the Bruce Trail, trying new restaurants, travelling when she can, and picking up new skills with more enthusiasm than expertise (pottery and sewing are the current outlets). She believes deeply that how you treat people is more important than what you know.`,
   },
   "sophia-kim": {
     name: "Sophia Kim",
@@ -65,8 +64,7 @@ Sophia is a Software Engineer and AI Trainer with a background in full-stack dev
 She found TechTank through a LinkedIn message from the founder and decided to check out a meetup. At the time, the community was still small, around 40 people, many coming out of bootcamps and trying to find their footing in tech. What started as simple conversations at events quickly turned into real friendships and a sense of belonging that kept her coming back.
 As she became more involved, Sophia naturally stepped into a bigger role. She started TechTank's Instagram account to share moments from events and help grow the community. From there, she took on social media, event planning, and later finances, creating experiences people genuinely enjoy, remember, and keep coming back for.
 To Sophia, TechTank is about real connection, growth, and opportunity. She hopes people leave TechTank events feeling inspired, supported, and more confident in their journey, whether that means making new friends, finding career opportunities, or simply feeling like they belong in tech, just as she once did.
-Outside of tech, she enjoys hosting events, muay thai, travelling, and creating unforgettable experiences.
-`,
+Outside of tech, she enjoys hosting events, muay thai, travelling, and creating unforgettable experiences.`,
   },
   "natasha-kasunic": {
     name: "Natasha Kasunic",
@@ -76,8 +74,7 @@ Outside of tech, she enjoys hosting events, muay thai, travelling, and creating 
     bio: `Natasha is one of TechTank's newer volunteers! She's a Technical Customer Success Lead at Tightknit, a small startup building an app for community builders, where she sits between the engineering and the humans using it, translating one to the other. Computer science at Waterloo gave her the technical half; the years since taught her the part that actually matters, which is people.
 She came to TechTank as an attendee first and found something she didn't expect: a room full of community leaders, operators, and builders, who happen to be her favourite kind of person. So she started pitching in. What's kept her around isn't any single event but the in-between, the hallway conversation that turns into a real one, and the way a good community quietly makes space for people, women in tech especially, to find their footing.
 She's early in her TechTank story, which is the fun part. Expect to see her wherever the community needs an extra set of hands.
-When she's not here, she's doing stand-up comedy, crocheting, fencing, or digital nomading her way to somewhere new.
-`,
+When she's not here, she's doing stand-up comedy, crocheting, fencing, or digital nomading her way to somewhere new.`,
   },
   "tony-ko": {
     name: "Tony Ko",
@@ -86,13 +83,9 @@ When she's not here, she's doing stand-up comedy, crocheting, fencing, or digita
     linkedin: "https://linkedin.com/in/tkodev",
     github: "https://github.com/tkodev",
     bio: `Tony leads TechTank's web team while serving as an organizer. By day, he's a Staff Software Engineer working where engineering, design, and product thinking meet. He's shipped products for Aeroplan, Loblaws, and a few others you'd recognize.
-
 He showed up early, camera in hand, doing whatever the community needed: events, copy, posters. What kept him was the people: their energy, the way quick conversations turned into real ones. To Tony, the most valuable thing TechTank offers isn't a talk or a networking opportunity, it's what happens between.
-
 That steady involvement grew into leading the web team. He now shapes every detail online, so it reflects the same quality felt in person.
-
-Outside of TechTank, he's drawn to experiences worth remembering. Good food, music, dance, hosting socials, new cities, and a creative eye that spans photography, 3D and industrial design.
-`,
+Outside of TechTank, he's drawn to experiences worth remembering. Good food, music, dance, hosting socials, new cities, and a creative eye that spans photography, 3D and industrial design.`,
   },
   "thannia-blanchet": {
     name: "Thannia Blanchet",
@@ -102,8 +95,7 @@ Outside of TechTank, he's drawn to experiences worth remembering. Good food, mus
     github: "https://github.com/thanniaB",
     bio: `Thannia co-runs CodeDiversity alongside Niki and has spoken at multiple TechTank events.
 She's been a Front-End Software Engineer since 2014 and moved to Toronto in 2023, where shortly after she met TechTank by a matter of destiny, she was the only one available to show them the office to host an event. In TechTank, she has found community and friends, and decided to use it to continue her mission of promoting diversity, equality, inclusion, and lifting everyone up.
-Outside of tech, Thannia enjoys different things: drawing, acting, muay thai, and roller derby: a sport you should totally check out.
-`,
+Outside of tech, Thannia enjoys different things: drawing, acting, muay thai, and roller derby: a sport you should totally check out.`,
   },
   "john-malapit": {
     name: "John Malapit",
@@ -111,6 +103,10 @@ Outside of tech, Thannia enjoys different things: drawing, acting, muay thai, an
     avatar: "/images/team/john-malapit.webp",
     linkedin: "https://linkedin.com/in/johnmalapit",
     github: "https://github.com/johnmal-dev",
+    bio: `John is a Toronto-based software developer who came to tech from Mechanical Engineering. He started out as a full-stack developer at an agency and now works on Scotiabank's test automation team, building software that's reliable, efficient, and built to scale.
+At TechTank, he builds the website with the digital team and plays on the Sashimis, TechTank's softball team.
+He likes hard technical problems, working closely with a team, and picking up new technologies, especially when the result is a web app that's useful and accessible to everyone.
+Outside of work, you'll find him playing volleyball, deep in a board game, or planning his next adventure.`,
   },
   "robert-so": {
     name: "Robert So",
@@ -127,11 +123,11 @@ That dedication to authentic, on-the-ground connection drives his work as an org
     pronouns: "she/her",
     avatar: "/images/team/eileen-xue.webp",
     linkedin: "https://linkedin.com/in/eileenxue",
+    github: "https://github.com/eileenxue",
     bio: `Eileen is a Tech Lead, Product at Curacity, a platform that helps hospitality brands reach travellers through media and AI-driven discovery. Beyond her day job, she's a Women Techmakers Ambassador and an active member of several women-in-tech communities.
 Her TechTank story started in the pandemic, attending virtual events and slowly getting to know the community. A chance run-in at a conference with current co-chair Niki (who, as it turns out, went to undergrad with Eileen's husband) led to an invitation to Code Diversity. That small-world moment has kept her showing up ever since.
 Today she volunteers wherever help is needed: events, participation, community engagement, and the in-between moments that make a community feel real. She believes TechTank is for everyone in tech, not just developers, and hopes people leave with a connection they didn't expect and a sense that they belong here.
-When she's not here, she's somewhere in the world or somewhere in Toronto chasing a great meal. Sushi and steak are her love languages, ideally on the same menu.
-`,
+When she's not here, she's somewhere in the world or somewhere in Toronto chasing a great meal. Sushi and steak are her love languages, ideally on the same menu.`,
   },
   "rodrigo-curbelo": {
     name: "Rodrigo Curbelo",
@@ -150,6 +146,9 @@ Outside of tech and community work, he can usually be found at a coffee shop, pl
     avatar: "/images/team/rohan-villoth.webp",
     linkedin: "https://linkedin.com/in/RohanVilloth",
     github: "https://github.com/RohanVilloth",
+    bio: `Rohan is a Tech Lead who builds e-commerce applications, with a decade of experience across industry and community-driven projects.
+His TechTank story started as a regular at events, drawn in by the local tech community and the conversations at each meetup. Over time he got involved in redesigning and building TechTank's website, and helped bring the TechTank YouTube channel back to life. Today he's one of the website's maintainers, and he records and publishes event sessions on YouTube so anyone can catch up on talks they missed.
+Outside of work and TechTank, he's a tech enthusiast who loves gadgets and co-op multiplayer games, and you'll often spot him at other tech events around Toronto. Off the screen, he skateboards, roller skates, and is learning to ice skate.`,
   },
   "abu-saeed": {
     name: "Abu Saeed",
@@ -242,6 +241,7 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
     name: "Rana Soyak",
     pronouns: "she/her",
     avatar: "/images/team/rana-soyak.webp",
+    github: "https://github.com/rselvasoyak",
   },
   "lune-moreau": {
     name: "Lune Moreau",
