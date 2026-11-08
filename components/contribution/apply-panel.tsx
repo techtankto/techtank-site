@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Check } from "lucide-react";
+import { Check, MailIcon } from "lucide-react";
 import type { Session } from "@supabase/supabase-js";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { SlackIcon } from "@/components/ui/icons";
 import { createClient } from "@/utils/supabase/client";
+import { signInWithEmail } from "@/utils/supabase/auth";
 import { useMutation } from "@/hooks/use-mutation";
 import { applyToTask } from "@/app/(site)/tasks/[id]/actions";
 import { isTakingApplications, type ContributionTask } from "@/constants/contribution-board";
@@ -18,6 +20,11 @@ interface ApplyPanelProps {
 
 // Only pre-selects the workspace on Slack's consent screen; SQL is the real gate.
 const SLACK_TEAM_ID = process.env.NEXT_PUBLIC_SLACK_TEAM_ID;
+
+// A dev server with no Slack app takes a password instead, so the board
+// is usable without registering one. `next build` always sets
+// NODE_ENV=production, so this is off in every deployment.
+const LOCAL_EMAIL_LOGIN = process.env.NODE_ENV === "development" && !SLACK_TEAM_ID;
 
 function closedCopy(task: ContributionTask): string {
   if (task.status === "done") {
@@ -41,6 +48,8 @@ export function ApplyPanel({ task }: ApplyPanelProps) {
   const [session, setSession] = useState<Session | null>(null);
   const [message, setMessage] = useState("");
   const [alreadyApplied, setAlreadyApplied] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // Resolves to the outcome so a server-side "closed" reads differently from an error.
   const apply = useMutation(async (msg: string) => {
@@ -50,6 +59,12 @@ export function ApplyPanel({ task }: ApplyPanelProps) {
   });
 
   const connect = useMutation(async () => {
+    if (LOCAL_EMAIL_LOGIN) {
+      const destination = new URL(`/tasks/${task.id}`, window.location.origin);
+      await signInWithEmail({ email, password, destination });
+      return;
+    }
+
     const callback = new URL("/auth/callback", window.location.origin);
     callback.searchParams.set("next", `/tasks/${task.id}`);
     const { error } = await createClient().auth.signInWithOAuth({
@@ -162,8 +177,14 @@ export function ApplyPanel({ task }: ApplyPanelProps) {
       ) : (
         <>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-            Tasks go to people in the TechTank Slack, so connect your account to apply. We&rsquo;ll only read your name
-            and email, and Tanky will message you on Slack about the task.
+            {LOCAL_EMAIL_LOGIN ? (
+              <>This dev server has no Slack app configured, so sign in with a password instead.</>
+            ) : (
+              <>
+                Tasks go to people in the TechTank Slack, so connect your account to apply. We&rsquo;ll only read your
+                name and email, and Tanky will message you on Slack about the task.
+              </>
+            )}
           </p>
 
           {connect.error && (
@@ -172,17 +193,47 @@ export function ApplyPanel({ task }: ApplyPanelProps) {
             </p>
           )}
 
-          <Button onClick={() => connect.mutate()} disabled={connect.isPending} className="mt-5 w-full">
-            <SlackIcon className="mr-2 size-4" />
-            Continue with Slack
-          </Button>
-          <p className="mt-3 text-center text-xs text-muted-foreground">
-            Not in our Slack yet?{" "}
-            <a href="/links/slack" className="text-ring underline">
-              Join here
-            </a>
-            , then come back.
-          </p>
+          {LOCAL_EMAIL_LOGIN ? (
+            <>
+              <Input
+                className="mt-5"
+                name="email"
+                type="email"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                className="mt-2"
+                name="password"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button onClick={() => connect.mutate()} disabled={connect.isPending} className="mt-5 w-full">
+                <MailIcon className="mr-2 size-4" />
+                Continue with Email
+              </Button>
+              <p className="mt-3 text-center text-xs text-muted-foreground">
+                Seeded account: organizer@localhost / localdev
+              </p>
+            </>
+          ) : (
+            <>
+              <Button onClick={() => connect.mutate()} disabled={connect.isPending} className="mt-5 w-full">
+                <SlackIcon className="mr-2 size-4" />
+                Continue with Slack
+              </Button>
+              <p className="mt-3 text-center text-xs text-muted-foreground">
+                Not in our Slack yet?{" "}
+                <a href="/links/slack" className="text-ring underline">
+                  Join here
+                </a>
+                , then come back.
+              </p>
+            </>
+          )}
         </>
       )}
     </aside>

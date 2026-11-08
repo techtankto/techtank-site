@@ -69,11 +69,11 @@ enable_manual_linking = false
 minimum_password_length = 6
 
 [auth.email]
-# Slack is the only way in, for organizers and applicants alike, so the
-# email provider is off. There is no login code, no SMTP, and no
-# transactional email anywhere in this project. Turning this on would
-# reintroduce a delivery dependency we deliberately removed.
-enable_signup = false
+# Local only: this file configures the CLI's Docker stack, never the
+# hosted project, so email sign-in lets a contributor run the task board
+# without registering a Slack app. Confirmations stay off because the
+# project has no SMTP.
+enable_signup = true
 enable_confirmations = false
 
 # Sign in with Slack (OpenID Connect) — the only way into this app, for
