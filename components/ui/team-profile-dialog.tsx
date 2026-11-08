@@ -33,9 +33,7 @@ export function TeamProfileDialog({ member, open, onClose }: TeamProfileDialogPr
       <div className={styles.header()}>
         <TeamAvatar name={name} avatar={avatar} size="xl" />
         <div>
-          <DialogTitle asChild>
-            <p className={styles.name()}>{name}</p>
-          </DialogTitle>
+          <DialogTitle className={styles.name()}>{name}</DialogTitle>
           <p className={styles.pronouns()}>{pronouns}</p>
           {role && <span className={styles.role()}>{role}</span>}
           <TeamSocialLinks linkedin={linkedin} github={github} align="center" className={styles.socialLinks()} />
