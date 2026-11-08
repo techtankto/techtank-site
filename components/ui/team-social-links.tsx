@@ -133,7 +133,7 @@ export function TeamSocialLinks({
           <a href={linkedin} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
             <LinkedInIcon className="size-4 shrink-0" aria-hidden="true" />
             <span className={iconOnly ? "sr-only" : undefined}>{linkedinUser}</span>
-            <span className="sr-only">on LinkedIn</span>
+            <span className="sr-only"> on LinkedIn (opens in new tab)</span>
           </a>
         </Button>
       )}
@@ -142,7 +142,7 @@ export function TeamSocialLinks({
           <a href={github} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
             <GitHubIcon className="size-4 shrink-0" aria-hidden="true" />
             <span className={iconOnly ? "sr-only" : undefined}>{githubUser}</span>
-            <span className="sr-only">on GitHub</span>
+            <span className="sr-only"> on GitHub (opens in new tab)</span>
           </a>
         </Button>
       )}

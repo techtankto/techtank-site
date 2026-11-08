@@ -7,7 +7,7 @@ import { TeamProfileDialog } from "@/components/ui/team-profile-dialog";
 import { TeamProfileHint } from "@/components/ui/team-profile-hint";
 import { TeamSocialLinks } from "@/components/ui/team-social-links";
 import { cn } from "@/utils/theme";
-import type { TeamMember } from "@/constants/team";
+import type { TeamGroupMember } from "@/constants/team";
 
 const teamCardVariants = cva("group relative w-full text-left", {
   variants: {
@@ -33,11 +33,11 @@ const teamCardVariants = cva("group relative w-full text-left", {
 const avatarSizes = { board: "lg", core: "md", compact: "sm" } as const;
 
 export interface TeamCardProps extends VariantProps<typeof teamCardVariants> {
-  member: TeamMember;
+  member: TeamGroupMember;
   className?: string;
 }
 
-function BoardBody({ name, pronouns, role, bio, linkedin, github }: TeamMember) {
+function BoardBody({ name, pronouns, role, bio, linkedin, github }: TeamGroupMember) {
   return (
     <div>
       <p className="font-display text-2xl leading-tight font-bold text-foreground">{name}</p>
@@ -54,7 +54,7 @@ function BoardBody({ name, pronouns, role, bio, linkedin, github }: TeamMember) 
   );
 }
 
-function CoreBody({ name, pronouns, role, bio, linkedin, github }: TeamMember) {
+function CoreBody({ name, pronouns, role, bio, linkedin, github }: TeamGroupMember) {
   return (
     <div className="min-w-0 flex-1">
       <p className="font-display text-lg leading-tight font-semibold text-foreground">{name}</p>
@@ -71,7 +71,7 @@ function CoreBody({ name, pronouns, role, bio, linkedin, github }: TeamMember) {
   );
 }
 
-function CompactBody({ name, pronouns, role, linkedin, github }: TeamMember) {
+function CompactBody({ name, pronouns, role, linkedin, github }: TeamGroupMember) {
   return (
     <>
       <div className="min-w-0 flex-1">

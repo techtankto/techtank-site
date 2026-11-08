@@ -3,7 +3,7 @@
 import { Dialog, DialogTitle } from "@/components/ui/dialog";
 import { TeamAvatar } from "@/components/ui/team-avatar";
 import { TeamSocialLinks } from "@/components/ui/team-social-links";
-import type { TeamMember } from "@/constants/team";
+import type { TeamGroupMember } from "@/constants/team";
 import { cva } from "@/utils/theme";
 
 const styles = {
@@ -20,7 +20,7 @@ const styles = {
 };
 
 interface TeamProfileDialogProps {
-  member: TeamMember;
+  member: TeamGroupMember;
   open: boolean;
   onClose: () => void;
 }
@@ -33,9 +33,7 @@ export function TeamProfileDialog({ member, open, onClose }: TeamProfileDialogPr
       <div className={styles.header()}>
         <TeamAvatar name={name} avatar={avatar} size="xl" />
         <div>
-          <DialogTitle asChild>
-            <p className={styles.name()}>{name}</p>
-          </DialogTitle>
+          <DialogTitle className={styles.name()}>{name}</DialogTitle>
           <p className={styles.pronouns()}>{pronouns}</p>
           {role && <span className={styles.role()}>{role}</span>}
           <TeamSocialLinks linkedin={linkedin} github={github} align="center" className={styles.socialLinks()} />
