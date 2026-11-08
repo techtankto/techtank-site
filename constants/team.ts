@@ -44,6 +44,7 @@ By day, Danny is a software engineer on the frontend team at Ideogram, an AI ima
     name: "Niki Fereidooni",
     pronouns: "she/her",
     avatar: "/images/team/niki-fereidooni.webp",
+    linkedin: "https://linkedin.com/in/nfereidooni",
     github: "https://github.com/nfereidooni",
     bio: `Niki has been running tech community events since October 2024. She currently leads Code Diversity and Tech Talks at TechTank.
 By day she's a software engineer, though she got there the long way. After nearly a decade in the print packaging industry in project management and operations, she transitioned into tech in 2020. She's a generalist at heart, someone who loves building things as much as she loves the people building alongside her.
@@ -57,6 +58,7 @@ Outside of TechTank, you'll find her hiking the Bruce Trail, trying new restaura
     name: "Sophia Kim",
     pronouns: "she/her",
     avatar: "/images/team/sophia-kim.webp",
+    linkedin: "https://linkedin.com/in/sophia-kim",
     github: "https://github.com/sophiakim1",
     bio: `Sophia leads TechTank's social events programming.
 Sophia is a Software Engineer and AI Trainer with a background in full-stack development and data annotation. She has worked across startups and AI teams, building web apps and helping train large language models.
@@ -70,6 +72,7 @@ Outside of tech, she enjoys hosting events, muay thai, travelling, and creating 
     name: "Natasha Kasunic",
     pronouns: "she/her",
     avatar: "/images/team/natasha-kasunic.webp",
+    linkedin: "https://linkedin.com/in/natasha-kasunic",
     bio: `Natasha is one of TechTank's newer volunteers! She's a Technical Customer Success Lead at Tightknit, a small startup building an app for community builders, where she sits between the engineering and the humans using it, translating one to the other. Computer science at Waterloo gave her the technical half; the years since taught her the part that actually matters, which is people.
 She came to TechTank as an attendee first and found something she didn't expect: a room full of community leaders, operators, and builders, who happen to be her favourite kind of person. So she started pitching in. What's kept her around isn't any single event but the in-between, the hallway conversation that turns into a real one, and the way a good community quietly makes space for people, women in tech especially, to find their footing.
 She's early in her TechTank story, which is the fun part. Expect to see her wherever the community needs an extra set of hands.
@@ -95,6 +98,7 @@ Outside of TechTank, he's drawn to experiences worth remembering. Good food, mus
     name: "Thannia Blanchet",
     pronouns: "she/her",
     avatar: "/images/team/thannia-blanchet.webp",
+    linkedin: "https://linkedin.com/in/thannia-blanchet",
     github: "https://github.com/thanniaB",
     bio: `Thannia co-runs CodeDiversity alongside Niki and has spoken at multiple TechTank events.
 She's been a Front-End Software Engineer since 2014 and moved to Toronto in 2023, where shortly after she met TechTank by a matter of destiny, she was the only one available to show them the office to host an event. In TechTank, she has found community and friends, and decided to use it to continue her mission of promoting diversity, equality, inclusion, and lifting everyone up.
@@ -105,12 +109,14 @@ Outside of tech, Thannia enjoys different things: drawing, acting, muay thai, an
     name: "John Malapit",
     pronouns: "he/him",
     avatar: "/images/team/john-malapit.webp",
+    linkedin: "https://linkedin.com/in/johnmalapit",
     github: "https://github.com/johnmal-dev",
   },
   "robert-so": {
     name: "Robert So",
     pronouns: "he/him",
     avatar: "/images/team/robert-so.webp",
+    linkedin: "https://linkedin.com/in/robertkso",
     github: "https://github.com/robester0403",
     bio: `Rob helps organize informational events for developers and tech professionals. By day, he is an engineer working on Elastic's security integration platform, operating closely with the latest in AI.
 He likes to keep his ear to the ground, staying current with the local tech scene so he can share valuable insights with his peers. For Rob, the community's true value lies in giving professionals a dedicated platform to speak openly, allowing everyday networking to evolve into candid discussions about their real-life experiences.
@@ -120,6 +126,7 @@ That dedication to authentic, on-the-ground connection drives his work as an org
     name: "Eileen Xue",
     pronouns: "she/her",
     avatar: "/images/team/eileen-xue.webp",
+    linkedin: "https://linkedin.com/in/eileenxue",
     bio: `Eileen is a Tech Lead, Product at Curacity, a platform that helps hospitality brands reach travellers through media and AI-driven discovery. Beyond her day job, she's a Women Techmakers Ambassador and an active member of several women-in-tech communities.
 Her TechTank story started in the pandemic, attending virtual events and slowly getting to know the community. A chance run-in at a conference with current co-chair Niki (who, as it turns out, went to undergrad with Eileen's husband) led to an invitation to Code Diversity. That small-world moment has kept her showing up ever since.
 Today she volunteers wherever help is needed: events, participation, community engagement, and the in-between moments that make a community feel real. She believes TechTank is for everyone in tech, not just developers, and hopes people leave with a connection they didn't expect and a sense that they belong here.
@@ -130,6 +137,7 @@ When she's not here, she's somewhere in the world or somewhere in Toronto chasin
     name: "Rodrigo Curbelo",
     pronouns: "he/him",
     avatar: "/images/team/rodrigo-curbelo.webp",
+    linkedin: "https://linkedin.com/in/rcurbelo",
     github: "https://github.com/rodrigocurbelo",
     bio: `Rodrigo is a Senior Product Engineer, UI/UX designer, and community organizer who has spent most of his career in early-stage startups. He's led engineering teams, founded a company, and tends to gravitate toward the intersection of engineering, product, and design, especially the messy early stages where the problem is still being figured out.
 At TechTank, he helps organize events, partnerships, and some of the systems behind the community. He's particularly interested in creating formats that get people doing more than exchanging LinkedIn profiles: working together, sharing what they know, building things, and forming actual relationships with other people in tech.
@@ -140,12 +148,14 @@ Outside of tech and community work, he can usually be found at a coffee shop, pl
     name: "Rohan Villoth",
     pronouns: "he/him",
     avatar: "/images/team/rohan-villoth.webp",
+    linkedin: "https://linkedin.com/in/RohanVilloth",
     github: "https://github.com/RohanVilloth",
   },
   "abu-saeed": {
     name: "Abu Saeed",
     pronouns: "he/him",
     avatar: "/images/team/abu-saeed.webp",
+    linkedin: "https://linkedin.com/in/abuhsaeed",
     github: "https://github.com/yumstar",
     bio: "Software engineer working in the broadcasting industry, nerding out about all things audio-visual.",
   },
