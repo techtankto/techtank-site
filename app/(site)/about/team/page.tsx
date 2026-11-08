@@ -79,7 +79,9 @@ export default function TeamPage() {
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-12">
+          {/* On wide screens, size this gap so the Design header spans two Developers card slots and the
+              Design cards line up with the left column. Retune it if card or header heights change. */}
+          <div className="flex flex-col gap-12 lg:gap-17">
             <div>
               <SectionHeader overline="Social media" title="Content & community" className="mb-8" />
               <div className="grid gap-3">
