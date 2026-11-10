@@ -42,9 +42,7 @@ export function LumaEventCard({ event }: Props) {
               {showTime && <span className="text-muted-foreground/60">{formattedTime}</span>}
             </div>
 
-            <h3 className="mb-2 truncate text-left text-xl">
-              {event.title}
-            </h3>
+            <h3 className="mb-2 truncate text-left text-xl">{event.title}</h3>
 
             <div className="mb-1 flex items-center gap-x-1">
               <div
