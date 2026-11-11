@@ -35,16 +35,14 @@ export function LumaEventCard({ event }: Props) {
   return (
     <a href={event.eventUrl} target="_blank" rel="noopener noreferrer" aria-label={event.title}>
       <div className="luma-event-card group glass relative overflow-hidden rounded-md">
-        <div className="grid grid-cols-[1fr] sm:grid-cols-[1fr_auto] sm:p-6">
-          <div className="col-[1_/_span_1] row-[2_/_span_1] flex-1 p-6 sm:col-[1_/_span_1] sm:row-[1_/_span_1] sm:p-0">
+        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_7rem] sm:gap-x-6 sm:p-6">
+          <div className="col-[1_/_span_1] row-[2_/_span_1] p-6 sm:col-[1_/_span_1] sm:row-[1_/_span_1] sm:p-0">
             <div className="mb-1 flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="size-4 shrink-0" />
               {showTime && <span className="text-muted-foreground/60">{formattedTime}</span>}
             </div>
 
-            <h3 className="mb-2 max-w-[390px] overflow-hidden text-left text-xl text-ellipsis whitespace-nowrap sm:max-w-[500px]">
-              {event.title}
-            </h3>
+            <h3 className="mb-2 truncate text-left text-xl">{event.title}</h3>
 
             <div className="mb-1 flex items-center gap-x-1">
               <div
@@ -110,14 +108,14 @@ export function LumaEventCard({ event }: Props) {
               </div>
             )}
           </div>
-          <div className="relative col-[1_/_span_1] row-[1_/_span_1] aspect-square h-full overflow-hidden rounded-t-sm sm:col-[2_/_span_1] sm:row-[1_/_span_1] sm:rounded-sm">
+          <div className="relative col-[1_/_span_1] row-[1_/_span_1] aspect-square w-full overflow-hidden rounded-t-sm sm:col-[2_/_span_1] sm:row-[1_/_span_1] sm:self-start sm:rounded-sm">
             {event.cover_url && (
               <Image
                 src={event.cover_url}
                 alt=""
                 fill
-                sizes="(min-width: 640px) 12rem, 100vw"
-                className="object-cover object-left-top"
+                sizes="(min-width: 640px) 7rem, 100vw"
+                className="object-contain object-center"
               />
             )}
           </div>
