@@ -108,14 +108,14 @@ export function LumaEventCard({ event }: Props) {
               </div>
             )}
           </div>
-          <div className="relative col-[1_/_span_1] row-[1_/_span_1] aspect-square w-full overflow-hidden rounded-t-sm sm:col-[2_/_span_1] sm:row-[1_/_span_1] sm:self-center sm:rounded-sm">
+          <div className="relative col-[1_/_span_1] row-[1_/_span_1] aspect-square w-full overflow-hidden rounded-t-sm sm:col-[2_/_span_1] sm:row-[1_/_span_1] sm:self-start sm:rounded-sm">
             {event.cover_url && (
               <Image
                 src={event.cover_url}
                 alt=""
                 fill
                 sizes="(min-width: 640px) 7rem, 100vw"
-                className="object-contain object-top-left"
+                className="object-contain object-center"
               />
             )}
           </div>
