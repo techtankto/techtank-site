@@ -35,8 +35,8 @@ export function LumaEventCard({ event }: Props) {
   return (
     <a href={event.eventUrl} target="_blank" rel="noopener noreferrer" aria-label={event.title}>
       <div className="luma-event-card group glass relative overflow-hidden rounded-md">
-        <div className="grid grid-cols-[minmax(0,1fr)] sm:grid-cols-[minmax(0,1fr)_7rem] sm:gap-x-6 sm:p-6">
-          <div className="col-[1_/_span_1] row-[2_/_span_1] min-w-0 p-6 sm:col-[1_/_span_1] sm:row-[1_/_span_1] sm:p-0">
+        <div className="grid grid-cols-1 sm:grid-cols-[minmax(0,1fr)_7rem] sm:gap-x-6 sm:p-6">
+          <div className="col-[1_/_span_1] row-[2_/_span_1] p-6 sm:col-[1_/_span_1] sm:row-[1_/_span_1] sm:p-0">
             <div className="mb-1 flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="size-4 shrink-0" />
               {showTime && <span className="text-muted-foreground/60">{formattedTime}</span>}
