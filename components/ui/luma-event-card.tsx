@@ -115,7 +115,7 @@ export function LumaEventCard({ event }: Props) {
                 alt=""
                 fill
                 sizes="(min-width: 640px) 7rem, 100vw"
-                className="object-cover object-left-top"
+                className="object-contain object-top-left"
               />
             )}
           </div>
