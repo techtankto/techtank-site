@@ -21,8 +21,10 @@ const styles = {
     "data-[state=closed]:animate-[dialog-content-out_150ms_ease-in]",
     "motion-reduce:animate-none",
   ]),
-  header: cva("flex shrink-0 items-center justify-end px-4 pt-4"),
-  closeButton: cva("size-11"),
+  header: cva("flex shrink-0 items-center justify-end gap-4 px-4 pt-4"),
+  headerTitle: cva("min-w-0 flex-1 text-center"),
+  // Sizes the close button and, opposite it, the spacer that keeps a title centered on the panel.
+  closeSlot: cva("size-11"),
   closeIcon: cva("size-5"),
   body: cva("flex min-h-0 flex-1 flex-col gap-5 overflow-y-auto px-6 pb-6 md:px-8 lg:px-10"),
   title: cva("font-display text-xl font-semibold text-foreground"),
@@ -31,6 +33,8 @@ const styles = {
 interface DialogProps {
   open: boolean;
   onClose: () => void;
+  /** Rendered as the `DialogTitle`, centered in the header row beside the close button. */
+  title?: ReactNode;
   className?: string;
   children: ReactNode;
 }
@@ -41,12 +45,14 @@ interface DialogProps {
  * overlay and panel. Enter/leave animation is CSS-driven off Radix's
  * `data-state`; Radix keeps the panel mounted until the exit animation ends.
  *
- * Pass `DialogTitle` in `children` for the accessible name (Radix warns
- * without one). `onClose` is the single close path: Radix routes Escape,
- * the overlay, and the close button through it, and the component is
- * controlled, so a caller can block closing (e.g. mid-request) by ignoring it.
+ * Pass `title` to put the title in the header row beside the close button,
+ * or `DialogTitle` in `children` to place it in the body; one of the two is
+ * needed for the accessible name (Radix warns without one). `onClose` is the
+ * single close path: Radix routes Escape, the overlay, and the close button
+ * through it, and the component is controlled, so a caller can block closing
+ * (e.g. mid-request) by ignoring it.
  */
-export function Dialog({ open, onClose, className, children }: DialogProps) {
+export function Dialog({ open, onClose, title, className, children }: DialogProps) {
   return (
     <DialogPrimitive.Root open={open} onOpenChange={(next) => !next && onClose()}>
       <DialogPrimitive.Portal>
@@ -55,10 +61,17 @@ export function Dialog({ open, onClose, className, children }: DialogProps) {
             outright — centering with a translate would fight the scale/slide. */}
         <div className={styles.positioner()}>
           <DialogPrimitive.Content aria-describedby={undefined} className={cn(styles.panel(), className)}>
-            {/* The close button gets its own row so a long title never runs under it. */}
+            {/* The header row holds the close button, plus a `title` between it and a
+                matching spacer; the title wraps in that space, never under the button. */}
             <div className={styles.header()}>
+              {title && (
+                <>
+                  <span className={styles.closeSlot()} aria-hidden="true" />
+                  <DialogTitle className={styles.headerTitle()}>{title}</DialogTitle>
+                </>
+              )}
               <DialogPrimitive.Close asChild>
-                <Button type="button" variant="ghost" size="icon" label="Close dialog" className={styles.closeButton()}>
+                <Button type="button" variant="ghost" size="icon" label="Close dialog" className={styles.closeSlot()}>
                   <X className={styles.closeIcon()} aria-hidden="true" />
                 </Button>
               </DialogPrimitive.Close>
