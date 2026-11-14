@@ -12,7 +12,8 @@ const buttonVariants = cva(
         secondary:
           "bg-warning text-warning-foreground hover:bg-warning/90 hover:text-warning-foreground focus-visible:ring-ring",
         outline:
-          "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring",
+          // An inset ring, not a border, so it takes no layout space and stays the same height as the filled variants.
+          "text-primary inset-ring-2 inset-ring-primary hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90 focus-visible:ring-destructive",
         ghost: "text-muted-foreground hover:bg-foreground/5 hover:text-foreground focus-visible:ring-ring",
