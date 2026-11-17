@@ -37,6 +37,18 @@ This repo uses [oxfmt](https://www.npmjs.com/package/oxfmt) for formatting. In V
 
 You can also run `pnpm format` from the CLI at any time.
 
+## Git hooks
+
+`pnpm install` sets up a [Husky](https://typicode.github.io/husky/) pre-commit hook that runs
+[lint-staged](https://github.com/lint-staged/lint-staged) on the files you're committing: it formats
+them with oxfmt and lints them with oxlint. These are the same checks CI runs, so a commit that passes
+the hook won't fail CI on formatting or lint. CI also type-checks and runs tests; run `pnpm validate`
+and `pnpm test` before pushing if you've touched anything those could catch.
+
+If the hook can't find `pnpm`, your Node version manager isn't loaded in the shell Git uses. See the
+[Husky docs on PATH](https://typicode.github.io/husky/how-to.html#node-version-managers-and-guis) for
+the fix. To skip the hook in a pinch, commit with `--no-verify`; CI still runs either way.
+
 ## Branches
 
 ```text
