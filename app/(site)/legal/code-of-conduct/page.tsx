@@ -179,7 +179,7 @@ export default function CodeOfConductPage() {
                 </ul>
                 <p>
                   Organizers may remove a post or hold it for review, and some posts are filtered automatically. If a
-                  post suggests someone may be struggling, organizers may reply in the thread with support resources.
+                  post suggests someone may be struggling, an automatic reply may share support resources in the thread.
                 </p>
               </div>
             </div>
@@ -258,7 +258,8 @@ export default function CodeOfConductPage() {
                   approval
                 </li>
                 <li>
-                  You aren&apos;t expected to give counselling or crisis support. Share the resources under{" "}
+                  You aren&apos;t expected to give counselling or crisis support, or to respond at all. If you choose
+                  to, point people to the resources under{" "}
                   <a href="#support-and-wellbeing" className="text-ring underline underline-offset-2">
                     Support and Wellbeing
                   </a>
