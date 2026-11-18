@@ -178,7 +178,6 @@ export default function CodeOfConductPage() {
                   <li>Don&apos;t use anonymity to harass, threaten, or target anyone</li>
                 </ul>
                 <p>
-                  Organizers can&apos;t see who wrote an anonymous post, so we can&apos;t follow up with you privately.
                   Organizers may remove a post or hold it for review, and some posts are filtered automatically. If a
                   post suggests someone may be struggling, organizers may reply in the thread with support resources.
                 </p>
