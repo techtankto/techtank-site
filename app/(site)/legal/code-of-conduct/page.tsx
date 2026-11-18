@@ -257,14 +257,6 @@ export default function CodeOfConductPage() {
                   Do not make commitments on behalf of TechTank — financial, partnership, or otherwise — without board
                   approval
                 </li>
-                <li>
-                  You aren&apos;t expected to give counselling or crisis support, or to respond at all. If you choose
-                  to, point people to the resources under{" "}
-                  <a href="#support-and-wellbeing" className="text-ring underline underline-offset-2">
-                    Support and Wellbeing
-                  </a>
-                  , then step back or hand the conversation to another organizer.
-                </li>
               </ul>
             </div>
 
@@ -360,7 +352,7 @@ export default function CodeOfConductPage() {
         </section>
 
         {/* Support and Wellbeing */}
-        <section id="support-and-wellbeing" className="scroll-mt-40">
+        <section>
           <h2 className="mb-4 font-display text-xl font-semibold text-foreground">Support and Wellbeing</h2>
           <div className="space-y-4 text-muted-foreground">
             <p>
