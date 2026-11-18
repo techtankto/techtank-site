@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Mail } from "lucide-react";
-import { CONTACT_EMAIL } from "@/constants/contact";
+import { CONTACT_EMAIL, CRISIS_RESOURCES_URL } from "@/constants/contact";
 
 export const metadata: Metadata = {
   title: "Code of Conduct",
@@ -13,7 +13,7 @@ export default function CodeOfConductPage() {
     <div className="rounded-2xl border border-border bg-card p-6 lg:p-10">
       {/* Header */}
       <div className="mb-8 border-b border-border pb-8">
-        <p className="mb-2 text-sm text-muted-foreground">Last updated: October 7, 2026</p>
+        <p className="mb-2 text-sm text-muted-foreground">Last updated: November 17, 2026</p>
         <h1 className="font-display text-3xl font-semibold text-foreground lg:text-4xl">Code of Conduct</h1>
       </div>
 
@@ -163,6 +163,29 @@ export default function CodeOfConductPage() {
             </div>
 
             <div>
+              <h3 className="mb-3 font-semibold text-foreground">Anonymous Posts and Venting Channels</h3>
+              <div className="space-y-4 text-muted-foreground">
+                <p>
+                  Some Slack channels let you post anonymously so you can vent about work, job hunting, or life in tech.
+                  Anonymous posts follow this code like every other post.
+                </p>
+                <ul className="list-disc space-y-2 pl-6">
+                  <li>
+                    Talk about the situation, not the person. Don&apos;t name, describe, or accuse anyone who could be
+                    identified, including coworkers, managers, recruiters, companies&apos; employees, or other members.
+                  </li>
+                  <li>Don&apos;t share anyone&apos;s personal or identifying details</li>
+                  <li>Don&apos;t use anonymity to harass, threaten, or target anyone</li>
+                </ul>
+                <p>
+                  Organizers can&apos;t see who wrote an anonymous post, so we can&apos;t follow up with you privately.
+                  Organizers may remove a post or hold it for review, and some posts are filtered automatically. If a
+                  post suggests someone may be struggling, organizers may reply in the thread with support resources.
+                </p>
+              </div>
+            </div>
+
+            <div>
               <h3 className="mb-3 font-semibold text-foreground">Profiles and Identity</h3>
               <div className="space-y-4 text-muted-foreground">
                 <p>
@@ -234,6 +257,13 @@ export default function CodeOfConductPage() {
                 <li>
                   Do not make commitments on behalf of TechTank — financial, partnership, or otherwise — without board
                   approval
+                </li>
+                <li>
+                  You aren&apos;t expected to give counselling or crisis support. Share the resources under{" "}
+                  <a href="#support-and-wellbeing" className="text-ring underline underline-offset-2">
+                    Support and Wellbeing
+                  </a>
+                  , then step back or hand the conversation to another organizer.
                 </li>
               </ul>
             </div>
@@ -329,6 +359,30 @@ export default function CodeOfConductPage() {
           </div>
         </section>
 
+        {/* Support and Wellbeing */}
+        <section id="support-and-wellbeing" className="scroll-mt-40">
+          <h2 className="mb-4 font-display text-xl font-semibold text-foreground">Support and Wellbeing</h2>
+          <div className="space-y-4 text-muted-foreground">
+            <p>
+              TechTank is a peer community, not a counselling service. Our organizers and volunteers care, but they
+              aren&apos;t trained to give mental health support.
+            </p>
+            <p>
+              If you&apos;re struggling, you can call or text 9-8-8 any time, or find Toronto crisis and support lines
+              on{" "}
+              <a
+                href={CRISIS_RESOURCES_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="text-ring underline underline-offset-2"
+              >
+                CAMH&apos;s crisis resources page
+              </a>
+              . If you or someone else is in immediate danger, call 911.
+            </p>
+          </div>
+        </section>
+
         {/* Report a Concern */}
         <section>
           <h2 className="mb-4 font-display text-xl font-semibold text-foreground">Report a Concern</h2>
@@ -417,8 +471,8 @@ export default function CodeOfConductPage() {
             <p className="text-sm text-muted-foreground">
               Note: some behaviours may warrant skipping directly to a temporary or permanent ban without a prior notice
               of correction, at the board&apos;s discretion. Fraud, impersonation, and threats to member safety result
-              in immediate removal. Where we believe a law has been broken, we may report it to the relevant platform or
-              authorities.
+              in immediate removal. Organizers or automated filters may remove or hold a Slack post without notice.
+              Where we believe a law has been broken, we may report it to the relevant platform or authorities.
             </p>
           </div>
         </section>
