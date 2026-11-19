@@ -10,16 +10,14 @@ import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 import { events } from "@/constants/events";
+import { lumaEvents as scrapedLumaEvents } from "@/constants/luma-events";
 import { socialLinks } from "@/constants/social-links";
 import type { Event } from "@/types/event";
 
 import { getAllLumaEvents } from "./actions";
 import { LumaEventCard } from "@/components/ui/luma-event-card";
 import { formatInAppTimeZone, toAppDateKey } from "@/utils/date";
-
-function getLumaSlug(url: string): string {
-  return url.split("/").pop()?.split("?")[0] ?? "";
-}
+import { mergeEventSources } from "@/utils/events";
 
 export function EventPageContent() {
   const [lumaEvents, setLumaEvents] = useState<Event[]>([]);
@@ -44,19 +42,8 @@ export function EventPageContent() {
     return dict;
   })();
 
-  const staticLumaSlugs = new Set(
-    events
-      .filter((e) => e.eventUrl?.includes("lu.ma/") || e.eventUrl?.includes("luma.com/"))
-      .map((e) => getLumaSlug(e.eventUrl!)),
-  );
-
-  const mergedEvents = [...events];
-  for (const lumaEvent of allLumaEvents) {
-    if (!lumaEvent.eventUrl) continue;
-    if (!staticLumaSlugs.has(getLumaSlug(lumaEvent.eventUrl))) {
-      mergedEvents.push(lumaEvent);
-    }
-  }
+  // Hand-curated entries win, then the scraped archive, then the live fetch.
+  const mergedEvents = mergeEventSources([events, scrapedLumaEvents, allLumaEvents]);
 
   // Sort descending by date
   mergedEvents.sort((a, b) => new Date(b.start_at).getTime() - new Date(a.start_at).getTime());
