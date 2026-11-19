@@ -5,19 +5,8 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { SlackIcon } from "@/components/ui/icons";
 import { signInWithSlack } from "@/utils/supabase/auth";
+import { safeRedirect } from "@/utils/safe-redirect";
 import { LoginLayout } from "./login-layout";
-
-/**
- * Only follow a same-origin `?redirect=` path — otherwise an open redirect
- * (`https://evil.example`, `javascript:`, or protocol-relative `//host`)
- * could carry a freshly authenticated organizer off-site.
- */
-function safeRedirect(value: string | null): string {
-  const fallback = "/admin/tasks";
-  if (!value) return fallback;
-  if (!value.startsWith("/") || value.startsWith("//")) return fallback;
-  return value;
-}
 
 export function SlackLogin() {
   const searchParams = useSearchParams();

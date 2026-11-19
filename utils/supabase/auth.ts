@@ -1,10 +1,11 @@
 import { createClient } from "./client";
+import { isLocalEmailLogin } from "./is-local-email-login";
 
 // Only pre-selects the workspace on Slack's consent screen; the real check is server-side.
 const SLACK_TEAM_ID = process.env.NEXT_PUBLIC_SLACK_TEAM_ID;
 
 export async function signInWithEmail(options: { email: string; password: string; destination: URL }) {
-  if (process.env.NODE_ENV !== "development" || !!SLACK_TEAM_ID) {
+  if (!isLocalEmailLogin({ nodeEnv: process.env.NODE_ENV, slackTeamId: SLACK_TEAM_ID })) {
     throw new Error("Email login is for local dev server only when slack is not configured.");
   }
   const client = createClient();

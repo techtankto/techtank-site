@@ -1,3 +1,4 @@
+import { isLocalEmailLogin } from "@/utils/supabase/is-local-email-login";
 import { EmailLogin } from "./email-login";
 import { SlackLogin } from "./slack-login";
 
@@ -10,7 +11,7 @@ const SLACK_TEAM_ID = process.env.NEXT_PUBLIC_SLACK_TEAM_ID;
  * reachable without registering one.
  */
 export function AdminLogin() {
-  if (process.env.NODE_ENV === "development" && !SLACK_TEAM_ID) {
+  if (isLocalEmailLogin({ nodeEnv: process.env.NODE_ENV, slackTeamId: SLACK_TEAM_ID })) {
     return <EmailLogin />;
   }
   return <SlackLogin />;

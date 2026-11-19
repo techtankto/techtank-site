@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { SlackIcon } from "@/components/ui/icons";
 import { createClient } from "@/utils/supabase/client";
 import { signInWithEmail } from "@/utils/supabase/auth";
+import { isLocalEmailLogin } from "@/utils/supabase/is-local-email-login";
 import { useMutation } from "@/hooks/use-mutation";
 import { applyToTask } from "@/app/(site)/tasks/[id]/actions";
 import { isTakingApplications, type ContributionTask } from "@/constants/contribution-board";
@@ -24,7 +25,7 @@ const SLACK_TEAM_ID = process.env.NEXT_PUBLIC_SLACK_TEAM_ID;
 // A dev server with no Slack app takes a password instead, so the board
 // is usable without registering one. `next build` always sets
 // NODE_ENV=production, so this is off in every deployment.
-const LOCAL_EMAIL_LOGIN = process.env.NODE_ENV === "development" && !SLACK_TEAM_ID;
+const LOCAL_EMAIL_LOGIN = isLocalEmailLogin({ nodeEnv: process.env.NODE_ENV, slackTeamId: SLACK_TEAM_ID });
 
 function closedCopy(task: ContributionTask): string {
   if (task.status === "done") {
