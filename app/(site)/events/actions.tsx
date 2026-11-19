@@ -4,6 +4,7 @@ import type { Event } from "@/types/event";
 
 import { z } from "zod";
 import { REMOTE_IMAGE_HOSTS } from "@/constants/remote-images";
+import { isListable, isLocationPublic } from "@/utils/luma/visibility";
 
 const LUMA_CALENDAR_ID = process.env.LUMA_CALENDAR_ID;
 const LUMA_API_KEY = process.env.LUMA_API_KEY;
@@ -45,6 +46,8 @@ const EventSchema = z.object({
     })
     .nullish(),
   meeting_url: z.string().nullish(),
+  visibility: z.string().nullish(),
+  location_visibility: z.string().nullish(),
   cover_url: ImageUrlSchema.nullish(),
   url: z.url(),
   max_capacity: z.number().nullish(),
@@ -112,7 +115,7 @@ function transformToEvent(rawEvent: z.infer<typeof EventSchema>, rawGuests: z.in
     guest_count: (rawEvent.max_capacity ?? 0) - (rawEvent.spots_remaining ?? 0),
     featured_guests: rawGuests.map((rawGuest) => ({ name: rawGuest.user_name })),
     meeting_url: rawEvent.meeting_url,
-    geo_address_info: rawEvent.geo_address_json,
+    geo_address_info: isLocationPublic(rawEvent) ? rawEvent.geo_address_json : null,
   };
 }
 
@@ -167,7 +170,7 @@ async function fetchLumaEvents(status: "upcoming" | "past"): Promise<Event[]> {
   }
   const json = await res.json();
   const eventListPage = EventListPageSchema.parse(json);
-  const rawEvents = eventListPage.entries;
+  const rawEvents = eventListPage.entries.filter((rawEvent) => isListable(rawEvent));
   return Promise.all(
     rawEvents.map(async (rawEvent) => {
       const rawGuests = await fetchGuests(rawEvent.id);
