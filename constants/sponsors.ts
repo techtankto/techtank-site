@@ -116,6 +116,15 @@ export const sponsors: Record<string, Sponsor> = {
     type: "host",
     scale: 1.25,
   },
+  gamma: {
+    id: "gamma",
+    name: "Gamma",
+    logo: "/images/sponsors/gamma.svg",
+    width: 1111,
+    height: 192,
+    url: "https://gamma.app",
+    type: "sponsor",
+  },
 };
 
 export function getAllSponsors(): Sponsor[] {
