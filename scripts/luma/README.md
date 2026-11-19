@@ -28,6 +28,10 @@ Luma API (all pages before now) → Zod validate → transform to LumaEvent
   and re-run.
 - **Skip-and-flag.** An event whose cover fails to download is archived with no
   cover and surfaced in the run summary; the next run retries it.
+- **No guests-only addresses.** An event whose location Luma limits to
+  registered guests is archived with `location: null`, using the same rule as
+  the live fetch (`utils/luma/visibility.ts`). Private events are archived:
+  once an event has happened, listing it does no harm.
 - **Tags are inferred at render time** by `utils/luma/tags.ts`, not stored, so
   a new title rule applies to the whole archive without a re-scrape.
 

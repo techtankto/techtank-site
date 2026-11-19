@@ -22,6 +22,7 @@ describe("transformEvent", () => {
       apiEvent("evt-abc", {
         cover_url: COVER,
         geo_address_json: { address: "2415 Yonge St", city: "Toronto" },
+        location_visibility: "public",
         meeting_url: null,
       }),
     );
@@ -48,6 +49,20 @@ describe("transformEvent", () => {
   test("records online events with a meeting URL and no location", () => {
     const { event } = transformEvent(apiEvent("evt-online", { meeting_url: "https://meet.example.com/x" }));
     expect(event).toMatchObject({ meeting_url: "https://meet.example.com/x", location: null });
+  });
+
+  test("never stores the address of a guests-only event", () => {
+    const address = { address: "123 Private Ave", city: "Toronto" };
+    expect(
+      transformEvent(apiEvent("evt-guests", { geo_address_json: address, location_visibility: "guests-only" })).event
+        .location,
+    ).toBeNull();
+    expect(transformEvent(apiEvent("evt-unset", { geo_address_json: address })).event.location).toBeNull();
+  });
+
+  test("keeps private past events in the archive", () => {
+    const { event } = transformEvent(apiEvent("evt-private", { visibility: "private" }));
+    expect(event.title).toBe("Event evt-private");
   });
 
   test("rejects an id that could escape the covers directory", () => {

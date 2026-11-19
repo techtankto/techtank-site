@@ -1,5 +1,6 @@
 import type { LumaEvent } from "../../constants/luma-events";
 import type { LumaApiEvent } from "../../utils/luma/schema";
+import { isLocationPublic } from "../../utils/luma/visibility";
 
 // A cover the shell must fetch and write under public/.
 export interface Download {
@@ -42,7 +43,9 @@ export function transformEvent(raw: LumaApiEvent): TransformResult {
     timezone: raw.timezone,
     url: raw.url,
     cover: download?.destPath ?? null,
-    location: raw.geo_address_json?.address ?? null,
+    // Never committed for guests-only events: the archive is public, and the
+    // address may be someone's home or a private office.
+    location: isLocationPublic(raw) ? (raw.geo_address_json?.address ?? null) : null,
     meeting_url: raw.meeting_url ?? null,
   };
 
