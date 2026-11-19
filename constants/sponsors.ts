@@ -59,16 +59,6 @@ export const sponsors: Record<string, Sponsor> = {
     type: "sponsor",
     scale: 1.75,
   },
-  "prema-coffee": {
-    id: "prema-coffee",
-    name: "Prema Coffee",
-    logo: "/images/sponsors/prema.png",
-    width: 2000,
-    height: 700,
-    url: "https://prematoronto.ca",
-    type: "partner",
-    scale: 1.75,
-  },
   vena: {
     id: "vena",
     name: "Vena",
@@ -115,6 +105,16 @@ export const sponsors: Record<string, Sponsor> = {
     height: 140,
     url: "https://posthog.com",
     type: "sponsor",
+  },
+  oneeleven: {
+    id: "oneeleven",
+    name: "OneEleven",
+    logo: "/images/sponsors/oneeleven.svg",
+    width: 60,
+    height: 46,
+    url: "https://oneeleven.com",
+    type: "host",
+    scale: 1.25,
   },
 };
 
