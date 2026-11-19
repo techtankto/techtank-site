@@ -1,16 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Calendar, ExternalLink, Users } from "lucide-react";
+import { ArrowRight, Calendar, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { LumaIcon, MeetupIcon } from "@/components/ui/icons";
 import { Section, SectionHeader } from "@/components/ui/section";
-import { StatsMarquee } from "@/components/ui/stats-marquee";
+import { StatsRow } from "@/components/ui/stats-row";
 import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { ToolsStrip } from "@/components/ui/tools-grid";
 import { RoleCard } from "@/components/ui/role-card";
 import { roleCardsData } from "@/constants/role-cards";
-import { socialLinks } from "@/constants/social-links";
 import { SocialFeed } from "@/components/ui/social-feed";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import {
@@ -20,7 +18,6 @@ import {
   getInstagramPostsByIds,
 } from "@/constants/instagram-posts";
 import { heroPostKeys } from "@/constants/instagram-pins";
-import { HomeEventsSection } from "./home-events-section";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -118,8 +115,8 @@ export default async function HomePage() {
             </div>
           </div>
 
-          {/* Stats Marquee */}
-          <StatsMarquee className="mt-8 py-8" />
+          {/* Stats */}
+          <StatsRow className="mt-8 py-8" />
         </div>
       </section>
 
@@ -145,37 +142,6 @@ export default async function HomePage() {
       <Section id="community" background="muted">
         <SectionHeader overline="From the community" title="Real people, real moments" className="mb-8" />
         <SocialFeed />
-      </Section>
-
-      {/* Events Section - Upcoming (large) + Past (small) */}
-      <Section>
-        <SectionHeader overline="Events" title="Recent happenings" className="mb-6" />
-
-        <HomeEventsSection />
-
-        {/* CTAs */}
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button variant="primary" size="md" asChild>
-            <a href={socialLinks.luma.url} target="_blank" rel="noopener noreferrer">
-              <LumaIcon className="mr-2 size-4" />
-              Luma
-              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
-            </a>
-          </Button>
-          <Button variant="outline" size="md" asChild>
-            <a href={socialLinks.meetup.url} target="_blank" rel="noopener noreferrer">
-              <MeetupIcon className="mr-2 size-4" />
-              Meetup
-              <ExternalLink className="ml-2 size-4" aria-hidden="true" />
-            </a>
-          </Button>
-          <Button variant="outline" size="md" asChild>
-            <Link href="/events">
-              View all<span className="sr-only"> events</span>
-              <ArrowRight className="ml-2 size-4" aria-hidden="true" />
-            </Link>
-          </Button>
-        </div>
       </Section>
 
       {/* Ways to Get Involved */}
