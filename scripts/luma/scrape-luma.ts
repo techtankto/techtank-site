@@ -52,6 +52,15 @@ interface RunOptions {
   now?: Date;
   fetchImpl?: typeof fetch;
   mediaDeps?: MediaDeps;
+  writeGenerated?: (path: string, contents: string) => Promise<void>;
+}
+
+// Atomic write: render to a temp file then rename, so a crash mid-write can
+// never leave a truncated, unparseable data file that breaks the build.
+export async function writeAtomically(path: string, contents: string): Promise<void> {
+  const tmp = `${path}.tmp`;
+  await writeFile(tmp, contents);
+  await rename(tmp, path);
 }
 
 export async function run({
@@ -62,6 +71,7 @@ export async function run({
   now = new Date(),
   fetchImpl = fetch,
   mediaDeps = defaultMediaDeps,
+  writeGenerated = writeAtomically,
 }: RunOptions): Promise<string> {
   const config = loadConfig(process.env);
   const rawEvents = await fetchPastEvents(config, now, fetchImpl);
@@ -93,13 +103,9 @@ export async function run({
     }
   }
 
-  // Atomic write: render to a temp file then rename, so a crash mid-write can
-  // never leave a truncated, unparseable data file that breaks the build.
   const changed = added.length + updated.length + downloaded.length > 0;
   if (!dryRun && changed) {
-    const tmp = `${generatedPath}.tmp`;
-    await writeFile(tmp, renderGeneratedFile(merged));
-    await rename(tmp, generatedPath);
+    await writeGenerated(generatedPath, renderGeneratedFile(merged));
   }
 
   return formatRunReport({ total: Object.keys(merged).length, added, updated, downloaded, failed });

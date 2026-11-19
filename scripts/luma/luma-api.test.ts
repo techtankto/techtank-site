@@ -1,20 +1,9 @@
 import { describe, expect, test, vi } from "vitest";
 import { buildEventListUrl, fetchPastEvents, type LumaConfig } from "./luma-api";
-import type { LumaApiEvent } from "../../utils/luma/schema";
+import { apiEvent } from "./fixtures";
 
 const config: LumaConfig = { apiKey: "key", pageSize: 2 };
 const before = new Date("2026-11-16T00:00:00Z");
-
-export const apiEvent = (id: string, over: Partial<LumaApiEvent> = {}): LumaApiEvent => ({
-  id,
-  name: `Event ${id}`,
-  start_at: "2026-06-01T22:00:00.000Z",
-  duration_interval: "PT2H",
-  end_at: "2026-06-02T00:00:00.000Z",
-  timezone: "America/Toronto",
-  url: `https://luma.com/${id}`,
-  ...over,
-});
 
 const fakeFetch = (pages: Record<string, unknown>) =>
   vi.fn(async (input: string | URL | Request, _init?: RequestInit) => {

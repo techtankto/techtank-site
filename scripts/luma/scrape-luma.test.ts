@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { loadConfig, run, transformEvents } from "./scrape-luma";
-import { apiEvent } from "./luma-api.test";
+import { apiEvent } from "./fixtures";
 import type { MediaDeps } from "./media";
 import type { LumaEvent } from "../../constants/luma-events";
 
@@ -104,6 +104,7 @@ describe("run", () => {
             json: async () => ({ entries: [apiEvent("evt-new", { cover_url: COVER })], has_more: false }),
           },
     );
+    const writeGenerated = vi.fn(async (_path: string, _contents: string) => {});
     const report = await run({
       dryRun: false,
       publicDir: "/public",
@@ -111,7 +112,27 @@ describe("run", () => {
       existing: {},
       fetchImpl: fetchImpl as unknown as typeof fetch,
       mediaDeps: mediaDeps(false),
+      writeGenerated,
     });
     expect(report).toContain("evt-new: Download failed (404)");
+    expect(writeGenerated).toHaveBeenCalledTimes(1);
+    const [path, contents] = writeGenerated.mock.calls[0];
+    expect(path).toBe("/generated.ts");
+    expect(contents).toContain('"evt-new"');
+    expect(contents).toContain('"cover": null');
+  });
+
+  test("a real run with nothing new writes nothing", async () => {
+    const writeGenerated = vi.fn(async () => {});
+    await run({
+      dryRun: false,
+      publicDir: "/public",
+      generatedPath: "/generated.ts",
+      existing,
+      fetchImpl: fakeFetch([]) as unknown as typeof fetch,
+      mediaDeps: mediaDeps(true),
+      writeGenerated,
+    });
+    expect(writeGenerated).not.toHaveBeenCalled();
   });
 });

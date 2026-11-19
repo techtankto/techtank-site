@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { coverExtension, transformEvent } from "./transform";
-import { apiEvent } from "./luma-api.test";
+import { apiEvent } from "./fixtures";
 
 const COVER = "https://images.lumacdn.com/cdn-cgi/image/format=auto,width=400/event-covers/ab/123e4567.png";
 
