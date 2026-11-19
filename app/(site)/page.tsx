@@ -123,6 +123,24 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Sponsors and sponsored tools */}
+      <Section background="white" className="py-8 lg:py-10">
+        <p className="mb-4 text-center text-xs font-medium tracking-widest text-muted-foreground uppercase">
+          Hosted and supported by
+        </p>
+        <SponsorsMarquee className="py-4" />
+
+        <p className="mt-8 mb-4 text-center text-xs font-medium tracking-widest text-muted-foreground uppercase">
+          Sponsored tools we run on
+        </p>
+        <ToolsStrip />
+        <p className="mt-3 text-center text-sm text-muted-foreground">
+          <Link href="/get-involved/sponsor#tools" className="underline underline-offset-4 hover:text-foreground">
+            Learn about tool sponsorship
+          </Link>
+        </p>
+      </Section>
+
       {/* Social Feed */}
       <Section id="community" background="muted">
         <SectionHeader overline="From the community" title="Real people, real moments" className="mb-8" />
@@ -134,14 +152,6 @@ export default async function HomePage() {
         <SectionHeader overline="Events" title="Recent happenings" className="mb-6" />
 
         <HomeEventsSection />
-
-        {/* Sponsors */}
-        <div className="mb-6">
-          <p className="mb-4 text-center text-xs font-medium tracking-widest text-muted-foreground uppercase">
-            Hosted and supported by
-          </p>
-          <SponsorsMarquee className="py-4" />
-        </div>
 
         {/* CTAs */}
         <div className="flex flex-wrap items-center justify-center gap-3">
@@ -181,19 +191,6 @@ export default async function HomePage() {
             <RoleCard key={role.role} {...role} />
           ))}
         </div>
-      </Section>
-
-      {/* Tools (product sponsors) */}
-      <Section background="white" className="py-8 lg:py-10">
-        <p className="mb-4 text-center text-xs font-medium tracking-widest text-muted-foreground uppercase">
-          Sponsored tools we run on
-        </p>
-        <ToolsStrip />
-        <p className="mt-3 text-center text-sm text-muted-foreground">
-          <Link href="/get-involved/sponsor#tools" className="underline underline-offset-4 hover:text-foreground">
-            Learn about tool sponsorship
-          </Link>
-        </p>
       </Section>
 
       {/* Values Teaser */}
