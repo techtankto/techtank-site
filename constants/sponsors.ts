@@ -49,6 +49,15 @@ export const sponsors: Record<string, Sponsor> = {
     type: "sponsor",
     scale: 1.25,
   },
+  ideogram: {
+    id: "ideogram",
+    name: "Ideogram",
+    logo: "/images/tools/ideogram.svg",
+    width: 119,
+    height: 24,
+    url: "https://ideogram.ai",
+    type: "sponsor",
+  },
   points: {
     id: "points",
     name: "Points",
@@ -123,15 +132,6 @@ export const sponsors: Record<string, Sponsor> = {
     width: 1111,
     height: 192,
     url: "https://gamma.app",
-    type: "sponsor",
-  },
-  ideogram: {
-    id: "ideogram",
-    name: "Ideogram",
-    logo: "/images/tools/ideogram.svg",
-    width: 119,
-    height: 24,
-    url: "https://ideogram.ai",
     type: "sponsor",
   },
 };
