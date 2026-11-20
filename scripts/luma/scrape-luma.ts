@@ -8,6 +8,7 @@ import { fetchPastEvents, type LumaConfig } from "./luma-api";
 import { transformEvent, type TransformResult } from "./transform";
 import { assertNoShrink, upsertById } from "./merge";
 import { renderGeneratedFile } from "./emit";
+import { formatGeneratedFile } from "./format";
 import { formatRunReport, type FailedEvent } from "./report";
 import { defaultMediaDeps, downloadCover, type MediaDeps } from "./media";
 
@@ -53,6 +54,8 @@ interface RunOptions {
   fetchImpl?: typeof fetch;
   mediaDeps?: MediaDeps;
   writeGenerated?: (path: string, contents: string) => Promise<void>;
+  // Repo root holding .oxfmtrc.json, used to format the generated file.
+  root?: string;
 }
 
 // Atomic write: render to a temp file then rename, so a crash mid-write can
@@ -72,6 +75,7 @@ export async function run({
   fetchImpl = fetch,
   mediaDeps = defaultMediaDeps,
   writeGenerated = writeAtomically,
+  root = process.cwd(),
 }: RunOptions): Promise<string> {
   const config = loadConfig(process.env);
   const rawEvents = await fetchPastEvents(config, now, fetchImpl);
@@ -105,7 +109,8 @@ export async function run({
 
   const changed = added.length + updated.length + downloaded.length > 0;
   if (!dryRun && changed) {
-    await writeGenerated(generatedPath, renderGeneratedFile(merged));
+    const contents = await formatGeneratedFile(generatedPath, renderGeneratedFile(merged), root);
+    await writeGenerated(generatedPath, contents);
   }
 
   return formatRunReport({ total: Object.keys(merged).length, added, updated, downloaded, failed });
@@ -119,6 +124,7 @@ async function main(): Promise<void> {
     publicDir: join(root, "public"),
     generatedPath: join(root, "constants", "luma-events.generated.ts"),
     existing: generatedLumaEvents,
+    root,
   });
   console.log(`${dryRun ? "[dry-run] " : ""}${report}`);
 }

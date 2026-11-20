@@ -32,6 +32,9 @@ Luma API (all pages before now) → Zod validate → transform to LumaEvent
   registered guests is archived with `location: null`, using the same rule as
   the live fetch (`utils/luma/visibility.ts`). Private events are archived:
   once an event has happened, listing it does no harm.
+- **Output is already formatted.** The generated file goes through oxfmt with
+  the repo's `.oxfmtrc.json` before it's written, so it passes CI's format
+  check even when no pre-commit hook runs (e.g. from automation).
 - **Tags are inferred at render time** by `utils/luma/tags.ts`, not stored, so
   a new title rule applies to the whole archive without a re-scrape.
 
@@ -40,15 +43,16 @@ Luma API (all pages before now) → Zod validate → transform to LumaEvent
 One module per pipeline stage. Pure modules have no I/O (fast, tested directly);
 shell modules isolate the network and filesystem behind injected deps.
 
-| Module           | Responsibility                           | Kind  |
-| ---------------- | ---------------------------------------- | ----- |
-| `transform.ts`   | API event → `LumaEvent` + cover download | pure  |
-| `merge.ts`       | Upsert by id + never-shrink guard        | pure  |
-| `emit.ts`        | Render the generated `.ts` data file     | pure  |
-| `report.ts`      | Format the run summary                   | pure  |
-| `luma-api.ts`    | Fetch every page of past events          | shell |
-| `media.ts`       | Download covers, sandboxed to `public/`  | shell |
-| `scrape-luma.ts` | Orchestrate the run; CLI entry point     | shell |
+| Module           | Responsibility                            | Kind  |
+| ---------------- | ----------------------------------------- | ----- |
+| `transform.ts`   | API event → `LumaEvent` + cover download  | pure  |
+| `merge.ts`       | Upsert by id + never-shrink guard         | pure  |
+| `emit.ts`        | Render the generated `.ts` data file      | pure  |
+| `report.ts`      | Format the run summary                    | pure  |
+| `format.ts`      | Run oxfmt on the generated file in memory | shell |
+| `luma-api.ts`    | Fetch every page of past events           | shell |
+| `media.ts`       | Download covers, sandboxed to `public/`   | shell |
+| `scrape-luma.ts` | Orchestrate the run; CLI entry point      | shell |
 
 The API schemas (`utils/luma/schema.ts`) and tag rules (`utils/luma/tags.ts`)
 are shared with the runtime fetch so both validate and tag events the same way.

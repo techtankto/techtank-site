@@ -119,7 +119,9 @@ describe("run", () => {
     const [path, contents] = writeGenerated.mock.calls[0];
     expect(path).toBe("/generated.ts");
     expect(contents).toContain('"evt-new"');
-    expect(contents).toContain('"cover": null');
+    // Formatted by oxfmt: plain keys lose their quotes.
+    expect(contents).toContain("cover: null");
+    expect(contents).not.toContain('"cover"');
   });
 
   test("a real run with nothing new writes nothing", async () => {
