@@ -125,6 +125,15 @@ export const sponsors: Record<string, Sponsor> = {
     url: "https://gamma.app",
     type: "sponsor",
   },
+  ideogram: {
+    id: "ideogram",
+    name: "Ideogram",
+    logo: "/images/tools/ideogram.svg",
+    width: 119,
+    height: 24,
+    url: "https://ideogram.ai",
+    type: "sponsor",
+  },
 };
 
 export function getAllSponsors(): Sponsor[] {
