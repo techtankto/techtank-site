@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { Menu, QrCode, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SlackIcon } from "@/components/ui/icons";
@@ -9,18 +10,37 @@ import { JoinDropdown } from "@/components/ui/join-dropdown";
 import { QrDialog } from "@/components/ui/qr-dialog";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { useAppStore } from "@/stores/app-state";
+import { cn } from "@/utils/theme";
 
-const navigation = [
+type NavItem = {
+  name: string;
+  href: string;
+  /** Path prefixes of the section the item leads, which mark it active; defaults to `href`. */
+  match?: string[];
+  disabled?: boolean;
+};
+
+const navigation: NavItem[] = [
   { name: "About", href: "/about" },
-  { name: "Get Involved", href: "/get-involved" },
+  // /donate is rewritten to /get-involved/donate (next.config.ts), so the browser path never shows the section.
+  { name: "Get Involved", href: "/get-involved", match: ["/get-involved", "/donate"] },
   { name: "Pick a Task", href: "/tasks", disabled: process.env.NEXT_PUBLIC_FEATURE_PICK_A_TASK !== "true" },
   { name: "Events", href: "/events" },
-  { name: "Resources", href: "/resources/media-kit" },
-  { name: "Code of Conduct", href: "/legal/code-of-conduct" },
-] satisfies { name: string; href: string; disabled?: boolean }[];
+  { name: "Resources", href: "/resources/media-kit", match: ["/resources"] },
+  { name: "Code of Conduct", href: "/legal/code-of-conduct", match: ["/legal"] },
+];
+
+const visibleNavigation = navigation.filter((item) => !item.disabled);
+
+// Active for the item's own page and everything under it, e.g. About for /about/team.
+function isActive(item: NavItem, pathname: string) {
+  const prefixes = item.match ?? [item.href];
+  return prefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+}
 
 export function Header() {
   const { mobileMenuOpen, setMobileMenuOpen, toggleMobileMenu, setQrDialogOpen } = useAppStore();
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 h-18 w-full shrink-0 border-b border-border bg-background/80 backdrop-blur-xl">
@@ -54,18 +74,17 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <div className="hidden lg:ml-6 lg:flex lg:items-center lg:gap-8">
-          {navigation
-            .filter((item) => !item.disabled)
-            .map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-sm font-medium text-foreground transition-colors hover:underline"
-              >
-                {item.name}
-              </Link>
-            ))}
+        <div className="hidden lg:flex lg:items-center lg:gap-1">
+          {visibleNavigation.map((item) => {
+            const active = isActive(item, pathname);
+            return (
+              <Button key={item.name} variant="nav" size="sm" isActive={active} asChild>
+                <Link href={item.href} aria-current={active ? "page" : undefined}>
+                  {item.name}
+                </Link>
+              </Button>
+            );
+          })}
         </div>
 
         <div className="flex-1"></div>
@@ -105,18 +124,23 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-border bg-background lg:hidden">
           <div className="space-y-4 p-4">
-            {navigation
-              .filter((item) => !item.disabled)
-              .map((item) => (
+            {visibleNavigation.map((item) => {
+              const active = isActive(item, pathname);
+              return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block text-base font-medium text-foreground transition-colors hover:text-ring"
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "block text-base font-medium text-foreground transition-colors hover:text-ring",
+                    active && "font-semibold text-ring",
+                  )}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
                 </Link>
-              ))}
+              );
+            })}
             <div className="space-y-2 border-t border-border pt-4">
               <Button variant="primary" size="sm" className="w-full" asChild onClick={() => setMobileMenuOpen(false)}>
                 <Link href="/get-involved">Get involved</Link>

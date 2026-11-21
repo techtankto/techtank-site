@@ -19,7 +19,9 @@ export function Subnav(props: Props) {
             const isActive = pathname === item.href;
             return (
               <Button key={item.href} variant="nav" size="sm" isActive={isActive} asChild>
-                <Link href={item.href}>{item.name}</Link>
+                <Link href={item.href} aria-current={isActive ? "page" : undefined}>
+                  {item.name}
+                </Link>
               </Button>
             );
           })}
