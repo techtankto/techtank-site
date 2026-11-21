@@ -84,12 +84,13 @@ describe("auth", () => {
 
     it("pre-selects the workspace and returns through the auth callback", async () => {
       const { signInWithSlack } = await load({ nodeEnv: "production", slackTeamId: "T0123" });
-      await signInWithSlack({ destination });
+      await signInWithSlack({ destination: new URL("http://localhost:3000/admin/tasks/5?tab=applicants") });
       const { options } = signInWithOAuth.mock.calls[0][0];
       expect(options.queryParams).toEqual({ team: "T0123" });
       const redirect = new URL(options.redirectTo);
       expect(redirect.pathname).toBe("/auth/callback");
-      expect(redirect.searchParams.get("next")).toBe(destination.toString());
+      // A full URL here would be dropped by the callback's same-origin check.
+      expect(redirect.searchParams.get("next")).toBe("/admin/tasks/5?tab=applicants");
     });
   });
 });

@@ -35,7 +35,9 @@ export async function signInWithSlack(options: { destination: URL }) {
   }
 
   const redirectTo = new URL("/auth/callback", window.location.origin);
-  redirectTo.searchParams.set("next", options.destination.toString());
+  // The callback only follows a same-origin path, so pass the path, not the full URL.
+  const { pathname, search, hash } = options.destination;
+  redirectTo.searchParams.set("next", `${pathname}${search}${hash}`);
 
   const { error } = await createClient().auth.signInWithOAuth({
     provider: "slack_oidc",
