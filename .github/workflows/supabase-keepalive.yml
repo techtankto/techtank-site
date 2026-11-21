@@ -1,0 +1,104 @@
+# Keeps the free-tier Supabase project from pausing due to 7-day inactivity.
+# Runs twice daily at off-peak minutes (GitHub drops or delays jobs queued at :00)
+# and sends lightweight public reads against `contribution_tasks`.
+#
+# Caveat: GitHub disables scheduled workflows on public repos after 60 days
+# without repository activity. Re-enable this workflow in the Actions tab if
+# the repo ever goes quiet for two months.
+
+name: Supabase Keepalive
+
+permissions: {}
+
+on:
+  schedule:
+    - cron: "17 6,18 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: supabase-keepalive
+  cancel-in-progress: false
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Query contribution_tasks
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::Missing SUPABASE_URL or SUPABASE_ANON_KEY repository secret."
+            exit 1
+          fi
+
+          base_url="${SUPABASE_URL%/}"
+          endpoint="${base_url}/rest/v1/contribution_tasks?select=id&limit=1"
+
+          # Send two real table reads per run (four/day) to satisfy Supabase's
+          # rolling 7-day database activity threshold.
+          for i in 1 2; do
+            status=$(curl -sS -o /dev/null -w "%{http_code}" \
+              --retry 3 --retry-all-errors --retry-delay 10 --max-time 20 \
+              "$endpoint" \
+              -H "apikey: $SUPABASE_ANON_KEY" \
+              -H "Authorization: Bearer $SUPABASE_ANON_KEY")
+
+            echo "Ping ${i}: HTTP ${status}"
+            if [ "$status" != "200" ]; then
+              echo "::error::Supabase keepalive ping ${i} returned HTTP ${status}."
+              exit 1
+            fi
+
+            if [ "$i" -lt 2 ]; then
+              sleep 2
+            fi
+          done
+
+  notify:
+    needs: ping
+    if: failure() && github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      issues: write
+    steps:
+      - name: Open or update failure issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+
+          title="[Supabase] Keepalive ping failed"
+          timestamp=$(date -u +"%Y-%m-%d %H:%M UTC")
+          body=$(cat <<EOF
+          The scheduled Supabase keepalive workflow failed at ${timestamp}.
+
+          - **Latest failed run:** ${RUN_URL}
+
+          ## Triage
+
+          1. **DNS error (\`Could not resolve host\`):** the Supabase project is likely paused. Resume it in the Supabase dashboard, then re-run **Supabase Keepalive** from the Actions tab.
+          2. **HTTP \`401\` or \`403\`:** verify the \`SUPABASE_URL\` and \`SUPABASE_ANON_KEY\` repository secrets match the production project.
+          3. **Missing secret error:** add \`SUPABASE_URL\` and \`SUPABASE_ANON_KEY\` under **Settings -> Secrets and variables -> Actions**.
+          EOF
+          )
+
+          existing=$(gh issue list \
+            --state open \
+            --search "in:title \"${title}\"" \
+            --json number,title \
+            --jq "[.[] | select(.title == \"${title}\") | .number][0] // empty")
+
+          if [ -n "$existing" ]; then
+            gh issue edit "$existing" --body "$body"
+            echo "Updated open issue #${existing}."
+          else
+            gh issue create --title "$title" --label bug --body "$body"
+          fi
