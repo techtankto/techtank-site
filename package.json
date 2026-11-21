@@ -27,6 +27,7 @@
     "lint": "oxlint .",
     "test": "vitest run",
     "scrape:instagram": "tsx --env-file=.env.local scripts/instagram/scrape-instagram.ts",
+    "scrape:luma": "tsx --env-file=.env.local scripts/luma/scrape-luma.ts",
     "prepare": "husky"
   },
   "dependencies": {
