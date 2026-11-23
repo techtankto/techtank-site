@@ -42,6 +42,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
               description={getCoverVideoDescription(post)}
               preload="none"
               className="absolute inset-0"
+              objectPosition={post.coverPosition}
               videoClassName="transition-transform duration-500 group-hover:scale-[1.03]"
             />
           ) : cover ? (
@@ -51,6 +52,7 @@ function InstagramPostCard({ post }: { post: InstagramPostWithId }) {
               fill
               sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
               className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              style={post.coverPosition ? { objectPosition: post.coverPosition } : undefined}
             />
           ) : null}
           {post.featured && (

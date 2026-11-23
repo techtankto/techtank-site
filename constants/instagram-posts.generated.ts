@@ -1040,16 +1040,7 @@ export const generatedPosts = {
     date: "2025-08-20",
     shortcode: "DNmHtVwNshY",
     createdAtRaw: 1755733466,
-    media: [
-      {
-        type: "video",
-        path: "/media/instagram/2025-08-20-DNmHtVwNshY/techtankto_3703681645618317400.mp4",
-      },
-      {
-        type: "image",
-        path: "/media/instagram/2025-08-20-DNmHtVwNshY/techtankto_DNmHtVwNshY_3703681645618317400.webp",
-      },
-    ],
+    media: [],
     pk: "18078892546765610",
   },
   "2026-02-05-DUY9ewPgSol": {
@@ -1095,12 +1086,7 @@ export const generatedPosts = {
     shortcode: "DYkPshWgcE0",
     pk: "17869481679677192",
     createdAtRaw: 1779292789,
-    media: [
-      {
-        type: "image",
-        path: "/media/instagram/2026-05-20-DYkPshWgcE0/techtankto_DYkPshWgcE0_17869481679677192.webp",
-      },
-    ],
+    media: [],
   },
   "2026-06-09-DZWPNciI8eO": {
     caption: "TechTank latest video",
@@ -1184,6 +1170,21 @@ export const generatedPosts = {
       {
         type: "image",
         path: "/media/instagram/2026-06-29-DaLhcpahRRn/techtankto_DaLhcpahRRn_18025525577837761_poster.webp",
+      },
+    ],
+  },
+  "2026-11-21-DgAhLQt0b": {
+    caption:
+      "we put comedians in a room full of job seekers and nobody got hired but everybody got roasted 😭\n\nthe job market is cooked so we laughed at it instead. 10/10 coping mechanism, would cope again\n\nthank you @ben.bayfield @kariswhisper @someguymark @sharmaine.ehi for emotionally damaging us in the best way!\n\nif you missed it, that's just too bad now ain't it. next events are on our luma, link in bio",
+    date: "2026-11-21",
+    shortcode: "DgAhL-Qt0-b",
+    pk: "4035371224425516955",
+    createdAtRaw: 1795273758,
+    media: [
+      { type: "video", path: "/media/instagram/2026-11-21-DgAhLQt0b/techtankto_DgAhLQt0b_4035371224425516955.mp4" },
+      {
+        type: "image",
+        path: "/media/instagram/2026-11-21-DgAhLQt0b/techtankto_DgAhLQt0b_4035371224425516955_poster.webp",
       },
     ],
   },

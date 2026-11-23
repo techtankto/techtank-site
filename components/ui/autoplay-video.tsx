@@ -23,6 +23,8 @@ type AutoplayVideoProps = Omit<HTMLAttributes<AutoplayVideoRef>, "children"> & {
   preload?: "auto" | "metadata" | "none";
   /** Visual treatment for the `<video>` element itself, separate from the root's layout `className`. */
   videoClassName?: string;
+  /** CSS object-position for the video, to move the crop off-centre. */
+  objectPosition?: string;
   /** Accessible label for the control while the video is playing. */
   pauseLabel?: string;
   /** Accessible label for the control while the video is paused. */
@@ -37,6 +39,7 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
     poster,
     preload,
     videoClassName,
+    objectPosition,
     pauseLabel = "Pause video",
     resumeLabel = "Play video",
     className,
@@ -110,6 +113,7 @@ const AutoplayVideo = forwardRef<AutoplayVideoRef, AutoplayVideoProps>((props, r
       preload={preload}
       poster={poster}
       className={cn(styles.video(), videoClassName)}
+      style={objectPosition ? { objectPosition } : undefined}
     >
       <source src={src.replace(/\.mp4$/, ".webm")} type="video/webm" />
       <source src={src} type="video/mp4" />
