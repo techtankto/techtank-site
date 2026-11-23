@@ -38,7 +38,7 @@ export const affiliations: Affiliation[] = [
     id: "maple-code",
     name: "Maple Code",
     description:
-      "Maple Code hosts a weekly mob programming session in Toronto, where developers gather around one laptop to write code together on someone's real project. Bring a half-done side project to get unstuck, or join someone else's to learn by watching how others code and solve problems.",
+      "Maple Code hosts a weekly mob programming session in Toronto, where small groups team up on one person's project. Bring a half-done side project to get unstuck, or join someone else's to learn by watching how others code and solve problems. We're proud to call Maple Code a friend and community partner of TechTank.",
     links: [
       { label: "Maple Code website", href: "https://maplecode.dev" },
       { label: "Maple Code events calendar", href: "https://luma.com/maplecode" },
