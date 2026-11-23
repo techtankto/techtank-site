@@ -219,6 +219,26 @@ the task routes error rather than show an empty board); and set
 DB (steps 5–6 above). A missing notification secret degrades to a log
 line: applications still record, but **nobody is told about them**.
 
+### Keeping Supabase awake
+
+Free-tier Supabase projects pause after a week of low database activity.
+[`.github/workflows/supabase-keepalive.yml`](./.github/workflows/supabase-keepalive.yml)
+runs twice daily (and on manual `workflow_dispatch`) to send lightweight
+anonymous `SELECT` queries against `contribution_tasks`, opening or updating a
+single GitHub issue if a scheduled run fails.
+
+Configure two GitHub Actions repository secrets (matching the Vercel values for
+the production Supabase project):
+
+| Secret              | Value                                      |
+| ------------------- | ------------------------------------------ |
+| `SUPABASE_URL`      | Production `NEXT_PUBLIC_SUPABASE_URL`      |
+| `SUPABASE_ANON_KEY` | Production `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
+
+GitHub automatically disables scheduled workflows on public repositories after
+60 days with no commits; re-enable the workflow in the Actions tab if the repo
+goes idle that long.
+
 ## Contributing
 
 See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for contribution guidelines, team
