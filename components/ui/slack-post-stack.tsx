@@ -8,8 +8,9 @@ const styles = {
   card: cva("shadow-soft relative rounded-xl border px-4 py-3.5", {
     variants: {
       tone: {
-        light: "border-border bg-background text-foreground",
-        loud: "border-transparent bg-primary text-primary-foreground dark:bg-card dark:text-card-foreground",
+        light:
+          "border-border bg-background text-foreground dark:border-transparent dark:bg-foreground dark:text-background",
+        loud: "border-transparent bg-primary text-primary-foreground dark:border-warning dark:bg-accent dark:text-accent-foreground",
       },
       shown: {
         true: "animate-slack-pop",

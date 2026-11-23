@@ -7,9 +7,11 @@ import type { SlackChannel, SlackMessage } from "@/constants/slack-preview";
 import { cn, cva } from "@/utils/theme";
 
 const styles = {
-  root: cva("shadow-soft-lg flex flex-wrap overflow-hidden rounded-2xl border border-border bg-background"),
+  root: cva(
+    "shadow-soft-lg flex flex-wrap overflow-hidden rounded-2xl border border-border bg-background dark:border-foreground/25",
+  ),
   sidebar: cva(
-    "flex flex-[1_1_11rem] flex-wrap content-start gap-1 bg-primary p-3 text-primary-foreground dark:bg-card dark:text-card-foreground",
+    "flex flex-[1_1_11rem] flex-wrap content-start gap-1 bg-primary p-3 text-primary-foreground dark:bg-secondary dark:text-secondary-foreground",
   ),
   logo: cva("mx-2.5 mt-1 mb-3 basis-full"),
   logoImage: cva("h-auto w-24"),
@@ -19,7 +21,7 @@ const styles = {
       variants: {
         active: {
           true: "bg-warning text-warning-foreground",
-          false: "hover:bg-primary-foreground/10 dark:hover:bg-card-foreground/10",
+          false: "hover:bg-primary-foreground/10 dark:hover:bg-secondary-foreground/10",
         },
       },
     },
@@ -28,13 +30,13 @@ const styles = {
     variants: {
       tone: {
         light: "bg-background text-foreground",
-        loud: "bg-primary text-primary-foreground dark:bg-card dark:text-card-foreground",
+        loud: "bg-primary text-primary-foreground dark:bg-accent dark:text-accent-foreground",
       },
     },
   }),
   header: cva("flex flex-wrap items-center justify-between gap-3 border-b px-5 py-3", {
     variants: {
-      tone: { light: "border-border", loud: "border-primary-foreground/20 dark:border-card-foreground/20" },
+      tone: { light: "border-border", loud: "border-primary-foreground/20 dark:border-accent-foreground/20" },
     },
   }),
   channelName: cva("font-display text-lg font-bold"),
@@ -70,7 +72,7 @@ const styles = {
     variants: { line: { title: "h-3 bg-muted", meta: "h-2.5 bg-foreground/6" } },
   }),
   yell: cva("flex animate-slack-yell gap-3.5"),
-  yellAvatar: cva("size-8.5 shrink-0 rounded-full bg-primary-foreground/15 dark:bg-card-foreground/15"),
+  yellAvatar: cva("size-8.5 shrink-0 rounded-full bg-primary-foreground/15 dark:bg-accent-foreground/15"),
   yellLabel: cva("mb-1 text-xs font-semibold opacity-80"),
   yellText: cva("text-base leading-snug font-bold", {
     variants: { accent: { true: "text-warning", false: "" } },
