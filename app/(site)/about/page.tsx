@@ -12,7 +12,6 @@ import {
   Coffee,
   Trophy,
   MessageSquare,
-  ExternalLink,
   Hammer,
   BookOpen,
 } from "lucide-react";
@@ -20,6 +19,8 @@ import { Button } from "@/components/ui/button";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { SponsorsMarquee } from "@/components/ui/sponsors-marquee";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
+import { AffiliationCard } from "@/components/ui/affiliation-card";
+import { affiliations } from "@/constants/affiliations";
 import { CONTACT_EMAIL } from "@/constants/contact";
 import {
   getCoverImage,
@@ -357,72 +358,15 @@ export default function AboutPage() {
       {/* Affiliations */}
       <Section background="white">
         <SectionHeader overline="Part of something bigger" title="Affiliations" className="mb-10" />
-        <div className="grid gap-6 md:grid-cols-2">
-          <div className="flex flex-col rounded-2xl border border-border bg-card p-6 lg:p-8">
-            <h3 className="mb-3 font-display text-xl font-semibold text-foreground">Supercollider</h3>
-            <p className="mb-6 leading-relaxed text-muted-foreground">
-              TechTank is a proud member of the Supercollider network, a community of communities bringing together
-              Toronto&apos;s tech scene. Our events are listed on their Luma calendar so you can discover everything
-              happening across the ecosystem.
-            </p>
-            <div className="mt-auto flex flex-wrap gap-3">
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href="https://www.supercollider.ca/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  Supercollider website
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href="https://luma.com/supercollider-tech-community"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  Supercollider events calendar
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </a>
-              </Button>
-            </div>
-          </div>
-          <div className="flex flex-col rounded-2xl border border-border bg-card p-6 lg:p-8">
-            <h3 className="mb-3 font-display text-xl font-semibold text-foreground">Creative Blocks Club</h3>
-            <p className="mb-6 leading-relaxed text-muted-foreground">
-              Creative Blocks is a Toronto coworking community that brings remote workers, founders, creatives, and
-              builders together for focused coworking sessions, workshops, and community events across the city.
-              TechTank and Creative Blocks collaborate regularly on events designed to help people get things done,
-              learn from each other, and build real relationships.
-            </p>
-            <div className="mt-auto flex flex-wrap gap-3">
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href="https://www.creativeblocks.club/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  Creative Blocks website
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button variant="outline" size="sm" asChild>
-                <a
-                  href="https://www.creativeblocks.club/events"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2"
-                >
-                  Creative Blocks events calendar
-                  <ExternalLink className="size-3.5" aria-hidden="true" />
-                </a>
-              </Button>
-            </div>
-          </div>
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {affiliations.map((affiliation) => (
+            <AffiliationCard
+              key={affiliation.id}
+              name={affiliation.name}
+              description={affiliation.description}
+              links={affiliation.links}
+            />
+          ))}
         </div>
       </Section>
     </>
