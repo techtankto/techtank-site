@@ -10,6 +10,8 @@ import { ToolsStrip } from "@/components/ui/tools-grid";
 import { RoleCard } from "@/components/ui/role-card";
 import { roleCardsData } from "@/constants/role-cards";
 import { SocialFeed } from "@/components/ui/social-feed";
+import { SlackJoinSection } from "@/components/ui/slack-join-section";
+import { slackChannels, slackHighlights, slackSection } from "@/constants/slack-preview";
 import { AutoplayVideo } from "@/components/ui/autoplay-video";
 import {
   getCoverImage,
@@ -142,6 +144,16 @@ export default async function HomePage() {
       <Section id="community" background="muted">
         <SectionHeader overline="From the community" title="Real people, real moments" className="mb-8" />
         <SocialFeed />
+      </Section>
+
+      {/* Slack community */}
+      <Section id="slack" background="white">
+        <SlackJoinSection
+          {...slackSection}
+          channels={slackChannels}
+          highlights={slackHighlights}
+          logo={{ src: "/images/logos/dark.svg", alt: "TechTank TO", width: 691, height: 157 }}
+        />
       </Section>
 
       {/* Ways to Get Involved */}
