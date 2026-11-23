@@ -1,6 +1,7 @@
 # Keeps the free-tier Supabase project from pausing due to 7-day inactivity.
 # Runs twice daily at off-peak minutes (GitHub drops or delays jobs queued at :00)
-# and sends lightweight public reads against `contribution_tasks`.
+# and calls /api/health, which executes a lightweight uncached read against
+# `contribution_tasks` using Vercel's production Supabase config.
 #
 # Caveat: GitHub disables scheduled workflows on public repos after 60 days
 # without repository activity. Re-enable this workflow in the Actions tab if
@@ -24,35 +25,27 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Query contribution_tasks
+      - name: Ping /api/health
         env:
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          HEALTH_URL: https://www.techtankto.com/api/health
         run: |
           set -euo pipefail
 
-          if [ -z "$SUPABASE_URL" ] || [ -z "$SUPABASE_ANON_KEY" ]; then
-            echo "::error::Missing SUPABASE_URL or SUPABASE_ANON_KEY repository secret."
-            exit 1
-          fi
-
-          base_url="${SUPABASE_URL%/}"
-          endpoint="${base_url}/rest/v1/contribution_tasks?select=id&limit=1"
-
-          # Send two real table reads per run (four/day) to satisfy Supabase's
+          # Send two uncached reads per run (four/day) to satisfy Supabase's
           # rolling 7-day database activity threshold.
           for i in 1 2; do
-            status=$(curl -sS -o /dev/null -w "%{http_code}" \
+            body_file=$(mktemp)
+            status=$(curl -sS -o "$body_file" -w "%{http_code}" \
               --retry 3 --retry-all-errors --retry-delay 10 --max-time 20 \
-              "$endpoint" \
-              -H "apikey: $SUPABASE_ANON_KEY" \
-              -H "Authorization: Bearer $SUPABASE_ANON_KEY")
+              "$HEALTH_URL")
 
             echo "Ping ${i}: HTTP ${status}"
-            if [ "$status" != "200" ]; then
-              echo "::error::Supabase keepalive ping ${i} returned HTTP ${status}."
+            if [ "$status" != "200" ] || ! grep -q '"ok":true' "$body_file"; then
+              rm -f "$body_file"
+              echo "::error::Health check ping ${i} failed (HTTP ${status})."
               exit 1
             fi
+            rm -f "$body_file"
 
             if [ "$i" -lt 2 ]; then
               sleep 2
@@ -84,9 +77,9 @@ jobs:
 
           ## Triage
 
-          1. **DNS error (\`Could not resolve host\`):** the Supabase project is likely paused. Resume it in the Supabase dashboard, then re-run **Supabase Keepalive** from the Actions tab.
-          2. **HTTP \`401\` or \`403\`:** verify the \`SUPABASE_URL\` and \`SUPABASE_ANON_KEY\` repository secrets match the production project.
-          3. **Missing secret error:** add \`SUPABASE_URL\` and \`SUPABASE_ANON_KEY\` under **Settings -> Secrets and variables -> Actions**.
+          1. **HTTP \`503\`:** the Supabase project may be paused, or Vercel's \`NEXT_PUBLIC_SUPABASE_URL\` / \`NEXT_PUBLIC_SUPABASE_ANON_KEY\` env vars may be misconfigured. Check the Supabase dashboard (resume the project if paused) and Vercel function logs for \`/api/health\`.
+          2. **Other HTTP error or timeout:** check the Vercel deployment status for \`https://www.techtankto.com/api/health\`.
+          3. After fixing, re-run **Supabase Keepalive** from the Actions tab to confirm HTTP \`200\`.
           EOF
           )
 
