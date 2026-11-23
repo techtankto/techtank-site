@@ -167,6 +167,7 @@ are route groups: they scope a shared layout without adding a URL segment.
 │   │   ├── layout.tsx              # Admin chrome + auth gate
 │   │   ├── login/                  #   /admin/login       Sign in with Slack
 │   │   └── tasks/                  #   /admin/tasks       Manage tasks + applicants
+│   ├── api/health/                 # /api/health          Database health check + Supabase keepalive
 │   ├── auth/callback/              #   /auth/callback     Slack OAuth callback
 │   └── globals.css
 ├── components/
@@ -223,17 +224,11 @@ line: applications still record, but **nobody is told about them**.
 
 Free-tier Supabase projects pause after a week of low database activity.
 [`.github/workflows/supabase-keepalive.yml`](./.github/workflows/supabase-keepalive.yml)
-runs twice daily (and on manual `workflow_dispatch`) to send lightweight
-anonymous `SELECT` queries against `contribution_tasks`, opening or updating a
-single GitHub issue if a scheduled run fails.
-
-Configure two GitHub Actions repository secrets (matching the Vercel values for
-the production Supabase project):
-
-| Secret              | Value                                      |
-| ------------------- | ------------------------------------------ |
-| `SUPABASE_URL`      | Production `NEXT_PUBLIC_SUPABASE_URL`      |
-| `SUPABASE_ANON_KEY` | Production `NEXT_PUBLIC_SUPABASE_ANON_KEY` |
+pings `GET /api/health` (`app/api/health/route.ts`) twice daily (and on manual
+`workflow_dispatch`). The route runs an uncached anonymous `SELECT` against
+`contribution_tasks` using Vercel's production Supabase env vars, so no extra
+GitHub Actions secrets are required. If a scheduled run fails, the workflow
+opens or updates a single GitHub issue.
 
 GitHub automatically disables scheduled workflows on public repositories after
 60 days with no commits; re-enable the workflow in the Actions tab if the repo
