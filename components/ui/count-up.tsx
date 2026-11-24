@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
 export interface CountUpProps {
@@ -11,16 +11,25 @@ export interface CountUpProps {
   className?: string;
 }
 
-/** Counts from zero up to `value` the first time it scrolls into view. */
+const format = (n: number, suffix: string) => `${n.toLocaleString("en-US")}${suffix}`;
+
+/**
+ * Counts from zero up to `value` the first time it scrolls into view.
+ *
+ * The animation writes each frame straight to the number's text node instead of
+ * going through React state, so counting up causes no re-renders. The server
+ * renders the final value, which is also what shows with reduced motion.
+ */
 export function CountUp({ value, suffix = "", durationMs = 1600, className }: CountUpProps) {
   // hooks
-  const ref = useRef<HTMLSpanElement>(null);
-  const [display, setDisplay] = useState(value);
+  const numberRef = useRef<HTMLSpanElement>(null);
   const reducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    const node = ref.current;
-    if (!node || reducedMotion) return;
+    const node = numberRef.current;
+    // Update React's own text node in place, so React's next render still finds it.
+    const text = node?.firstChild;
+    if (!node || !(text instanceof Text) || reducedMotion) return;
 
     let frame = 0;
     const observer = new IntersectionObserver(([entry]) => {
@@ -29,7 +38,7 @@ export function CountUp({ value, suffix = "", durationMs = 1600, className }: Co
       const start = performance.now();
       const step = (now: number) => {
         const progress = Math.min(1, (now - start) / durationMs);
-        setDisplay(Math.round(value * (1 - Math.pow(1 - progress, 3))));
+        text.data = format(Math.round(value * (1 - Math.pow(1 - progress, 3))), suffix);
         if (progress < 1) frame = requestAnimationFrame(step);
       };
       frame = requestAnimationFrame(step);
@@ -39,17 +48,17 @@ export function CountUp({ value, suffix = "", durationMs = 1600, className }: Co
     return () => {
       observer.disconnect();
       cancelAnimationFrame(frame);
+      text.data = format(value, suffix);
     };
-  }, [value, durationMs, reducedMotion]);
-
-  // render vars
-  const format = (n: number) => `${n.toLocaleString("en-US")}${suffix}`;
+  }, [value, suffix, durationMs, reducedMotion]);
 
   // jsx
   return (
-    <span ref={ref} className={className}>
-      <span aria-hidden="true">{format(display)}</span>
-      <span className="sr-only">{format(value)}</span>
+    <span className={className}>
+      <span ref={numberRef} aria-hidden="true">
+        {format(value, suffix)}
+      </span>
+      <span className="sr-only">{format(value, suffix)}</span>
     </span>
   );
 }
