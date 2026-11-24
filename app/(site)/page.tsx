@@ -20,6 +20,7 @@ import {
   getInstagramPostsByIds,
 } from "@/constants/instagram-posts";
 import { heroPostKeys } from "@/constants/instagram-pins";
+import { HomeEventsSection } from "./home-events-section";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -154,6 +155,11 @@ export default async function HomePage() {
           highlights={slackHighlights}
           logo={{ src: "/images/logos/dark.svg", alt: "TechTank TO", width: 691, height: 157 }}
         />
+      </Section>
+
+      {/* Events: 2 large + 4 small, the /events Cards layout */}
+      <Section id="events">
+        <HomeEventsSection />
       </Section>
 
       {/* Ways to Get Involved */}

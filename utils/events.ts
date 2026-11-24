@@ -24,3 +24,16 @@ export function mergeEventSources(sources: Event[][]): Event[] {
   }
   return merged;
 }
+
+/**
+ * Display order shared by the `/events` browser and the homepage: upcoming
+ * events first, soonest first, then past events, most recent first. Returns
+ * a new array.
+ */
+export function sortForDisplay(events: Event[]): Event[] {
+  return [...events].sort((a, b) => {
+    if (a.status !== b.status) return a.status === "upcoming" ? -1 : 1;
+    const diff = new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
+    return a.status === "upcoming" ? diff : -diff;
+  });
+}
