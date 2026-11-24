@@ -19,6 +19,8 @@ export interface InstagramPost {
   featured?: boolean;
   /** Visual description for the post's cover video (WCAG 1.2.1). */
   videoDescription?: string;
+  /** CSS object-position for the cover crop, when the default centre crop hides something. */
+  coverPosition?: string;
   media: InstagramPostMedia[];
 }
 
@@ -55,6 +57,17 @@ export const videoDescriptions: Partial<Record<PostKey, string>> = {
     "Animated poster for the TechTank 5K Run Club featuring a running-track graphic and the tagline 'Run with community. Run with intention. Run with TechTank.'",
   "2026-06-29-DaLhcpahRRn":
     "Montage captioned 'Tech Tank Run Club' showing community members stretching, playing outdoor games on a park lawn, and running together through downtown Toronto.",
+  "2026-11-21-DgAhLQt0b":
+    "Montage from TechTank's Candidate Pitch Day comedy show on a dark stage: comedians do short stand-up sets, then pitch real job seekers to hiring managers using projected profiles, résumés with fun facts, and QR codes to connect. Ends on a thank-you card to the comedians, candidates, hiring managers and volunteers.",
+};
+
+/**
+ * Where to crop a post's cover in the feed's 4:5 frame, as a CSS object-position.
+ * Only for posts whose centre crop cuts off something important, such as a
+ * headline near the top of a vertical reel. Keyed by post ID like the above.
+ */
+export const coverPositions: Partial<Record<PostKey, string>> = {
+  "2026-11-21-DgAhLQt0b": "50% 15%",
 };
 
 // Merge machine-owned scraped data with human-owned curation. The scraper only
@@ -63,12 +76,14 @@ export const videoDescriptions: Partial<Record<PostKey, string>> = {
 const instagramPosts: Record<string, InstagramPost> = Object.fromEntries(
   Object.entries(generatedPosts).map(([id, post]) => {
     const videoDescription = videoDescriptions[id as PostKey];
+    const coverPosition = coverPositions[id as PostKey];
     return [
       id,
       {
         ...post,
         ...(featuredKeys.has(id) ? { featured: true } : {}),
         ...(videoDescription ? { videoDescription } : {}),
+        ...(coverPosition ? { coverPosition } : {}),
       },
     ];
   }),
