@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LumaIcon, MeetupIcon } from "@/components/ui/icons";
@@ -9,28 +8,15 @@ import { EventBrowser } from "@/components/ui/event-browser";
 import { DualCTA } from "@/components/ui/dual-cta";
 import { ContactCard } from "@/components/ui/contact-card";
 import { TrackedLink } from "@/components/analytics/tracked-link";
-import { events } from "@/constants/events";
-import { lumaEvents as scrapedLumaEvents } from "@/constants/luma-events";
 import { socialLinks } from "@/constants/social-links";
 import type { Event } from "@/types/event";
 
-import { getAllLumaEvents } from "./actions";
+import { useEvents } from "./use-events";
 import { LumaEventCard } from "@/components/ui/luma-event-card";
 import { formatInAppTimeZone, toAppDateKey } from "@/utils/date";
-import { mergeEventSources } from "@/utils/events";
 
 export function EventPageContent() {
-  const [lumaEvents, setLumaEvents] = useState<Event[]>([]);
-  const [pastLumaEvents, setPastLumaEvents] = useState<Event[]>([]);
-
-  useEffect(() => {
-    getAllLumaEvents().then((results) => {
-      setLumaEvents(results.upcoming);
-      setPastLumaEvents(results.past);
-    });
-  }, []);
-
-  const allLumaEvents = [...lumaEvents, ...pastLumaEvents];
+  const { upcoming: lumaEvents, all } = useEvents();
 
   const upcomingEventsGroupedByDate = (() => {
     const dict: Record<string, Event[]> = {};
@@ -42,11 +28,8 @@ export function EventPageContent() {
     return dict;
   })();
 
-  // Hand-curated entries win, then the scraped archive, then the live fetch.
-  const mergedEvents = mergeEventSources([events, scrapedLumaEvents, allLumaEvents]);
-
   // Sort descending by date
-  mergedEvents.sort((a, b) => new Date(b.start_at).getTime() - new Date(a.start_at).getTime());
+  const mergedEvents = [...all].sort((a, b) => new Date(b.start_at).getTime() - new Date(a.start_at).getTime());
 
   return (
     <>

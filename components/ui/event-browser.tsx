@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { EventCard } from "@/components/ui/event-card";
 import type { Event } from "@/types/event";
 import { formatEventDate } from "@/utils/date";
+import { sortForDisplay } from "@/utils/events";
 import Image from "next/image";
 
 type CategoryFilter = "all" | "tech-talks" | "build-nights" | "coffee-chats" | "socials" | "sports" | "other";
@@ -46,14 +47,7 @@ export function EventBrowser({ events }: EventBrowserProps) {
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
 
   const filtered = useMemo(
-    () =>
-      events
-        .filter((e) => matchesCategory(e, category))
-        .sort((a, b) => {
-          if (a.status !== b.status) return a.status === "upcoming" ? -1 : 1;
-          const diff = new Date(a.start_at).getTime() - new Date(b.start_at).getTime();
-          return a.status === "upcoming" ? diff : -diff;
-        }),
+    () => sortForDisplay(events.filter((e) => matchesCategory(e, category))),
     [events, category],
   );
 
@@ -144,7 +138,7 @@ export function EventBrowser({ events }: EventBrowserProps) {
       {filtered.length === 0 ? (
         <div className="py-16 text-center text-muted-foreground">No events match the current filters.</div>
       ) : displayMode === "cards" ? (
-        <CardsView events={visible} />
+        <EventCardsView events={visible} />
       ) : displayMode === "grid" ? (
         <GridView events={visible} />
       ) : (
@@ -162,7 +156,11 @@ export function EventBrowser({ events }: EventBrowserProps) {
   );
 }
 
-function CardsView({ events }: { events: Event[] }) {
+/**
+ * Two large cards, then the rest as small cards (2 across on phones, 4 on
+ * desktop). Also used by the homepage, limited to 2 + 4 events.
+ */
+export function EventCardsView({ events }: { events: Event[] }) {
   return (
     <>
       <div className="mb-4 grid gap-4 lg:grid-cols-2">
