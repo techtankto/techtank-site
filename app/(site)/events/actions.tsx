@@ -69,6 +69,9 @@ async function fetchLumaEvents(status: "upcoming" | "past"): Promise<Event[]> {
       break;
     case "past":
       search.append("before", new Date().toISOString());
+      // The API lists oldest first; without this, a page of 10 is the
+      // calendar's 10 oldest past events rather than the latest.
+      search.append("sort_direction", "desc");
       break;
   }
   const url = new URL(`${LUMA_API_BASE_URL}${EVENT_LIST_ENDPOINT}?${search}`);
