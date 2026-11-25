@@ -1,10 +1,11 @@
 ﻿"use client";
 
 import { useState, useMemo } from "react";
-import { LayoutGrid, List, Columns2, Calendar, MapPin, Camera, Play } from "lucide-react";
+import { LayoutGrid, List, Columns2, Calendar, MapPin, Camera, Play, FileText } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { EventCard } from "@/components/ui/event-card";
+import { EventMediaBadges, getEventSlides } from "@/components/ui/event-media-badges";
 import type { Event } from "@/types/event";
 import { formatEventDate } from "@/utils/date";
 import { sortForDisplay } from "@/utils/events";
@@ -254,26 +255,7 @@ function GridView({ events }: { events: Event[] }) {
                 </div>
               )}
 
-              {(event.albumUrl || event.youtubeUrl) && (
-                <div className="flex flex-wrap gap-1 pt-0.5">
-                  {event.albumUrl && (
-                    <Badge variant="secondary" size="sm" asChild className="relative z-10">
-                      <a href={event.albumUrl} target="_blank" rel="noopener noreferrer">
-                        <Camera className="size-2.5" aria-hidden="true" />
-                        Photos<span className="sr-only"> from {event.title}</span>
-                      </a>
-                    </Badge>
-                  )}
-                  {event.youtubeUrl && (
-                    <Badge variant="secondary" size="sm" asChild className="relative z-10">
-                      <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                        <Play className="size-2.5 fill-current" aria-hidden="true" />
-                        Recap<span className="sr-only"> from {event.title}</span>
-                      </a>
-                    </Badge>
-                  )}
-                </div>
-              )}
+              <EventMediaBadges event={event} size="sm" className="flex flex-wrap gap-1 pt-0.5" />
             </div>
           </div>
         );
@@ -349,6 +331,20 @@ function ListView({ events }: { events: Event[] }) {
                   <span className="sr-only">Recap from {event.title}</span>
                 </a>
               )}
+              {getEventSlides(event).map(({ url, speaker }) => (
+                <a
+                  key={url}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <FileText className="size-3.5" aria-hidden="true" />
+                  <span className="sr-only">
+                    Slides by {speaker} from {event.title}
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
         );

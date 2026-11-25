@@ -49,6 +49,30 @@ If the hook can't find `pnpm`, your Node version manager isn't loaded in the she
 [Husky docs on PATH](https://typicode.github.io/husky/how-to.html#node-version-managers-and-guis) for
 the fix. To skip the hook in a pinch, commit with `--no-verify`; CI still runs either way.
 
+## Curating events
+
+Past Luma events reach the site through the scraped archive (`pnpm scrape:luma`, see
+[scripts/luma/README.md](scripts/luma/README.md)). To add what Luma doesn't know about (a pitch,
+speakers, a recording, photos, slides):
+
+- **Archived Luma events:** add an entry to `constants/luma-event-extras.ts`, keyed by the event's
+  Luma id from `constants/luma-events.generated.ts`. Luma stays the source for the title, date,
+  cover, and location; don't copy those.
+- **Events the archive doesn't have** (Meetup-era and older): add or edit the entry in
+  `constants/events.ts`.
+
+**Slides** go in `public/slides/`, linked from the speaker's `slidesUrl`, named:
+
+```text
+<yyyy-mm-dd>-<talk-title>-<speaker-name>.pdf
+2026-10-22-solidjs-the-framework-for-the-ai-era-brenley-dueck.pdf
+```
+
+Use the event's date in Toronto time and kebab-case for the rest. Get the speaker's OK before
+publishing their deck, and keep files under about 10 MB. `slidesUrl` can also point to a hosted
+deck instead. `constants/slides.test.ts` checks the naming, the date, and that every file in
+`public/slides/` is linked.
+
 ## Branches
 
 ```text

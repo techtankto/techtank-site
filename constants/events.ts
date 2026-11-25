@@ -81,6 +81,7 @@ export const events: Event[] = [
         title: "Senior Design Engineer",
         company: "7shifts",
         talkTitle: "Teaching AI to Use Your Design System",
+        slidesUrl: "/slides/2026-06-29-teaching-ai-to-use-your-design-system-alex-andrade.pdf",
       },
     ],
     youtubeUrl: "https://www.youtube.com/watch?v=Ta-DNbrSH38",
