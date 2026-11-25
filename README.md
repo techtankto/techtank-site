@@ -86,12 +86,48 @@ The local stack runs on its own port block (`5452x`, `project_id =
 Studio is at <http://localhost:54523>.
 
 **Everything is browsable without signing in.** Applying for a task and
-the admin back office both require Slack, so those need the setup below.
+the admin back office need an account. Locally that is an email and a
+password, with no Slack app to register; see below. In production it is
+always Slack.
+
+### Signing in locally, without Slack
+
+`pnpm db:start` seeds an organizer, so the whole task board works on a
+fresh clone:
+
+```text
+organizer@localhost / localdev
+```
+
+Sign in at <http://localhost:3000/admin> for the back office, or from the
+apply panel on any task. The seeded account is in the `admins` allowlist,
+so it reaches `/admin/tasks`; a second account you sign up yourself will
+not, which is the same rule production follows.
+
+Two things make this local-only:
+
+- The email provider is enabled in `db/supabase/config.toml`, which
+  configures the CLI's Docker stack and never the hosted project. The
+  hosted project is configured in the Supabase dashboard.
+- The form only renders when `NODE_ENV` is `development` **and**
+  `NEXT_PUBLIC_SLACK_TEAM_ID` is unset. `next build` always sets
+  `NODE_ENV=production`, so every Vercel deployment, preview included,
+  shows Slack.
+
+Set `NEXT_PUBLIC_SLACK_TEAM_ID` and the sign-in goes back to Slack, which
+is how to exercise the real flow locally.
+
+Editing `db/supabase/config.toml` needs `pnpm db:stop && pnpm db:start`.
+`pnpm db:reset` reapplies migrations and the seed but does not re-read
+that file.
 
 ## Slack + Supabase setup
 
-Slack is the only identity here — it's how applicants prove they're in the
-community and how organizers sign in (no passwords, no email). One Slack
+Set this up when you need to exercise the real sign-in, the apply
+receipt, or the organizer alert. Local development does not require it.
+
+Slack is the only identity in production — it's how applicants prove
+they're in the community and how organizers sign in. One Slack
 app ([api.slack.com/apps](https://api.slack.com/apps) → _Create New App_)
 carries all of it; note its **Client ID / Secret** (_Basic Information_)
 and your **workspace / team ID** (`T…`, from _About this workspace_). Then:
