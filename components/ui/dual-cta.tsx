@@ -7,6 +7,20 @@ import { getEventLinks, getSocialLinks, getContributeLinks } from "@/constants/s
 import { BRAND_ICONS } from "@/components/ui/icons";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 import { trackEvent } from "@/utils/analytics";
+import { cva } from "@/utils/theme";
+
+const styles = {
+  root: cva("grid gap-4 lg:grid-cols-2"),
+  card: cva("glass relative overflow-hidden rounded-xl p-5 lg:p-6"),
+  decoration: cva("absolute top-4 right-4 size-16 text-foreground opacity-15"),
+  content: cva("relative"),
+  overline: cva("mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase"),
+  title: cva("mb-2 font-display text-lg font-bold text-foreground lg:text-xl"),
+  description: cva("mb-4 max-w-sm text-sm text-muted-foreground"),
+  actions: cva("flex flex-wrap gap-2"),
+  brandIcon: cva("mr-2 size-4"),
+  externalIcon: cva("ml-2 size-3.5"),
+};
 
 export function DualCTA() {
   const eventLinks = getEventLinks();
@@ -14,19 +28,15 @@ export function DualCTA() {
   const contributeLinks = getContributeLinks();
 
   return (
-    <div className="grid gap-4 lg:grid-cols-2">
+    <div className={styles.root()}>
       {/* Never miss an event */}
-      <div className="glass relative overflow-hidden rounded-xl p-5 lg:p-6">
-        <Calendar className="absolute top-4 right-4 size-16 text-foreground opacity-15" aria-hidden="true" />
-        <div className="relative">
-          <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
-            Stay in the loop
-          </span>
-          <h3 className="mb-2 font-display text-lg font-bold text-foreground lg:text-xl">Never miss an event</h3>
-          <p className="mb-4 max-w-sm text-sm text-muted-foreground">
-            Subscribe to our Luma calendar and follow us on socials.
-          </p>
-          <div className="flex flex-wrap gap-2">
+      <div className={styles.card()}>
+        <Calendar className={styles.decoration()} aria-hidden="true" />
+        <div className={styles.content()}>
+          <span className={styles.overline()}>Stay in the loop</span>
+          <h3 className={styles.title()}>Never miss an event</h3>
+          <p className={styles.description()}>Subscribe to our Luma calendar and follow us on socials.</p>
+          <div className={styles.actions()}>
             {[...eventLinks, ...socialLinks].map((link) => {
               const Icon = BRAND_ICONS[link.id];
 
@@ -39,9 +49,9 @@ export function DualCTA() {
                     event="cta_click"
                     properties={{ id: link.id, name: link.name }}
                   >
-                    {Icon && <Icon className="mr-2 size-4" />}
+                    {Icon && <Icon className={styles.brandIcon()} />}
                     {link.name}
-                    <ExternalLink className="ml-2 size-3.5" aria-hidden="true" />
+                    <ExternalLink className={styles.externalIcon()} aria-hidden="true" />
                   </TrackedLink>
                 </Button>
               );
@@ -51,15 +61,13 @@ export function DualCTA() {
       </div>
 
       {/* Want to contribute? */}
-      <div className="glass relative overflow-hidden rounded-xl p-5 lg:p-6">
-        <Users className="absolute top-4 right-4 size-16 text-foreground opacity-15" aria-hidden="true" />
-        <div className="relative">
-          <span className="mb-2 inline-block text-xs font-semibold tracking-widest text-overline uppercase">
-            Get involved
-          </span>
-          <h3 className="mb-2 font-display text-lg font-bold text-foreground lg:text-xl">Want to contribute?</h3>
-          <p className="mb-4 max-w-sm text-sm text-muted-foreground">Speak, host, sponsor, or volunteer.</p>
-          <div className="flex flex-wrap gap-2">
+      <div className={styles.card()}>
+        <Users className={styles.decoration()} aria-hidden="true" />
+        <div className={styles.content()}>
+          <span className={styles.overline()}>Get involved</span>
+          <h3 className={styles.title()}>Want to contribute?</h3>
+          <p className={styles.description()}>Speak, host, sponsor, or volunteer.</p>
+          <div className={styles.actions()}>
             <Button variant="primary" size="sm" asChild>
               <Link href="/get-involved" onClick={() => trackEvent("cta_click", { id: "get-involved" })}>
                 Get involved
@@ -76,9 +84,9 @@ export function DualCTA() {
                     event="cta_click"
                     properties={{ id: link.id, name: link.name }}
                   >
-                    {Icon && <Icon className="mr-2 size-4" />}
+                    {Icon && <Icon className={styles.brandIcon()} />}
                     {link.name}
-                    <ExternalLink className="ml-2 size-3.5" aria-hidden="true" />
+                    <ExternalLink className={styles.externalIcon()} aria-hidden="true" />
                   </TrackedLink>
                 </Button>
               );
