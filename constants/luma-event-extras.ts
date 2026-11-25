@@ -32,4 +32,20 @@ export const lumaEventExtras: Partial<Record<LumaEventId, LumaEventExtras>> = {
       },
     ],
   },
+  // Blender to XR: An Introduction to 3D Development (Oct 8, 2026)
+  "evt-fML4QflRLOMJvMH": {
+    youtubeUrl: "https://www.youtube.com/watch?v=CY17HAyKOUI",
+  },
+  // Build Night TO by TechTank x PostHog (Aug 19, 2026)
+  "evt-2myD0FRHosU6bz7": {
+    youtubeUrl: "https://www.youtube.com/watch?v=hF45ou4RWiQ",
+  },
+  // Build Night TO by TechTank x PostHog (Aug 5, 2026)
+  "evt-eO06MVCGT0GQeJK": {
+    youtubeUrl: "https://www.youtube.com/watch?v=wEjd6TC7w1o",
+  },
+  // Build Night TO by TechTank x PostHog (Jul 22, 2026)
+  "evt-7y2m144kvHjWTvJ": {
+    youtubeUrl: "https://www.youtube.com/watch?v=fDqWlzuvv7w",
+  },
 };
