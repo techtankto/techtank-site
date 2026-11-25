@@ -5,6 +5,11 @@ import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
 import { THEMES } from "@/constants/theme";
 import { useIsHydrated } from "@/hooks/use-is-hydrated";
+import { cva } from "@/utils/theme";
+
+const styles = {
+  icon: cva("size-4"),
+};
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
@@ -24,7 +29,11 @@ export function ThemeToggle() {
       label={isDark ? "Switch to light theme" : "Switch to dark theme"}
       title={isDark ? "Switch to light theme" : "Switch to dark theme"}
     >
-      {isDark ? <Sun className="size-4" aria-hidden="true" /> : <Moon className="size-4" aria-hidden="true" />}
+      {isDark ? (
+        <Sun className={styles.icon()} aria-hidden="true" />
+      ) : (
+        <Moon className={styles.icon()} aria-hidden="true" />
+      )}
     </Button>
   );
 }
