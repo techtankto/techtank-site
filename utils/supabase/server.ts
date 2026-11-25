@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 /**
  * Cookie-authed Supabase client for Server Components and Server Actions,
  * carrying the caller's admin session. `setAll` swallows errors because
- * Server Components can't write cookies — middleware handles the refresh.
+ * Server Components can't write cookies — the proxy handles the refresh.
  */
 export async function createServerSupabaseClient() {
   const cookieStore = await cookies();
@@ -20,7 +20,7 @@ export async function createServerSupabaseClient() {
             cookieStore.set(name, value, options);
           }
         } catch {
-          // Read-only in Server Components — middleware handles refreshes.
+          // Read-only in Server Components — the proxy handles refreshes.
         }
       },
     },
