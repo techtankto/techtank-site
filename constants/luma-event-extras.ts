@@ -37,9 +37,26 @@ export const lumaEventExtras: Partial<Record<LumaEventId, LumaEventExtras>> = {
       },
     ],
   },
+  // Candidate Pitch Day: A Recession Indicator Comedy Show (Nov 12, 2026)
+  "evt-j9e6EHHFrD4wwH9": {
+    tags: ["Social"],
+  },
   // Blender to XR: An Introduction to 3D Development (Oct 8, 2026)
   "evt-fML4QflRLOMJvMH": {
+    tags: ["Tech Talk"],
     youtubeUrl: "https://www.youtube.com/watch?v=CY17HAyKOUI",
+  },
+  // QueerTank: A Social for Queer & Trans Folks in Tech (Sep 13, 2026)
+  "evt-vmuMGAAGWtr8XA8": {
+    tags: ["Social"],
+  },
+  // Salsa at the Park: TechTank Fiesta (Aug 30, 2026)
+  "evt-AFFUpzJW0ScYqpx": {
+    tags: ["Social"],
+  },
+  // TechTank Sunset Soirée (Aug 30, 2026)
+  "evt-5BWfRdpvXUyAQNA": {
+    tags: ["Social"],
   },
   // Build Night TO by TechTank x PostHog (Aug 19, 2026)
   "evt-2myD0FRHosU6bz7": {
