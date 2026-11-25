@@ -216,7 +216,7 @@ are route groups: they scope a shared layout without adding a URL segment.
 ├── hooks/                          # Reusable React hooks (useMutation)
 ├── utils/                          # Helpers (theme, Supabase clients)
 ├── db/                             # Supabase — config, migrations, seed
-├── middleware.ts                   # Admin session refresh + route guard
+├── proxy.ts                        # Admin session refresh + route guard
 ├── docs/prd/                       # Product requirements pipeline (01-brief → 06-plan)
 ├── .agents/skills/                 # Vendored house-standard skills (copied, portable)
 ├── .claude/skills/                 # Same skills (symlinked to .agents/skills/)

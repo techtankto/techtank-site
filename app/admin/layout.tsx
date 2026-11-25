@@ -6,7 +6,7 @@ import { createServerSupabaseClient } from "@/utils/supabase/server";
 import { signOutAdmin } from "./actions";
 
 /**
- * Gate for the admin back office (server-side). The middleware already
+ * Gate for the admin back office (server-side). The proxy already
  * bounces sessionless visitors on protected /admin paths to the login
  * page, so here:
  *   - no user  → render children bare (this is the /admin/login page).
