@@ -1,5 +1,6 @@
 import type { Event } from "@/types/event";
 import type { generatedLumaEvents } from "./luma-events.generated";
+import { sponsors } from "./sponsors";
 
 /**
  * Hand-curated additions to events in the scraped Luma archive. Luma stays the
@@ -17,6 +18,10 @@ export type LumaEventExtras = Partial<
 // Keyed by Luma event id, typed against the real archive keys so a typo or a
 // stale id fails the type check.
 type LumaEventId = keyof typeof generatedLumaEvents;
+
+// Every Build Night TO so far was hosted at TMU with PostHog. Luma keeps the
+// exact location guests-only, so only the campus name is shown.
+const buildNightAtTmu: LumaEventExtras = { venue: "TMU", sponsors: [sponsors.posthog] };
 
 export const lumaEventExtras: Partial<Record<LumaEventId, LumaEventExtras>> = {
   // SolidJS: The Framework for the AI Era (online, Oct 22, 2026). Not recorded.
@@ -38,14 +43,17 @@ export const lumaEventExtras: Partial<Record<LumaEventId, LumaEventExtras>> = {
   },
   // Build Night TO by TechTank x PostHog (Aug 19, 2026)
   "evt-2myD0FRHosU6bz7": {
+    ...buildNightAtTmu,
     youtubeUrl: "https://www.youtube.com/watch?v=hF45ou4RWiQ",
   },
   // Build Night TO by TechTank x PostHog (Aug 5, 2026)
   "evt-eO06MVCGT0GQeJK": {
+    ...buildNightAtTmu,
     youtubeUrl: "https://www.youtube.com/watch?v=wEjd6TC7w1o",
   },
   // Build Night TO by TechTank x PostHog (Jul 22, 2026)
   "evt-7y2m144kvHjWTvJ": {
+    ...buildNightAtTmu,
     youtubeUrl: "https://www.youtube.com/watch?v=fDqWlzuvv7w",
   },
 };

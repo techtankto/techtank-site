@@ -8,6 +8,7 @@ export const events: Event[] = [
     title: "Build Night TO by TechTank x PostHog",
     pitch: "Hands-on build night — bring a project and ship alongside other builders",
     start_at: "2026-07-08T18:00:00-04:00",
+    venue: "TMU",
     tags: ["Build Night"],
     status: "past",
     guest_count: 0,
