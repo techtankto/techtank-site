@@ -28,7 +28,8 @@ export interface Event {
         name?: string | null;
       }[]
     | null;
-  meeting_url?: string | null | undefined;
+  /** True for online events. The meeting link itself is never sent to the site (see `isOnlineEvent`). */
+  online?: boolean;
   geo_address_info?: {
     address?: string | null;
   } | null;
@@ -39,5 +40,10 @@ export interface Event {
     company?: string;
     talkTitle?: string;
     image?: string;
+    /**
+     * The talk's slides: a site path under `public/slides/` (see CONTRIBUTING,
+     * "Curating events") or an external URL such as a hosted deck.
+     */
+    slidesUrl?: string;
   }[];
 }

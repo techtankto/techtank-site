@@ -1,6 +1,7 @@
 ﻿import type { ReactNode } from "react";
-import { Camera, Calendar, MapPin, Play } from "lucide-react";
+import { Calendar, Handshake, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { EventMediaBadges } from "@/components/ui/event-media-badges";
 import type { Event } from "@/types/event";
 import { formatEventDate, formatEventTime } from "@/utils/date";
 
@@ -83,7 +84,9 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           )}
 
           {event.sponsors && event.sponsors.length > 0 && (
-            <div className="mb-3 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
+            <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+              <Handshake className="size-4 shrink-0" aria-hidden="true" />
+              <span className="sr-only">Sponsored by</span>
               {event.sponsors.map((s) => (
                 <a
                   key={s.id}
@@ -98,26 +101,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
             </div>
           )}
 
-          {(event.albumUrl || event.youtubeUrl) && (
-            <div className="flex flex-wrap items-center gap-2">
-              {event.albumUrl && (
-                <Badge variant="secondary" asChild className="relative z-10">
-                  <a href={event.albumUrl} target="_blank" rel="noopener noreferrer">
-                    <Camera className="size-3" aria-hidden="true" />
-                    Photos<span className="sr-only"> from {event.title}</span>
-                  </a>
-                </Badge>
-              )}
-              {event.youtubeUrl && (
-                <Badge variant="secondary" asChild className="relative z-10">
-                  <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                    <Play className="size-3 fill-current" aria-hidden="true" />
-                    Recap<span className="sr-only"> from {event.title}</span>
-                  </a>
-                </Badge>
-              )}
-            </div>
-          )}
+          <EventMediaBadges event={event} className="flex flex-wrap items-center gap-2" />
         </div>
       </div>
     );
@@ -160,7 +144,9 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
       )}
 
       {event.sponsors && event.sponsors.length > 0 && (
-        <div className="mb-2 flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
+        <div className="mb-2 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+          <Handshake className="size-3 shrink-0" aria-hidden="true" />
+          <span className="sr-only">Sponsored by</span>
           {event.sponsors.map((s) => (
             <a
               key={s.id}
@@ -175,26 +161,7 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
         </div>
       )}
 
-      {(event.albumUrl || event.youtubeUrl) && (
-        <div className="mt-auto flex flex-wrap items-center gap-1.5 pt-1">
-          {event.albumUrl && (
-            <Badge variant="secondary" size="sm" asChild className="relative z-10">
-              <a href={event.albumUrl} target="_blank" rel="noopener noreferrer">
-                <Camera className="size-2.5" aria-hidden="true" />
-                Photos<span className="sr-only"> from {event.title}</span>
-              </a>
-            </Badge>
-          )}
-          {event.youtubeUrl && (
-            <Badge variant="secondary" size="sm" asChild className="relative z-10">
-              <a href={event.youtubeUrl} target="_blank" rel="noopener noreferrer">
-                <Play className="size-2.5 fill-current" aria-hidden="true" />
-                Recap<span className="sr-only"> from {event.title}</span>
-              </a>
-            </Badge>
-          )}
-        </div>
-      )}
+      <EventMediaBadges event={event} size="sm" className="mt-auto flex flex-wrap items-center gap-1.5 pt-1" />
     </div>
   );
 }

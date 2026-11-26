@@ -30,3 +30,12 @@ export function isListable(event: VisibilityFields, now: Date = new Date()): boo
 export function isLocationPublic(event: VisibilityFields): boolean {
   return event.location_visibility === "public";
 }
+
+/**
+ * Whether an event happens online. Only this flag ever reaches the site: Luma
+ * shows meeting links to registered guests only, and online series reuse one
+ * standing link, so publishing it would let anyone join future sessions.
+ */
+export function isOnlineEvent(event: { location_type?: string | null; meeting_url?: string | null }): boolean {
+  return event.location_type ? event.location_type !== "offline" : Boolean(event.meeting_url);
+}

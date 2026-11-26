@@ -14,13 +14,30 @@ describe("inferTags", () => {
   test("combines every matching rule without duplicates", () => {
     expect(inferTags("Code Diversity Coffee Chat", "https://luma.com/x")).toEqual([
       "Coffee Chat",
-      "Social",
       "CodeDiversity",
+      "Social",
     ]);
   });
 
-  test("applies the per-URL override ahead of title rules", () => {
-    expect(inferTags("Touch Grass", "https://luma.com/d114actf")).toEqual(["Social"]);
+  test("types recurring series from their titles", () => {
+    expect(inferTags("System Design and AI with Rob So", "https://luma.com/x")).toEqual([
+      "Tech Talk",
+      "AI",
+      "Architecture",
+    ]);
+    expect(inferTags("Code Diversity: Pass The Mic!", "https://luma.com/x")).toEqual([
+      "Coffee Chat",
+      "CodeDiversity",
+      "Social",
+    ]);
+    expect(inferTags("Code Diversity Monthly Coffee Chats", "https://luma.com/x")).toEqual([
+      "Coffee Chat",
+      "CodeDiversity",
+      "Social",
+    ]);
+    expect(inferTags("Touch Grass: Stretch in the Park with TechTank x Creative Blocks", "https://luma.com/x")).toEqual(
+      ["Social"],
+    );
   });
 
   test("returns no tags when nothing matches", () => {

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { isListable, isLocationPublic } from "./visibility";
+import { isListable, isLocationPublic, isOnlineEvent } from "./visibility";
 
 const now = new Date("2026-11-19T12:00:00Z");
 const past = "2026-04-17T22:00:00Z";
@@ -27,5 +27,18 @@ describe("isLocationPublic", () => {
     expect(isLocationPublic({ start_at: past, location_visibility: "public" })).toBe(true);
     expect(isLocationPublic({ start_at: past, location_visibility: "guests-only" })).toBe(false);
     expect(isLocationPublic({ start_at: past })).toBe(false);
+  });
+});
+
+describe("isOnlineEvent", () => {
+  test("reads Luma's location_type: anything but offline is online", () => {
+    expect(isOnlineEvent({ location_type: "offline" })).toBe(false);
+    expect(isOnlineEvent({ location_type: "meet" })).toBe(true);
+    expect(isOnlineEvent({ location_type: "zoom" })).toBe(true);
+  });
+
+  test("falls back to the meeting link when location_type is missing", () => {
+    expect(isOnlineEvent({ meeting_url: "https://meet.example.com/x" })).toBe(true);
+    expect(isOnlineEvent({})).toBe(false);
   });
 });

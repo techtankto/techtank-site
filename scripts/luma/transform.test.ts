@@ -35,7 +35,7 @@ describe("transformEvent", () => {
       url: "https://luma.com/evt-abc",
       cover: "/images/luma/evt-abc.png",
       location: "2415 Yonge St",
-      meeting_url: null,
+      online: false,
     });
     expect(download).toEqual({ sourceUrl: COVER, destPath: "/images/luma/evt-abc.png" });
   });
@@ -46,9 +46,12 @@ describe("transformEvent", () => {
     expect(download).toBeUndefined();
   });
 
-  test("records online events with a meeting URL and no location", () => {
-    const { event } = transformEvent(apiEvent("evt-online", { meeting_url: "https://meet.example.com/x" }));
-    expect(event).toMatchObject({ meeting_url: "https://meet.example.com/x", location: null });
+  test("flags online events but never stores the meeting link", () => {
+    const { event } = transformEvent(
+      apiEvent("evt-online", { location_type: "meet", meeting_url: "https://meet.example.com/standing-room" }),
+    );
+    expect(event).toMatchObject({ online: true, location: null });
+    expect(JSON.stringify(event)).not.toContain("meet.example.com");
   });
 
   test("never stores the address of a guests-only event", () => {

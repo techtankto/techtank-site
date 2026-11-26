@@ -26,7 +26,7 @@ export function LumaEventCard({ event }: Props) {
   const formattedTime = formatEventTime(event.start_at);
   const showTime = !event.start_at.includes("T12:00:00");
 
-  const isOnline = Boolean(event.meeting_url);
+  const isOnline = Boolean(event.online);
   const locationLabel = isOnline ? "Online" : (event.geo_address_info?.address ?? null);
   const LocationIcon = isOnline ? Video : MapPin;
 

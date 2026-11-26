@@ -34,7 +34,7 @@ describe("run", () => {
       url: "https://luma.com/evt-old",
       cover: "/images/luma/evt-old.jpg",
       location: null,
-      meeting_url: null,
+      online: false,
     },
   };
 
