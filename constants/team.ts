@@ -258,6 +258,37 @@ Outside of design, Mabel loves reading, travelling, discovering new places, and 
     avatar: "/images/team/carmen-lam.webp",
     github: "https://github.com/Carmen-jx",
   },
+  "khushi-sukhija": {
+    name: "Khushi Sukhija",
+    pronouns: "she/her",
+    avatar: "/images/team/khushi-sukhija.webp",
+  },
+  "behrooz-jadidi": {
+    name: "Behrooz Jadidi",
+    pronouns: "he/him",
+    avatar: "/images/team/behrooz-jadidi.webp",
+  },
+  "karen-swyszcz": {
+    name: "Karen Swyszcz",
+    pronouns: "she/her",
+    avatar: "/images/team/karen-swyszcz.webp",
+    linkedin: "https://linkedin.com/in/karenswyszcz",
+    bio: `Karen is one of TechTank's newest volunteers. She provides support to the sponsorship team, collects feedback from the community and is building a roadmap for TechTank's events and programming.
+
+Karen is a product manager who has worked at both startups and enterprise companies. She came to product from a biochemistry degree, and thinks of her career as a rock climbing wall rather than a ladder. What she loves most is figuring out what people actually need and turning it into something real.
+
+Outside of work, Karen is a triathlete who has taken on the half-Ironman distance, an avid traveller and cyclist, a baker, and a bookworm with the next read always lined up.`,
+  },
+  "samantha-osaduke": {
+    name: "Samantha Osaduke",
+    pronouns: "she/her",
+    avatar: "/images/team/samantha-osaduke.webp",
+  },
+  "christina-suzuki": {
+    name: "Christina Suzuki",
+    pronouns: "she/her",
+    avatar: "/images/team/christina-suzuki.webp",
+  },
 } satisfies Record<string, TeamMember>;
 
 export type TeamMemberId = keyof typeof members;
@@ -285,11 +316,14 @@ export const teamGroups: TeamGroup[] = [
       { id: "rodrigo-curbelo", role: "Organizer" },
       { id: "rohan-villoth", role: "Video Content Lead" },
       { id: "abu-saeed", role: "Event Promotion Lead" },
+      { id: "behrooz-jadidi", role: "Event Organizer" },
+      { id: "karen-swyszcz", role: "Sponsorship & Partnership Manager" },
+      { id: "samantha-osaduke", role: "People, Strategy & Events Manager" },
     ],
   },
   {
     title: "Design Team",
-    members: [{ id: "victoria-sze" }, { id: "mabel-kasunic" }],
+    members: [{ id: "victoria-sze" }, { id: "mabel-kasunic" }, { id: "christina-suzuki", role: "UX/UI Developer" }],
   },
   {
     title: "Digital Team",
@@ -304,6 +338,7 @@ export const teamGroups: TeamGroup[] = [
       { id: "jacky-tea" },
       { id: "marco-campos" },
       { id: "nana-ogasawara" },
+      { id: "christina-suzuki", role: "UX/UI Developer" },
     ],
   },
   {
@@ -314,6 +349,7 @@ export const teamGroups: TeamGroup[] = [
       { id: "natasha-kasunic" },
       { id: "niki-fereidooni" },
       { id: "beatrice-yu" },
+      { id: "khushi-sukhija", role: "Social Media Specialist" },
     ],
   },
   {
