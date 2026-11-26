@@ -10,7 +10,7 @@ const lumaEvent = (title: string): LumaEvent => ({
   url: "https://luma.com/x",
   cover: null,
   location: null,
-  meeting_url: null,
+  online: false,
 });
 
 describe("upsertById", () => {

@@ -4,15 +4,16 @@ import { sponsors } from "./sponsors";
 
 /**
  * Hand-curated additions to events in the scraped Luma archive. Luma stays the
- * source of truth for the title, date, cover, and location (the weekly scrape
- * keeps those current); these entries only add what Luma doesn't have.
+ * source of truth for the date, cover, and location (the weekly scrape keeps
+ * those current); these entries add what Luma doesn't have.
  *
- * `tags` are added to the ones inferred from the title. Every other field
- * overrides. To curate an event the scraper hasn't archived (Meetup-era or
- * older), add it to `events.ts` instead.
+ * `tags` are added to the ones inferred from Luma's title. Every other field
+ * overrides, including `title`, which changes only what the site shows: the
+ * archive keeps Luma's title. To curate an event the scraper hasn't archived
+ * (Meetup-era or older), add it to `events.ts` instead.
  */
 export type LumaEventExtras = Partial<
-  Pick<Event, "pitch" | "tags" | "speakers" | "youtubeUrl" | "albumUrl" | "sponsors" | "host" | "venue">
+  Pick<Event, "title" | "pitch" | "tags" | "speakers" | "youtubeUrl" | "albumUrl" | "sponsors" | "host" | "venue">
 >;
 
 // Keyed by Luma event id, typed against the real archive keys so a typo or a
@@ -26,6 +27,8 @@ const buildNightAtTmu: LumaEventExtras = { venue: "TMU", sponsors: [sponsors.pos
 export const lumaEventExtras: Partial<Record<LumaEventId, LumaEventExtras>> = {
   // SolidJS: The Framework for the AI Era (online, Oct 22, 2026). Not recorded.
   "evt-OrkHChuAAJ9ZuYF": {
+    // Luma's title ends in "| Online Event", which the location line already says.
+    title: "SolidJS: The Framework for the AI Era",
     pitch: "Why your UI framework still matters when AI writes the code",
     tags: ["Tech Talk"],
     speakers: [

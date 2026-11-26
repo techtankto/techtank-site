@@ -40,6 +40,8 @@ export const lumaEventSchema = z.object({
     })
     .nullish(),
   meeting_url: z.string().nullish(),
+  /** "offline" for in-person events; the meeting platform (e.g. "meet", "zoom") for online ones. */
+  location_type: z.string().nullish(),
   visibility: z.string().nullish(),
   location_visibility: z.string().nullish(),
   cover_url: imageUrlSchema.nullish(),

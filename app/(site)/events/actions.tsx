@@ -12,7 +12,7 @@ import {
   type LumaApiGuest,
 } from "@/utils/luma/schema";
 import { inferTags } from "@/utils/luma/tags";
-import { isListable, isLocationPublic } from "@/utils/luma/visibility";
+import { isListable, isLocationPublic, isOnlineEvent } from "@/utils/luma/visibility";
 
 const LUMA_CALENDAR_ID = process.env.LUMA_CALENDAR_ID;
 const LUMA_API_KEY = process.env.LUMA_API_KEY;
@@ -30,7 +30,8 @@ function transformToEvent(rawEvent: LumaApiEvent, rawGuests: LumaApiGuest[]): Ev
     cover_url: rawEvent.cover_url,
     guest_count: (rawEvent.max_capacity ?? 0) - (rawEvent.spots_remaining ?? 0),
     featured_guests: rawGuests.map((rawGuest) => ({ name: rawGuest.user_name })),
-    meeting_url: rawEvent.meeting_url,
+    // A flag, never the link: this response reaches every visitor's browser.
+    online: isOnlineEvent(rawEvent),
     geo_address_info: isLocationPublic(rawEvent) ? rawEvent.geo_address_json : null,
   };
 }

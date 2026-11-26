@@ -11,7 +11,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/code-diversity-nov-2026",
     cover: "/images/luma/evt-Fy3iLv6OjqiS7RK.png",
     location: "Waterworks Food Hall",
-    meeting_url: null,
+    online: false,
   },
   "evt-j9e6EHHFrD4wwH9": {
     title: "Candidate Pitch Day: A Recession Indicator Comedy Show",
@@ -21,7 +21,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-comedy-night-nov-2026",
     cover: "/images/luma/evt-j9e6EHHFrD4wwH9.png",
     location: "2415 Yonge St",
-    meeting_url: null,
+    online: false,
   },
   "evt-dJnS4iVNkq8mRAF": {
     title: "System Design and AI with Rob So",
@@ -31,7 +31,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/a4r30ybm",
     cover: "/images/luma/evt-dJnS4iVNkq8mRAF.webp",
     location: null,
-    meeting_url: "https://meet.google.com/wqw-shqy-zzj",
+    online: true,
   },
   "evt-PlLxrsFeL7GmJxD": {
     title: "Code Diversity: Pass The Mic!",
@@ -41,7 +41,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/code-diversity-oct-2026",
     cover: "/images/luma/evt-PlLxrsFeL7GmJxD.png",
     location: "Now & Later",
-    meeting_url: null,
+    online: false,
   },
   "evt-OrkHChuAAJ9ZuYF": {
     title: "SolidJS: The Framework for the AI Era | Online Event",
@@ -51,7 +51,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-framework-for-ai-era-2026",
     cover: "/images/luma/evt-OrkHChuAAJ9ZuYF.jpg",
     location: null,
-    meeting_url: "https://meet.google.com/wqw-shqy-zzj",
+    online: true,
   },
   "evt-EiTLcvrAaKltiN2": {
     title: "System Design and AI with Rob So",
@@ -61,7 +61,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/weiplg87",
     cover: "/images/luma/evt-EiTLcvrAaKltiN2.jpg",
     location: null,
-    meeting_url: "https://meet.google.com/wqw-shqy-zzj",
+    online: true,
   },
   "evt-fML4QflRLOMJvMH": {
     title: "Blender to XR: An Introduction to 3D Development",
@@ -71,7 +71,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-blender-to-xr",
     cover: "/images/luma/evt-fML4QflRLOMJvMH.png",
     location: "Ideogram AI",
-    meeting_url: null,
+    online: false,
   },
   "evt-Gt1VpZM7XZy1ZuX": {
     title: "System Design and AI with Rob So",
@@ -81,7 +81,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/bv2x7kt4",
     cover: "/images/luma/evt-Gt1VpZM7XZy1ZuX.webp",
     location: null,
-    meeting_url: "https://meet.google.com/wqw-shqy-zzj",
+    online: true,
   },
   "evt-3R1nzBHDGYcXZne": {
     title: "System Design and AI with Rob So",
@@ -91,7 +91,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-sysdesign-sept17",
     cover: "/images/luma/evt-3R1nzBHDGYcXZne.webp",
     location: null,
-    meeting_url: "https://meet.google.com/wqw-shqy-zzj",
+    online: true,
   },
   "evt-vmuMGAAGWtr8XA8": {
     title: "QueerTank: A Social for Queer & Trans Folks in Tech",
@@ -101,7 +101,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-queertank-sept-2026",
     cover: "/images/luma/evt-vmuMGAAGWtr8XA8.jpg",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-hpjP3X1QJOeDIXG": {
     title: "Code Diversity: Pass The Mic!",
@@ -111,7 +111,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/code-diversity-sept-2026",
     cover: "/images/luma/evt-hpjP3X1QJOeDIXG.png",
     location: "Prema Coffee and Bar",
-    meeting_url: null,
+    online: false,
   },
   "evt-AFFUpzJW0ScYqpx": {
     title: "Salsa at the Park: TechTank Fiesta ☀️💃",
@@ -121,7 +121,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-dancing-fishes",
     cover: "/images/luma/evt-AFFUpzJW0ScYqpx.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-5BWfRdpvXUyAQNA": {
     title: "🌅✨TechTank Sunset Soirée✨🌅",
@@ -131,7 +131,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-sunset",
     cover: "/images/luma/evt-5BWfRdpvXUyAQNA.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-eXxk99NUllm0u9X": {
     title: "System Design and AI with Rob So",
@@ -141,7 +141,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-sysdesign-aug20",
     cover: "/images/luma/evt-eXxk99NUllm0u9X.webp",
     location: null,
-    meeting_url: "https://meet.google.com/wqw-shqy-zzj",
+    online: true,
   },
   "evt-2myD0FRHosU6bz7": {
     title: "Build Night TO by TechTank x PostHog",
@@ -151,7 +151,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/build-night-to-aug-19",
     cover: "/images/luma/evt-2myD0FRHosU6bz7.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-eErsFeP1vwcyecp": {
     title: "Code Diversity Monthly Coffee Chats",
@@ -161,7 +161,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/x8030ikz",
     cover: "/images/luma/evt-eErsFeP1vwcyecp.png",
     location: "Prema Coffee and Bar",
-    meeting_url: null,
+    online: false,
   },
   "evt-DMABja1izsFoDaj": {
     title: "System Design and AI with Rob So",
@@ -171,7 +171,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-sysdesign-aug13",
     cover: "/images/luma/evt-DMABja1izsFoDaj.webp",
     location: null,
-    meeting_url: "https://meet.google.com/wqw-shqy-zzj",
+    online: true,
   },
   "evt-MHo96VzUSK5YmsV": {
     title: "Touch Grass: Stretch in the Park with TechTank x Creative Blocks",
@@ -181,7 +181,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/techtank-cb-stretch-aug-8",
     cover: "/images/luma/evt-MHo96VzUSK5YmsV.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-eO06MVCGT0GQeJK": {
     title: "Build Night TO by TechTank x PostHog",
@@ -191,7 +191,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/build-night-to-aug-5",
     cover: "/images/luma/evt-eO06MVCGT0GQeJK.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-7y2m144kvHjWTvJ": {
     title: "Build Night TO by TechTank x PostHog",
@@ -201,7 +201,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/build-night-to-jul-22",
     cover: "/images/luma/evt-7y2m144kvHjWTvJ.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-0uW8oE6gQMgLqPY": {
     title: "Touch Grass: Stretch in the Park with TechTank x Creative Blocks",
@@ -211,7 +211,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/d114actf",
     cover: "/images/luma/evt-0uW8oE6gQMgLqPY.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-PCDZ6HzbGB6vUze": {
     title: "Code Diversity Monthly Coffee Chats",
@@ -221,7 +221,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/19w7djzo",
     cover: "/images/luma/evt-PCDZ6HzbGB6vUze.png",
     location: "Prema Coffee and Bar",
-    meeting_url: null,
+    online: false,
   },
   "evt-gnBp13Gn0qzs3EP": {
     title: "Build Night TO by TechTank x PostHog",
@@ -231,7 +231,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/7mgyw1r2",
     cover: "/images/luma/evt-gnBp13Gn0qzs3EP.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-HU5uZkfw2Qi4Gk4": {
     title: "Teaching AI to Use Your Design System",
@@ -241,7 +241,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/r37zzrdi",
     cover: "/images/luma/evt-HU5uZkfw2Qi4Gk4.png",
     location: "7shifts",
-    meeting_url: null,
+    online: false,
   },
   "evt-ocbBE0NykSWkf86": {
     title: "🚨 Mayday Mayday: We’re Running Again 🏃‍♀️",
@@ -251,7 +251,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/197e37yl",
     cover: "/images/luma/evt-ocbBE0NykSWkf86.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-o87dxuFmVO0tsvl": {
     title: "Code Diversity Monthly Coffee Chats",
@@ -261,7 +261,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/4hcuzi7y",
     cover: "/images/luma/evt-o87dxuFmVO0tsvl.png",
     location: "Prema Coffee and Bar",
-    meeting_url: null,
+    online: false,
   },
   "evt-A3aaXfDravaj0ZH": {
     title: "Everyone's a Builder Now: How AI is Reshaping Product, Security, Engineering, and the Modern Workflow",
@@ -271,7 +271,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/sbd5tsj6",
     cover: "/images/luma/evt-A3aaXfDravaj0ZH.png",
     location: "BrainStation",
-    meeting_url: null,
+    online: false,
   },
   "evt-gbA8VaxFQa67oBq": {
     title: "🌱 May I Have Your Attention Please: We’re Running",
@@ -281,7 +281,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/rop2u7iz",
     cover: "/images/luma/evt-gbA8VaxFQa67oBq.png",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-keZE9Sqdrn7Ty6U": {
     title: "Code Diversity Monthly Coffee Chats",
@@ -291,7 +291,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/3ea6eq1s",
     cover: "/images/luma/evt-keZE9Sqdrn7Ty6U.png",
     location: "Prema Coffee and Bar",
-    meeting_url: null,
+    online: false,
   },
   "evt-rmVgO6l9g6smIGU": {
     title: "This ain’t my first rodeo 🤠🪩 TECHTANK 3 YEAR ANNIVERSARY",
@@ -301,7 +301,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/qwpt54ke",
     cover: "/images/luma/evt-rmVgO6l9g6smIGU.webp",
     location: null,
-    meeting_url: null,
+    online: false,
   },
   "evt-faGWoDMo8jxkNRX": {
     title: "CI Optimization: Built-In Flags You're Probably Not Using",
@@ -311,7 +311,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/7h4g008b",
     cover: "/images/luma/evt-faGWoDMo8jxkNRX.png",
     location: "BrainStation",
-    meeting_url: null,
+    online: false,
   },
   "evt-6f9hT47Fc38OQ7R": {
     title: "Code Diversity Monthly Coffee Chats",
@@ -321,7 +321,7 @@ export const generatedLumaEvents = {
     url: "https://luma.com/cye39lls",
     cover: "/images/luma/evt-6f9hT47Fc38OQ7R.png",
     location: "Prema Coffee and Bar",
-    meeting_url: null,
+    online: false,
   },
   "evt-rbgEGYcWeuFXSBR": {
     title: "Code Diversity × TigerBaby: IWD Pottery Workshop - Clay & Connection",
@@ -331,6 +331,6 @@ export const generatedLumaEvents = {
     url: "https://luma.com/wzaj4vzy",
     cover: "/images/luma/evt-rbgEGYcWeuFXSBR.png",
     location: "Creeds Coffee Bar",
-    meeting_url: null,
+    online: false,
   },
 } satisfies Record<string, LumaEvent>;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { displayTitle, toEvent, type LumaEvent } from "./luma-events";
+import { toEvent, type LumaEvent } from "./luma-events";
 
 const archived: LumaEvent = {
   title: "Build Night TO by TechTank x PostHog",
@@ -9,7 +9,7 @@ const archived: LumaEvent = {
   url: "https://luma.com/build-night-to-aug-19",
   cover: "/images/luma/evt-x.png",
   location: null,
-  meeting_url: null,
+  online: false,
 };
 
 describe("toEvent", () => {
@@ -21,13 +21,14 @@ describe("toEvent", () => {
       eventUrl: archived.url,
       cover_url: archived.cover,
       tags: ["Build Night"],
+      online: false,
     });
     expect(event.speakers).toBeUndefined();
   });
 
   it("shows online events as Online, unless extras say otherwise", () => {
-    const online = { ...archived, meeting_url: "https://meet.example.com/x" };
-    expect(toEvent("evt-x", online).venue).toBe("Online");
+    const online = { ...archived, online: true };
+    expect(toEvent("evt-x", online)).toMatchObject({ venue: "Online", online: true });
     expect(toEvent("evt-x", online, { venue: "Hybrid" }).venue).toBe("Hybrid");
     expect(toEvent("evt-x", archived).venue).toBeUndefined();
   });
@@ -36,13 +37,10 @@ describe("toEvent", () => {
     expect(toEvent("evt-x", archived, { tags: ["Build Night", "AI"] }).tags).toEqual(["Build Night", "AI"]);
   });
 
-  it("uses the cleaned title for online events", () => {
-    const online = {
-      ...archived,
-      title: "SolidJS: The Framework | Online Event",
-      meeting_url: "https://meet.example.com/x",
-    };
-    expect(toEvent("evt-x", online).title).toBe("SolidJS: The Framework");
+  it("lets extras override the displayed title while tags still come from Luma's", () => {
+    const event = toEvent("evt-x", archived, { title: "Build Night TO" });
+    expect(event.title).toBe("Build Night TO");
+    expect(event.tags).toEqual(["Build Night"]);
   });
 
   it("layers curated extras on top while keeping Luma's fields", () => {
@@ -55,27 +53,5 @@ describe("toEvent", () => {
       venue: "Online",
     });
     expect(event.speakers).toEqual(speakers);
-  });
-});
-
-describe("displayTitle", () => {
-  const online = (title: string): LumaEvent => ({ ...archived, title, meeting_url: "https://meet.example.com/x" });
-
-  it.each([
-    ["SolidJS: The Framework for the AI Era | Online Event", "SolidJS: The Framework for the AI Era"],
-    ["Rust for Beginners - Virtual", "Rust for Beginners"],
-    ["Design Systems — online event", "Design Systems"],
-    ["AMA (Online)", "AMA"],
-  ])("drops the online suffix from %j", (title, expected) => {
-    expect(displayTitle(online(title))).toBe(expected);
-  });
-
-  it("leaves titles alone when online isn't a trailing marker", () => {
-    expect(displayTitle(online("Online Safety for Startups"))).toBe("Online Safety for Startups");
-    expect(displayTitle(online("System Design and AI with Rob So"))).toBe("System Design and AI with Rob So");
-  });
-
-  it("never touches in-person events", () => {
-    expect(displayTitle({ ...archived, title: "Launch Party | Online Event" })).toBe("Launch Party | Online Event");
   });
 });

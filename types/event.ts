@@ -28,7 +28,8 @@ export interface Event {
         name?: string | null;
       }[]
     | null;
-  meeting_url?: string | null | undefined;
+  /** True for online events. The meeting link itself is never sent to the site (see `isOnlineEvent`). */
+  online?: boolean;
   geo_address_info?: {
     address?: string | null;
   } | null;

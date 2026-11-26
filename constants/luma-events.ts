@@ -23,36 +23,26 @@ export interface LumaEvent {
   cover: string | null;
   /** Venue line as Luma shows it, or null for online events and events with no address. */
   location: string | null;
-  meeting_url: string | null;
+  /** Whether the event happens online. The meeting link itself is never stored. */
+  online: boolean;
 }
 
 // --- Data ---
 
-// "| Online Event", "- Virtual", "(Online)" and the like at the end of a title.
-const ONLINE_TITLE_SUFFIX = /\s*(?:[|–—-]\s*(?:online|virtual)(?:\s+event)?|\((?:online|virtual)(?:\s+event)?\))\s*$/i;
-
-/**
- * An online event shows "Online" as its location, so a trailing online marker
- * in its title only repeats it. In-person titles are left alone.
- */
-export function displayTitle(lumaEvent: LumaEvent): string {
-  return lumaEvent.meeting_url ? lumaEvent.title.replace(ONLINE_TITLE_SUFFIX, "") : lumaEvent.title;
-}
-
 export function toEvent(id: string, lumaEvent: LumaEvent, extras: LumaEventExtras = {}): Event {
   const { tags: extraTags = [], ...rest } = extras;
-  const isOnline = Boolean(lumaEvent.meeting_url) && !lumaEvent.location;
   return {
     id,
-    title: displayTitle(lumaEvent),
-    ...(isOnline ? { venue: "Online" } : {}),
+    title: lumaEvent.title,
+    ...(lumaEvent.online && !lumaEvent.location ? { venue: "Online" } : {}),
     start_at: lumaEvent.start_at,
+    // Tags are inferred from Luma's title, even when extras override the displayed one.
     tags: [...new Set([...inferTags(lumaEvent.title, lumaEvent.url), ...extraTags])],
     status: Date.now() > new Date(lumaEvent.start_at).valueOf() ? "past" : "upcoming",
     eventUrl: lumaEvent.url,
     cover_url: lumaEvent.cover,
     guest_count: 0,
-    meeting_url: lumaEvent.meeting_url,
+    online: lumaEvent.online,
     geo_address_info: lumaEvent.location ? { address: lumaEvent.location } : null,
     ...rest,
   };

@@ -10,7 +10,7 @@ const lumaEvent = (start_at: string, title = start_at): LumaEvent => ({
   url: "https://luma.com/x",
   cover: null,
   location: null,
-  meeting_url: null,
+  online: false,
 });
 
 const dataLiteral = (rendered: string) => {
