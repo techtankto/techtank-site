@@ -1,5 +1,5 @@
 ﻿import type { ReactNode } from "react";
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar, Handshake, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { EventMediaBadges } from "@/components/ui/event-media-badges";
 import type { Event } from "@/types/event";
@@ -84,7 +84,9 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
           )}
 
           {event.sponsors && event.sponsors.length > 0 && (
-            <div className="mb-3 flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground">
+            <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+              <Handshake className="size-4 shrink-0" aria-hidden="true" />
+              <span className="sr-only">Sponsored by</span>
               {event.sponsors.map((s) => (
                 <a
                   key={s.id}
@@ -142,7 +144,9 @@ export function EventCard({ event, variant = "compact" }: EventCardProps) {
       )}
 
       {event.sponsors && event.sponsors.length > 0 && (
-        <div className="mb-2 flex flex-wrap items-center gap-1 text-xs text-muted-foreground">
+        <div className="mb-2 flex flex-wrap items-center gap-1.5 text-xs text-muted-foreground">
+          <Handshake className="size-3 shrink-0" aria-hidden="true" />
+          <span className="sr-only">Sponsored by</span>
           {event.sponsors.map((s) => (
             <a
               key={s.id}
